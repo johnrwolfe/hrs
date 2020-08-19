@@ -1,0 +1,42 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#staff_list").load("staff_home");
+     setTimeout(function(){ $("#action-home").html($("#staff-action").html()); }, 500);
+    });
+    </script> 
+<div id="staff_list"></div>
+
+<div id="staff-action" style="display: none">
+
+
+          <h3 align="right">بدلات الموظفين</h3>
+<br>
+{% if staff_bonus_list %}
+     {% for staff_bonus in staff_bonus_list %}
+<div class="row align-right">
+
+         <div class="col-md-2">
+        <a href="staff_bonus_detail">{{staff_bonus.staff}}</a>
+        </div>
+        <div class="col-md-3"> {{staff_bonus.bonus}}</div>
+        <div class="col-md-2">{{staff_bonus.amount}}</div>
+        <div class="col-md-3">{{staff_bonus.percentage}}</div>
+        <div class="col-md-3">{{staff_bonus.date_added}}</div>
+
+
+
+    </div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا توجد بدلات حاليا</p>
+
+{% endif %}
+    {% endblock %}
+
+</div>
+</html>

@@ -1,0 +1,35 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#dep_list").load("department_home.html");
+     setTimeout(function(){ $("#action-home").html($("#dep-action").html()); }, 500);
+    });
+    </script> 
+<div id="dep_list"></div>
+
+<div id="dep-action" style="display: none">
+
+          <h3 align="right">دليل الإدارات</h3>
+<br>
+{% if department_list %}
+     {% for department in department_list %}
+<div class="row align-right">
+
+         <div class="col-md-3">
+        <a href="department_detail.html">{{department}} </a>
+        </div>
+        <div class="col-md-3"> {{department.manager}}</div>
+        <div class="col-md-3">{{department.number_of_employees}}</div>
+
+    </div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا يوجد موظفين حاليا</p>
+
+{% endif %}
+</div>
+</html>

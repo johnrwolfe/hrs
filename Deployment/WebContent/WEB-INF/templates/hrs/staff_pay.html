@@ -1,0 +1,32 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#staf").load("staff_detail");
+      $("#form").load("hr_form");
+      setTimeout(function(){ $("#detail").html($("#staff-form").html()); }, 500);
+    });
+    </script> 
+<div id="staf"></div>
+<div id="staff-form" style="display: none">
+  <br>
+    <p><strong>الراتب الأساسي:</strong> {{staff.grade.salary}}</p>
+
+<br>
+
+{% if staff_pay_list %}
+    {% for staff_pay in staff_pay_list %}
+<p><strong>{{staff_pay.bonus}}:</strong> <a href="{{staff_pay.get_absolute_url}}">{{staff_pay.bonus_amount}}</a></p>
+    {% endfor %}
+{% endif %}
+<hr>
+  <p><strong>المجموع:</strong> {{staff.total_pay}}</p>
+
+<br>
+
+
+</div>
+</html>
+

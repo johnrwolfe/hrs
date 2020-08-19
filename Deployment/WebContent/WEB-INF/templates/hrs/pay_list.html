@@ -1,0 +1,40 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#pay_list").load("pay_home.html");
+     setTimeout(function(){ $("#action-pay").html($("#pay-action").html()); }, 500);
+    });
+    </script> 
+<div id="pay_list"></div>
+
+<div id="pay-action" style="display: none">
+
+
+{% block action %}
+
+          <h3 align="right">رواتب شهر {{date.month}}</h3>
+<br>
+{% if pay_list %}
+     {% for pay in pay_list %}
+<div class="row align-right">
+
+         <div class="col-md-2">
+        <a href="{{pay.get_absolute_url}}">{{pay.staff.first_name}} {{pay.staff.last_name}}</a>
+        </div>
+        <div class="col-md-3"> {{pay.amount}}</div>
+        <div class="col-md-2">{{pay.staff.department}}</div>
+
+
+    </div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا يوجد رواتب حاليا</p>
+
+{% endif %}
+    {% endblock %}
+</div>
+</html>

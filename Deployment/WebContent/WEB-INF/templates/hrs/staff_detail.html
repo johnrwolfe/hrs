@@ -1,0 +1,85 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#staff_detail").load("staff_home");
+     setTimeout(function(){ $("#action-home").html($("#staff-action").html()); }, 500);
+    });
+    </script> 
+<div id="staff_detail"></div>
+
+<div id="staff-action" style="display: none">
+
+<div class="row">
+        <div class="col-md-1"> </div>
+
+<div class="col-md-10">
+    {% if staff is None %}
+        <h4>موظف جديد</h4>
+
+    {% else %}
+    <h4>الموظف {{staff.first_name}} {{staff.last_name}} </h4>
+    <a href="staff_delete">حذف </a> |
+                       <a href="{% url 'hr:update_staff' staff.id %} ">تعديل  </a> |
+                           <a href="{% url 'hr:staff' staff.id %} ">الملف الشخصي  </a> |
+    {% endif %}
+    <hr>
+</div>
+</div>
+
+<div class="row">
+        <div class="col-md-1"> </div>
+
+<div class="col-md-8" align="left">
+    {% if staff is not None %}
+
+        {% if staff.user == None %}
+                       <a href="register">انشئ حساب  </a>|
+        {% else %}
+                        <a href="register">عدل الحساب  </a>|
+        {% endif %}
+                <a href="staff_pay">هيكل المرتب </a> |
+                <a href="staff_bonus_form">إضافة بدل </a>
+    {% endif %}
+ </div>
+</div>
+    <div class="row">
+                <div class="col-md-3"> </div>
+
+<div class="col-md-6" align="right">
+
+   <div id="detail">
+    <br>
+    <p><strong>حساب المستخدم:</strong> {{staff.user.username}}</p>
+
+<br>
+<p><strong>تاريخ الميلاد:</strong> {{staff.birth_date}}</p>
+    <p><strong>السجل المدني:</strong> {{staff.national_ID}}</p>
+
+<p><strong>سيرة مختصرة:</strong> {{staff.short_bio}}</p>
+    <p><strong>الدرجة العلمية:</strong> {{staff.get_degree_display}}</p>
+
+<p><strong>الوظيفة:</strong> {{staff.job}}</p>
+    <p><strong>الإدارة:</strong> {{staff.department}}</p>
+
+    <p><strong>المرتبة:</strong> {{staff.grade}}</p>
+    <p><strong>الراتب:</strong> {{staff.grade.salary}}</p>
+        <p><strong>السيرة:</strong> {{staff.short_bio}}</p>
+
+
+<br>
+<p><strong>رصيد الإجازات العادية:</strong> {{staff.available_leave}}</p>
+<p><strong>رصيد الإجازات المرضية:</strong> {{staff.available_sick_leave}}</p>
+<p><strong>رصيد الإجازات المرضية:</strong> {{staff.available_sick_leave}}</p>
+</div>
+
+</div>
+    </div>
+</div>
+
+    {% endblock %}
+
+</div>
+</html>

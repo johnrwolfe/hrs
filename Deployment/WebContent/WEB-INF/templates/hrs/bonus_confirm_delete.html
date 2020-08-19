@@ -1,0 +1,26 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#bon_detail").load("grade_home.html");
+     setTimeout(function(){ $("#action-home").html($("#bon-action").html()); }, 500);
+    });
+    </script> 
+<div id="bon_detail"></div>
+
+  <div id="bon-action" style="display: none">
+
+  {% block action %}
+  <h3>حذف بدل</h3>
+
+<p>  هل أنت متأكد من رغبتك في حذف {{ bonus }}؟</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="نعم, احذف.">
+</form>
+    {% endblock %}
+    </div>
+    </html>

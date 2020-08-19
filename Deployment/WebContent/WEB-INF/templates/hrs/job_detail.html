@@ -1,0 +1,37 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#job_detail").load("job_home");
+     setTimeout(function(){ $("#action-home").html($("#job-action").html()); }, 500);
+    });
+    </script> 
+<div id="job_detail"></div>
+
+<div id="job-action" style="display: none">
+<div class="row">
+    <div class="col-md-1"> </div>
+    <div class="col-md-6">
+
+<h4>{{job.title}}</h4>
+<hr>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-1"> </div>
+    <div class="col-md-6">
+    <div align="left"> <a href="job_confirm_delete">حذف </a> | <a href="{% url 'hr:update_job' job.id %} ">تعديل  </a></div>
+
+        <p><strong>المؤهل المطلوب:</strong> {{job.degree_required}}</p>
+        <p><strong>الرقم الوظيفي:</strong> {{job.job_number}}</p>
+        <p><strong>سنوات الخبرة المطلوبة:</strong> {{job.years_experience}}</p>
+    </div>
+    </div>
+
+
+{% endblock %}
+</div>
+</html>

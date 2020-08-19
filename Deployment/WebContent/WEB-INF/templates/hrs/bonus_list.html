@@ -1,0 +1,47 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#bonus_list").load("grade_home");
+     setTimeout(function(){ $("#action-home").html($("#bonus-action").html()); }, 500);
+    });
+    </script> 
+<div id="bonus_list"></div>
+
+<div id="bonus-action" style="display: none">
+
+{% block action %}
+
+          <h3 align="right"> قائمة البدلات</h3>
+<br>
+{% if bonus_list %}
+     {% for bonus in bonus_list %}
+<div class="row align-right">
+
+         <div class="col-md-3">
+        <a href="bonus_detail">{{bonus}} </a>
+        </div>
+        {% if bonus.amount is None %}
+            <div class="col-md-3">ـــ</div>
+        {% else %}
+            <div class="col-md-3">{{bonus.amount}}</div>
+        {% endif %}
+
+        {% if bonus.percentage is None %}
+            <div class="col-md-3">ـــ</div>
+        {% else %}
+            <div class="col-md-3">{{bonus.percentage}}</div>
+        {% endif %}
+
+    </div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا يوجد بدلات حاليا</p>
+
+{% endif %}
+    {% endblock %}
+</div>
+</html>

@@ -1,0 +1,41 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#staff_list").load("staff_home");
+     setTimeout(function(){ $("#action-home").html($("#staff-action").html()); }, 500);
+    });
+    </script> 
+<div id="staff_list"></div>
+
+<div id="staff-action" style="display: none">
+
+
+
+          <h3 align="right">دليل الموظفين</h3>
+<br>
+{% if staff_list %}
+     {% for staff in staff_list %}
+<div class="row align-right">
+
+         <div class="col-md-2">
+        <a href="staff_detail">{{staff.first_name}} {{staff.last_name}}</a>
+        </div>
+        <div class="col-md-3"> {{staff.email}}</div>
+        <div class="col-md-2">{{staff.work_phone}}</div>
+        <div class="col-md-3">{{staff.get_current_state_display}}</div>
+        <div class="col-md-2">{{staff.department}}</div>
+
+
+    </div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا يوجد موظفين حاليا</p>
+
+{% endif %}
+    {% endblock %}
+    </div>
+    </html>

@@ -1,0 +1,25 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#job_detail").load("job_home");
+     setTimeout(function(){ $("#action-home").html($("#job-action").html()); }, 500);
+    });
+    </script> 
+<div id="job_detail"></div>
+
+  <div id="job-action" style="display: none">
+ 
+  <h3>حذف وظيفة</h3>
+
+<p>  هل أنت متأكد من رغبتك في حذف {{ job }}؟</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="نعم, احذف.">
+</form>
+    {% endblock %}
+  </div>
+  </html>

@@ -1,0 +1,61 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#overtime_list").load("overtime_home.html");
+     setTimeout(function(){ $("#action-home").html($("#overtime-action").html()); }, 500);
+    });
+    </script> 
+<div id="overtime_list"></div>
+
+<div id="overtime-action" style="display: none">
+
+
+          <h4 align="right">دليل خارج الدوام</h4>
+<br>
+<div class="row" align="center">
+ <div class="col-md-3">
+الموظف
+             <hr>
+
+         </div>
+         <div class="col-md-3">
+التاريخ
+             <hr>
+
+         </div>
+        <div class="col-md-3"> الحالة
+            <hr>
+</div>
+        <div class="col-md-3 ">
+            عدد الساعات
+<hr>
+        </div>
+</div>
+
+{% if overtime_list %}
+     {% for overtime in overtime_list %}
+<div class="row align-right">
+    <div class="col-md-3">
+                <a href="overtime_detail.html">{{overtime.staff}}</a>
+    </div>
+
+         <div class="col-md-3">
+            {{overtime.dates_display}}
+        </div>
+        <div class="col-md-3"> {{overtime.stopped}}</div>
+        <div class="col-md-3" align="center">{{overtime.hours}}</div>
+
+</div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا يوجد خارج دوام حاليا</p>
+
+{% endif %}
+    {% endblock %}
+    </div>
+    </html>
+

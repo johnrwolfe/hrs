@@ -1,0 +1,406 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#base").load("base"); 
+      var xmlhttp = new XMLHttpRequest();
+  	var breeds = {};
+  	var here
+  	function sendXHR(type, url, data, callback) {
+  		xmlhttp = new XMLHttpRequest() || new window.ActiveXObject("Microsoft.XMLHTTP");
+  		xmlhttp.open(type, url, true);
+  		xmlhttp.send(data);
+  		xmlhttp.onreadystatechange = function() { // Use onreadystatechange instead onload.
+  	      if (this.status === 200 && this.readyState === 4) {
+  	        callback(this.response);
+				var list = JSON.parse(xmlhttp.responseText)
+				var i = 0;
+				var opt = document.getElementById("messages");
+				var w = null;
+				var j = 0;
+				for (i in list){
+					j = 0;
+					if(w == null){
+						for(j in list[i])
+							if(j == 0){
+								console.log(i, j);
+								console.log(list[i][j]);
+								if(list[i][j]==="bonus"){
+									
+									w = "<p> اضافة بدل</p>";
+									w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+									w += "<hr>";
+								}else{
+									if(list[i][j]==="employee"){
+										
+										w = "<p> اضافة موظف</p>";
+										w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+										w += "<hr>";
+									}else{
+										if(list[i][j]==="grade"){
+											
+											w = "<p> اضافة مرتبة</p>";
+											w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+											w += "<hr>";
+									}else{
+											if(list[i][j]==="job"){
+												
+												w = "<p> اضافة وظيفة</p>";
+												w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+												w += "<hr>";
+											}else{
+												if(list[i][j]==="leave"){
+													
+													w = "<p> اضافة اجازة</p>";
+													w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+													w += "<hr>";
+												}else{
+													if(list[i][j]==="step"){
+														
+														w = "<p> اضافة درجة</p>";
+														w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+														w += "<hr>";
+													}else{
+														if(list[i][j]==="employeeBonus"){
+															
+															w = "<p> اضافة بدل لموظف</p>";
+															w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+															w += "<hr>";
+														}else{
+															if(list[i][j]==="employeeCommence"){
+																
+																w = "<p> بدء العمل لموظف</p>";
+																w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																w += "<hr>";
+															}else{
+																if(list[i][j]==="employeeJob"){
+																	
+																	w = "<p> اضافة وظيفة الى موظف</p>";
+																	w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																	w += "<hr>";
+																}else{
+																	if(list[i][j]==="employeeReturn"){
+																		
+																		w = "<p> عودة موظف من اجازة</p>";
+																		w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																		w += "<hr>";
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								
+							}else{
+								console.log(i, j);
+								console.log(list[i][j]);
+						if(list[i][j]==="bonus"){
+							
+							w += "<p> اضافة بدل</p>";
+							w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+							w += "<hr>";
+						}else{
+							if(list[i][j]==="employee"){
+								
+								w += "<p> اضافة موظف</p>";
+								w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+								w += "<hr>";
+							}else{
+								if(list[i][j]==="grade"){
+									
+									w += "<p> اضافة مرتبة</p>";
+									w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+									w += "<hr>";
+							}else{
+									if(list[i][j]==="job"){
+										
+										w += "<p> اضافة وظيفة</p>";
+										w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+										w += "<hr>";
+									}else{
+										if(list[i][j]==="leave"){
+											
+											w += "<p> اضافة اجازة</p>";
+											w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+											w += "<hr>";
+										}else{
+											if(list[i][j]==="step"){
+												
+												w += "<p> اضافة درجة</p>";
+												w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+												w += "<hr>";
+											}else{
+												if(list[i][j]==="employeeBonus"){
+													
+													w += "<p> اضافة بدل لموظف</p>";
+													w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+													w += "<hr>";
+												}else{
+													if(list[i][j]==="employeeCommence"){
+														
+														w += "<p> بدء العمل لموظف</p>";
+														w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+														w += "<hr>";
+													}else{
+														if(list[i][j]==="employeeJob"){
+															
+															w += "<p> اضافة وظيفة الى موظف</p>";
+															w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+															w += "<hr>";
+														}else{
+															if(list[i][j]==="employeeReturn"){
+																
+																w += "<p> عودة موظف من اجازة</p>";
+																w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																w += "<hr>";
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+							}
+					}else{
+						j=0;
+						for(j in list[i]){
+							console.log(i, j);
+							console.log(list[i][j]);
+					if(list[i][j]==="bonus"){
+						
+						w += "<p> اضافة بدل</p>";
+						w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+						w += "<hr>";
+					}else{
+						if(list[i][j]==="employee"){
+							
+							w += "<p> اضافة موظف</p>";
+							w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+							w += "<hr>";
+						}else{
+							if(list[i][j]==="grade"){
+								
+								w += "<p> اضافة مرتبة</p>";
+								w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+								w += "<hr>";
+						}else{
+								if(list[i][j]==="job"){
+									
+									w += "<p> اضافة وظيفة</p>";
+									w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+									w += "<hr>";
+								}else{
+									if(list[i][j]==="leave"){
+										
+										w += "<p> اضافة اجازة</p>";
+										w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+										w += "<hr>";
+									}else{
+										if(list[i][j]==="step"){
+											
+											w += "<p> اضافة درجة</p>";
+											w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+											w += "<hr>";
+										}else{
+											if(list[i][j]==="employeeBonus"){
+												
+												w += "<p> اضافة بدل لموظف</p>";
+												w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+												w += "<hr>";
+											}else{
+												if(list[i][j]==="employeeCommence"){
+													
+													w += "<p> بدء العمل لموظف</p>";
+													w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+													w += "<hr>";
+												}else{
+													if(list[i][j]==="employeeJob"){
+														
+														w += "<p> اضافة وظيفة الى موظف</p>";
+														w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+														w += "<hr>";
+													}else{
+														if(list[i][j]==="employeeReturn"){
+															
+															w += "<p> عودة موظف من اجازة</p>";
+															w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+															w += "<hr>";
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+						
+						}
+					}
+					
+				}
+				opt.innerHTML = w;
+				
+  	      }
+  	    };
+  	  }
+		
+		sendXHR("GET", "messages", null, function(response) {
+		breeds = JSON.parse(response);
+		});
+    });
+    </script> 
+    
+
+<div id="base"></div>
+<style>
+    #base {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; //height of the footer
+  box-sizing: border-box;
+}
+</style>
+
+ <div style="display: none">
+  <div id="home-header" >
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'hr:index' %}"> الموارد البشرية</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#home-navbarResponsive" aria-controls="home-navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+      <div class="collapse navbar-collapse" id="home-navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+             	
+            <li class="nav-item">
+            <a class="nav-link" href="staff_home">الموظفون</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="overtime_home">خارج الدوام</a>
+          </li>
+             <li class="nav-item">
+            <a class="nav-link" href="leave_home">الإجازات</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="job_home">الوظائف</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="grade_home">المراتب</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="department_home">الإدارات</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="pay_home">الرواتب</a>
+          </li>
+
+
+           
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+</div>
+
+
+<div style="display: none">
+   <div id="home-content">
+<div class="row">
+    <div class="col-md-2">
+             
+
+    </div>
+    <div class="col-md-8"><br><hr>
+              <div id="action">
+            <p>أهلا وسهلا بك في نظام الموارد البشرية! </p>
+        <p>أعد هذا النظام باعتباره نموذجا تجريبيا طور بالاستعانة بمنهجية النمذجة فائقة السرعة</p>
+        <br>
+            <h4>ملخص لمحتوى النظام</h4>
+        <hr>
+        <p>تحتوي قاعدة البيانات على التالي:</p>
+        <ul>
+                <li><b>عدد الموظفين:</b> {{num_of_staff}}</li>
+                <li><b> على رأس العمل:</b> {{num_on_vacation}}</li>
+
+                <li><b>متوسط أعمار الموظفين:</b> {{avg_age}}</li>
+
+                <li><b>عدد الوظائف:</b> {{num_of_jobs}}</li>
+                <li><b>عدد الوظائف المشغولة:</b> {{num_of_jobs}}</li>
+                <li><b>عدد الوظائف الشاغرة:</b> {{num_of_jobs}}</li>
+                
+        </ul>
+        <div style="background-color: lightyellow">
+        	<b>تحديثات النظام:</b>
+        	<div id="messages"></div>
+        </div>
+        </div>
+         
+    </div>
+    
+</div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</div>
+</div>
+
+
+<div style="display: none">
+   <div id="home-pagination">
+<div class="row">
+    <div class="col-md-3"></div>
+ <div class="col-md-8">
+     
+        <div class="home-pagination">
+            <span class="page-links">
+                
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">السابق</a> 
+                
+                <span class="page-current">
+                   
+                        {{ page_obj.number }} من صفحتين
+                   <br>
+                        {{ page_obj.number }} من {{ page_obj.paginator.num_pages }} صفحات
+                    <br>
+                        {{ page_obj.number }} من {{ page_obj.paginator.num_pages }} صفحة
+                    
+
+                </span>
+                
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">التالي</a>
+               
+            </span>
+        </div>
+        
+    
+ </div>
+</div>
+</div>
+</div>
+
+<script> 
+$(document).ready( function() {
+    setTimeout(function(){ $("#header").html($("#home-header").html()); }, 200);
+    setTimeout(function(){ $("#content").html($("#home-content").html()); }, 200);
+    setTimeout(function(){ $("#pagination").html($("#home-pagination").html()); }, 200);
+});
+    
+</script>
+</html>

@@ -1,0 +1,56 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#job_list").load("job_home");
+     setTimeout(function(){ $("#action-home").html($("#job-action").html()); }, 500);
+    });
+    </script> 
+<div id="job_list"></div>
+
+<div id="job-action" style="display: none">
+
+
+          <h4 align="right">دليل الوظائف</h4>
+<br>
+<div class="row" align="center">
+    <div class="col-md-1"></div>
+
+         <div class="col-md-3">
+الوظيفة
+             <hr>
+
+         </div>
+        <div class="col-md-3"> المؤهل
+            <hr>
+</div>
+        <div class="col-md-3 ">
+            سنوات الخبرة المطلوبة
+            <hr>
+
+        </div>
+</div>
+
+{% if job_list %}
+     {% for job in job_list %}
+<div class="row align-right">
+    <div class="col-md-1"></div>
+
+         <div class="col-md-3">
+        <a href="job_detail">{{job.title}}</a>
+        </div>
+        <div class="col-md-3"> {{job.degree_required}}</div>
+        <div class="col-md-3" align="center">{{job.years_experience}}</div>
+
+</div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا توجد وظائف حاليا</p>
+
+{% endif %}
+    {% endblock %}
+</div>
+</html>

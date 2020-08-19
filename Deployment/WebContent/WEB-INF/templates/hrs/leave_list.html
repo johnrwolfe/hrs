@@ -1,0 +1,37 @@
+<html dir="rtl" lang="AR">
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      $("#leave_list").load("leave_home");
+     setTimeout(function(){ $("#action-home").html($("#leave-action").html()); }, 500);
+    });
+    </script> 
+<div id="leave_list"></div>
+
+<div id="leave-action" style="display: none">
+
+
+          <h3 align="right">دليل الإجازات</h3>
+<br>
+{% if leave_list %}
+     {% for leave in leave_list %}
+<div class="row align-right">
+
+         <div class="col-md-3">
+        <a href="leave_detail">{{leave}} </a>
+        </div>
+        <div class="col-md-3"> {{leave.name}}</div>
+        <div class="col-md-3">{{leave.max_of_days}}</div>
+
+    </div>
+<br>
+    {%  endfor %}
+{% else %}
+    <p>لا يوجد إجازات حاليا</p>
+
+{% endif %}
+    {% endblock %}
+</div>
+</html>
