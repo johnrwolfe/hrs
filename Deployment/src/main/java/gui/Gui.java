@@ -563,8 +563,8 @@ public class Gui {
     	LocalDate d2 = LocalDate.parse(employeeBonus.end, DateTimeFormatter.ISO_LOCAL_DATE);
     	Duration diff1 = Duration.between(base.atStartOfDay(), d1.atStartOfDay());
     	Duration diff2 = Duration.between(base.atStartOfDay(), d2.atStartOfDay());
-    	int diffsecond1 = (int) diff1.toSeconds();
-    	int diffsecond2 = (int) diff2.toSeconds();
+    	int diffsecond1 = (int) diff1.getSeconds();
+    	int diffsecond2 = (int) diff2.getSeconds();
         server.sendSignal(new IOps.Employee_Bonus(employeeBonus.nid, employeeBonus.name, diffsecond1, diffsecond2, "NEW"));
         data.add(employeeBonus.nid+"/"+employeeBonus.name+"/"+employeeBonus.start+"/"+employeeBonus.end);
     	type.add("employeeBonus");
@@ -609,8 +609,8 @@ public class Gui {
     	LocalDate d2 = LocalDate.parse(leaveRequest.end, DateTimeFormatter.ISO_LOCAL_DATE);
     	Duration diff1 = Duration.between(base.atStartOfDay(), d1.atStartOfDay());
     	Duration diff2 = Duration.between(base.atStartOfDay(), d2.atStartOfDay());
-    	int diffsecond1 = (int) diff1.toSeconds();
-    	int diffsecond2 = (int) diff2.toSeconds();
+    	int diffsecond1 = (int) diff1.getSeconds();
+    	int diffsecond2 = (int) diff2.getSeconds();
     	System.out.println(diffsecond1);
     	System.out.println(diffsecond2);
         server.sendSignal(new IOps.Leave_Request(diffsecond1, diffsecond2, leaveRequest.nid, leaveRequest.leave));
