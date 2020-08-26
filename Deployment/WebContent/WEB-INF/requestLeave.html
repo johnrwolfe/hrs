@@ -43,10 +43,12 @@
                 <p>End Date:</p>
                 <input type="text" name="end" v-model="end"/>
                 <p id="NID">National ID:</p>
-                <input type="text" name="nid" v-model="nid"/>
+                <input type="text" name="NID" v-model="NID"/>
                 <p>Choose Leave</p>
-                <input type="text" name="leave" v-model="leave">
-				 
+                <input list="leaves" name="leave" id="leave">
+				  <datalist id="leaves">
+				  <option v-for="leave in leaves" :value="leave"/>
+				  </datalist>
                 <div class="button-panel">
                 <input class="button" type="submit"/>
                 </div>
@@ -61,7 +63,7 @@
      const signupForm = document.getElementById('signup-form');
      const startInput  = signupForm.querySelector('input[name=start]');
      const endInput  = signupForm.querySelector('input[name=end]');
-     const nidInput  = signupForm.querySelector('input[name=nid]');
+     const NIDInput  = signupForm.querySelector('input[name=NID]');
      const leaveInput  = signupForm.querySelector('input[name=leave]');
     //listen for the submit event
      signupForm.addEventListener('submit', processSignupForm);
@@ -70,11 +72,11 @@
 	
      const start =  startInput.value;
      const end =  endInput.value;
-     const nid =  nidInput.value;
+     const NID =  NIDInput.value;
      const leave =  leaveInput.value;
 
-     console.log({ start, end, nid, leave});
-     
+     console.log({ start, end, NID, leave});
+     alert('Processing!');
     }
 
    
@@ -85,7 +87,7 @@
       data: {
     	start: '',
     	end: '',
-    	nid: '',
+    	NID: '',
     	leave: '',
         errors: {
           name: false,
@@ -94,14 +96,14 @@
       },
       methods: {
         processForm: function() {
-          console.log({ start: this.start, end: this.end, nid: this.nid, leave: this.leave});
-          
+          console.log({ start: this.start, end: this.end, NID: this.NID, leave: this.leave});
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/saveLeaveRequest', {
     		    start: this.start,
     		    end: this.end,
-    		    nid: this.nid,
+    		    NID: this.NID,
     		    leave: this.leave
             })
         }

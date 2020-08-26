@@ -8,7 +8,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import shared.ICRUD;
+import java.util.ArrayList;
+import java.util.List;
+
+import interfaces.IData;
 
 /**
  * The <code>ApplicationConnection</code> is the connection to the underlying 
@@ -69,8 +72,18 @@ public class ApplicationConnection extends Thread {
                     // work out the data type of the incoming message
                     // and set the action (run()) to be carried out
                     switch (data.getId()) {
-                    case ICRUD.SIGNAL_NO_REPLY:
+                    case IData.SIGNAL_NO_REPLY:
                     	app.setReply( (String) data.get(0) );
+                    	break;
+                    case IData.SIGNAL_NO_SENDLEAVESPECIFICATION:
+                    	for(int i = 0; i < 4; i++)
+                    		app.setReply( (String) data.get(i) );
+                    	break;
+                    case IData.SIGNAL_NO_SENDEMPLOYEE:
+                    	List<String> employee = new ArrayList<String>();
+                    	for(int i = 0; i < 12; i++)
+                    		  employee.add( (String) data.get(i) );
+                    	app.setReplyList(employee);
                     	break;
                     default:
                         break;

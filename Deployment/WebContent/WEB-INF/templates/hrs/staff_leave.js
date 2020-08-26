@@ -1,3 +1,9 @@
+
+    
+    
+
+
+
 //plain javscript ==================================
      //grab the things we need
      const signupForm = document.getElementById('signup-form');
@@ -29,11 +35,17 @@
     	end: '',
     	nid: '',
     	leave: '',
+    	options: null,
         errors: {
           name: false,
           email: false
         }
       },
+      mounted () {
+    	    axios
+    	      .get('listLeave')
+    	      .then(response => (this.options = response.data))
+    	  },
       methods: {
         processForm: function() {
           console.log({ start: this.start, end: this.end, nid: this.nid, leave: this.leave});
@@ -51,3 +63,6 @@
         }
       }
     });
+    
+    
+   

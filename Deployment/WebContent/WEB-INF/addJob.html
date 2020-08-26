@@ -16,14 +16,14 @@
                 <input type="text" name="grade" v-model="grade">
                 <p>Amount:</p>
                 <input type="text" name="amount" v-model="amount">
-                <p>Name:</p>
-                <input type="text" name="name" v-model="name">
                 <p>Action</p>
                 <input list="actions" name="action" v-model="action">
                 <datalist id="actions">
 				  <option v-for="option in options" v-bind:value="option">
 				  </option>
 				</datalist>
+				<p>Name:</p>
+                <input type="text" name="name" v-model="name">
                 <div class="button-panel">
                 <input class="button" type="submit"/>
                 </div>
@@ -54,6 +54,7 @@
      const name =  nameInput.value;
 
      console.log({ step, grade, amount, action, name });
+     alert('Processing!');
     }
 
    
@@ -76,7 +77,7 @@
       methods: {
         processForm: function() {
           console.log({ step: this.step, grade: this.grade, amount: this.amount, action: this.action, name: this.name});
-          
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/saveJob', {

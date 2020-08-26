@@ -58,7 +58,7 @@
             <a class="nav-link" href="department_home">الإدارات</a>
           </li>
             <li class="nav-item">
-            <a class="nav-link" href="pay_home">الرواتب</a>
+            <a class="nav-link" href="pay_home">Payroll</a>
           </li>
 
 
@@ -85,6 +85,7 @@
                 <br>
                 <br>
                 <li><a href="staff_bonus_list">استعراض بدلات الموظفين</a></li>
+                <li><a href="staff_bonus_form">اضافة بدل لموظف</a></li>
         </ul>
         
          </div>
@@ -96,10 +97,14 @@
                 <input type="text" name="start" v-model="start"/>
                 <p>تاريخ الانتهاء:</p>
                 <input type="text" name="end" v-model="end"/>
-                <p id="NID">رقم الهوية الوطنية/رقم الاقامة:</p>
+                <p id="NID">الرقم الوظيفي:</p>
                 <input type="text" name="nid" v-model="nid"/>
                 <p>اسم الاجازة:</p>
-                <input type="text" name="leave" v-model="leave">
+                <input list="leaves" name="leave" v-model="leave">
+                <datalist id="leaves">
+				  <option v-for="option in options" v-bind:value="option">
+				  </option>
+				  </datalist>
                 <div>
                 <br><br>
      			<input type="submit" value="ارسل">

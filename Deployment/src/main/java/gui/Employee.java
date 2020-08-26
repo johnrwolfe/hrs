@@ -1,10 +1,13 @@
 package gui;
 
 public class Employee {
-		public String fname;
-		public String lname;
-		public int nid;
-		public String action;
-	
+	public int employeeID;
+	public int nationalID;
+	public String firstName;
+	public String middleName;
+	public String lastName;
+	public int dateOfBirth;
+	public String degree;
+	public String gender; 
 
 }

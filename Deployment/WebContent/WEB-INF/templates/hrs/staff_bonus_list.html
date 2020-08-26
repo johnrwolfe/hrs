@@ -2,18 +2,76 @@
 <meta charset="utf-8">
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script> 
-    $(function(){
-      $("#staff_list").load("staff_home");
-     setTimeout(function(){ $("#action-home").html($("#staff-action").html()); }, 500);
-    });
-    </script> 
-<div id="staff_list"></div>
 
-<div id="staff-action" style="display: none">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 
 
-          <h3 align="right">بدلات الموظفين</h3>
+   
+<link id="bootstrapcss" href="bootstrap" rel="stylesheet">
+    <link id="headercss" href="headercss" rel="stylesheet">
+   	<link id="stylecss" href="stylecss" rel="stylesheet">
+  
+ 
+<div id="app">
+  <mynavbar></mynavbar>
+  <myheader id="header"></myheader>
+  <myjs id="js"></myjs>
+  <mycontent id="content"></mycontent>
+  <mypagination id="pagination"></mypagination>
+  <myfooter id="footer"></myfooter>
+  </div>
+  
+  <script src='homejs'></script>
+  
+<style>
+    #app {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; //height of the footer
+  box-sizing: border-box;
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  color:white;
+  width: 100%;
+}
+</style>
+
+
+
+    <div  style="display: none">
+    <div   id="content_links">
+    <div class="row">
+    <div class="col-md-2">
+         
+            <ul class="list-unstyled">
+                <br> <br> <br>
+
+                <li><a href="hrs">الرئيسية</a></li>
+                <br>
+                <li><a href="staff_list">استعراض الموظفين</a></li>
+                <li><a href="staff_form">إضافة موظف</a> </li>
+                 <li><a href="staff_commence">بدء موظف</a> </li>
+                 <li><a href="staff_leave">طلب اجازة</a> </li>
+                 <li><a href="staff_return">عودة الموظف من الاجازة</a> </li>
+                <br>
+                <br>
+                <li><a href="staff_bonus_list">استعراض بدلات الموظفين</a></li>
+                <li><a href="staff_bonus_form">اضافة بدل لموظف</a></li>
+        </ul>
+        
+         </div>
+    <div class="col-md-8"><br><hr>
+         
+              <div id="action-home">
+              		
+        <h3 align="right">بدلات الموظفين</h3>
 <br>
 {% if staff_bonus_list %}
      {% for staff_bonus in staff_bonus_list %}
@@ -37,6 +95,22 @@
 
 {% endif %}
     {% endblock %}
-
-</div>
+              </div>
+              <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+              <script class="vue"></script>
+              
+    </div>
+    </div>
+    </div>
+    </div>
+     <script> 
+    $(function(){
+      $("#content").html($("#content_links").html());
+    });
+    </script> 
+    
 </html>
+
+
+
+

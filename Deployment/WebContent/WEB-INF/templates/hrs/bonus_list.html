@@ -2,19 +2,71 @@
 <meta charset="utf-8">
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script> 
-    $(function(){
-      $("#bonus_list").load("grade_home");
-     setTimeout(function(){ $("#action-home").html($("#bonus-action").html()); }, 500);
-    });
-    </script> 
-<div id="bonus_list"></div>
+  
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  
+  
+<link id="bootstrapcss" href="bootstrap" rel="stylesheet">
+    <link id="headercss" href="headercss" rel="stylesheet">
+   	<link id="stylecss" href="stylecss" rel="stylesheet">
+  
+<div id="app">
+  <mynavbar></mynavbar>
+  <myheader id="header"></myheader>
+  <myjs id="js"></myjs>
+  <mycontent id="content"></mycontent>
+  <mypagination id="pagination"></mypagination>
+  <myfooter id="footer"></myfooter>
+  </div>
+  
+  <script src='homejs'></script>
+  
+<style>
+    #app {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; //height of the footer
+  box-sizing: border-box;
+}
 
-<div id="bonus-action" style="display: none">
 
-{% block action %}
+#footer {
+  position: absolute;
+  bottom: 0;
+  color:white;
+  width: 100%;
+}
+</style>
 
-          <h3 align="right"> قائمة البدلات</h3>
+
+
+<div  style="display: none">
+    <div   id="content_links">
+    <div class="row">
+    <div class="col-md-2">
+        
+            <ul class="list-unstyled">
+                <br> <br> <br>
+
+                <li><a href="hrs">الرئيسية</a></li>
+                <br>
+                <li><a href="grade_list">استعراض المراتب</a> </li>
+                <li><a href="grade_form">استحداث مرتبة</a> </li>
+                <br>
+                <li><a href="step_form">استحداث درجة</a> </li>
+                <br>
+                <li><a href="bonus_list">استعراض البدلات</a> </li>
+                <li><a href="bonus_form">استحداث بدل</a> </li>
+        </ul>
+       
+    </div>
+        <div class="col-md-8"><br><hr>
+         
+              <div id="action-home">
+        	 <h3 align="right"> قائمة البدلات</h3>
 <br>
 {% if bonus_list %}
      {% for bonus in bonus_list %}
@@ -43,5 +95,18 @@
 
 {% endif %}
     {% endblock %}
-</div>
+              </div>
+        </div>
+    
+    </div>
+    </div>
+    </div>
+     <script> 
+    $(function(){
+      $("#content").html($("#content_links").html());
+    });
+    </script> 
+    
+    
 </html>
+

@@ -13,7 +13,7 @@
                 <p>National ID:</p>
                 <input type="text" name="nid" v-model="nid"/>
                 <p>Bonus Name:</p>
-                <input type="text" name="name" v-model="name"/>
+                <input type="text" name="bonusname" v-model="bonusname"/>
                 <p>Start:</p>
                 <input type="text" name="start" v-model="start"/>
                 <p>End:</p>
@@ -37,7 +37,7 @@
      //grab the things we need
      const signupForm = document.getElementById('signup-form');
      const nidInput  = signupForm.querySelector('input[name=nid]');
-     const nameInput  = signupForm.querySelector('input[name=name]');
+     const bonusnameInput  = signupForm.querySelector('input[name=bonusname]');
      const startInput  = signupForm.querySelector('input[name=start]');
      const endInput  = signupForm.querySelector('input[name=end]');
      const actionInput  = signupForm.querySelector('input[name=action]');
@@ -47,12 +47,13 @@
      e.preventDefault();
 
      const nid =  nidInput.value;
-     const name =  nameInput.value;
+     const bonusname =  bonusnameInput.value;
      const start =  actionInput.value;
      const end =  endInput.value;
      const action =  actionInput.value;
 
-     console.log({ nid, name});
+     console.log({ nid, bonusname});
+     alert('Processing!');
     }
 
    
@@ -62,7 +63,7 @@
       el: '#signup-form',
       data: {
     	nid: '',
-    	name: '',
+    	bonusname: '',
     	start: '',
     	end:'',
     	action: '',
@@ -74,13 +75,13 @@
       },
       methods: {
         processForm: function() {
-          console.log({ nid: this.nid, name: this.name, start: this.start, end: this.end, action: this.action});
-          
+          console.log({ nid: this.nid, bonusname: this.bonusname, start: this.start, end: this.end, action: this.action});
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/saveEmployeeBonus', {
     		    nid: this.nid,
-    		    name: this.name,
+    		    bonusname: this.bonusname,
     		    start: this.start,
     		    end: this.end,
     		    action: this.action

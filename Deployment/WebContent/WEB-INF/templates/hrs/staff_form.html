@@ -14,10 +14,17 @@
    
   
     <style>
+      body {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; //height of the footer
+  box-sizing: border-box;
+}
    
 #footer {
   position: absolute;
-  bottom: 54;
+  bottom: 0;
   color:white;
   width: 100%;
 }
@@ -36,29 +43,29 @@
     <span class="navbar-toggler-icon"></span>
   </button>
       <div class="collapse navbar-collapse" id="home-navbarResponsive">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto" id="navlist">
              	
-            <li class="nav-item">
+            <li class="nav-item" v-if="a">
             <a class="nav-link" href="staff_home">الموظفون</a>
           </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="b">
             <a class="nav-link" href="overtime_home">خارج الدوام</a>
           </li>
-             <li class="nav-item">
+             <li class="nav-item" v-if="a">
             <a class="nav-link" href="leave_home">الإجازات</a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item" v-if="a">
             <a class="nav-link" href="job_home">الوظائف</a>
           </li>
-           <li class="nav-item">
+           <li class="nav-item" v-if="a">
             <a class="nav-link" href="grade_home">المراتب</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="b">
             <a class="nav-link" href="department_home">الإدارات</a>
           </li>
-            <li class="nav-item">
-            <a class="nav-link" href="pay_home">الرواتب</a>
+            <li class="nav-item" v-if="a">
+            <a class="nav-link" href="pay_home">Payroll</a>
           </li>
 
 
@@ -90,15 +97,32 @@
         
          </div>
     <div class="col-md-8"><br><hr>
-         
               <div id="action-home">
               	<form id="signup" @submit.prevent="processForm" @submit="submitProduct">
-  			 	<p>الاسم الاول:</p>
-                <input type="text" name="fname" v-model="fname"/><br><br>
-                <p>الاسم الاخير:</p>
-                <input type="text" name="lname" v-model="lname"/><br><br>
+  			 	<p>الرقم الوظيفي:</p>
+                <input type="text" name="employeeID" v-model="employeeID"/><br><br>
                 <p>رقم الهوية الوطنية/رقم الاقامة:</p>
-                <input type="text" name="nid" v-model="nid"/>
+                <input type="text" name="nid" v-model="nationalID"/><br><br>
+  			 	<p>الاسم الاول:</p>
+                <input type="text" name="firstName" v-model="firstName"/><br><br>
+                <p>الاسم الثاني:</p>
+                <input type="text" name="middleName" v-model="middleName"/><br><br>
+                <p>الاسم الاخير:</p>
+                <input type="text" name="lastName" v-model="lastName"/><br><br>
+                <p>تاريخ الميلاد:</p>
+                <input type="text" name="dateOfBirth" v-model="dateOfBirth"/><br><br>
+                <p>الدرجة العلمية:</p>
+                <input list="degrees" name="degree" v-model="degree"/><br><br>
+                <datalist id="degrees">
+				  <option v-for="option in options" v-bind:value="option">
+				  </option>
+				  </datalist>
+                <p>الجنس:</p>
+                <input list="genders" name="gender" v-model="gender"/><br><br>
+                <datalist id="genders">
+				  <option v-for="select in selects" v-bind:value="select">
+				  </option>
+				  </datalist>
                 <div>
                 <br><br>
      			<input type="submit" value="ارسل">
@@ -144,7 +168,15 @@
 </div>
 
      		<script src='basejs'></script>	 
-
+			<script>
+			var con = new Vue({
+			    el:'#navlist',
+			    data: {
+			        a: true,
+			        b: false
+			    }
+			  })
+			</script>
 
 
 </html>

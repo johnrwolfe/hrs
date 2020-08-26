@@ -1,6 +1,7 @@
 const signupForm = document.getElementById('signup-form');
      const nameInput  = signupForm.querySelector('input[name=name]');
      const maximumDaysInput  = signupForm.querySelector('input[name=maximumDays]');
+     const minimumDaysInput  = signupForm.querySelector('input[name=minimumDays]');
 
     //listen for the submit event
      signupForm.addEventListener('submit', processSignupForm);
@@ -9,8 +10,9 @@ const signupForm = document.getElementById('signup-form');
 
      const name =  nameInput.value;
      const maximumDays =  maximumDaysInput.value;
-
-     console.log({ name, maximumDays});
+     const minimumDays =  minimumDaysInput.value;
+     
+     console.log({ name, maximumDays, minimumDays});
     }
 
    
@@ -21,6 +23,7 @@ const signupForm = document.getElementById('signup-form');
       data: {
     	name: '',
     	maximumDays: '',
+    	minimumDays: '',
         errors: {
           name: false,
           email: false
@@ -28,12 +31,13 @@ const signupForm = document.getElementById('signup-form');
       },
       methods: {
         processForm: function() {
-          console.log({ name: this.name, maximumDays: this.maximumDays});
+          console.log({ name: this.name, maximumDays: this.maximumDays, minimumDays: this.minimumDays });
         },
       submitProduct: function () {
     	  axios.post('saveLeave', {
     		    name: this.name,
-    		    maximumDays: this.maximumDays
+    		    maximumDays: this.maximumDays,
+    		    minimumDays: this.minimumDays
             }).then(response => {
                 window.location.href = 'hrs';
             })

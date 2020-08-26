@@ -33,6 +33,7 @@
      const nid =  nidInput.value;
 
      console.log({ nid});
+     alert('Processing!');
     }
 
    
@@ -50,6 +51,7 @@
       methods: {
         processForm: function() {
           console.log({ nid: this.nid});
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/requestEmployeePayment', {

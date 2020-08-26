@@ -12,7 +12,7 @@
             <form id="signup-form" @submit.prevent="processForm" @submit="submitProduct">
                <p>Bonus Name:</p>
                 <input type="text" name="name" v-model="name"/>
-                 <p>Percentage:</p>
+                 <p>Amount:</p>
                 <input type="text" name="amount" v-model="amount"/>
                 <p>Action</p>
                 <input list="actions" name="action" v-model="action">
@@ -46,6 +46,7 @@
      const action =  actionInput.value;
 
      console.log({ name, amount, action });
+     alert('Processing!');
     }
 
    
@@ -66,6 +67,7 @@
       methods: {
         processForm: function() {
           console.log({ name: this.name, amount: this.amount, action: this.action});
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/saveBonus', {

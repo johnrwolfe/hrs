@@ -49,7 +49,7 @@
      const action =  actionInput.value;
 
      console.log({ fname, lname, nid, action });
-     
+     alert('Processing!');
     }
 
    
@@ -71,7 +71,7 @@
       methods: {
         processForm: function() {
           console.log({ fname: this.fname, lname: this.lname, nid: this.nid, action: this.action});
-          
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/saveEmployee', {

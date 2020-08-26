@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 import com.sun.jersey.api.view.Viewable;
 
-import shared.ICRUD;
+import interfaces.IData;
 import shared.IOps;
 import io.ciera.runtime.summit.interfaces.IMessage;
 
@@ -44,6 +44,7 @@ public class Gui {
 	
 	List<String> data = new ArrayList<String>();
 	List<String> type = new ArrayList<String>();
+	List<String> leaves = new ArrayList<String>();
    
     ApplicationConnection server = null;
     ConnectionHandler connHandler = null;
@@ -70,7 +71,7 @@ public class Gui {
 		 i++;
 		 
 		 try {
-			 Runtime.getRuntime().exec(new String[]{"sh","/Users/feras/Desktop/untitled folder 5/hrm-master/run.sh"});
+			 Runtime.getRuntime().exec(new String[]{"sh","/run.sh"});
 			
 			 
 		 }catch(Exception e) {
@@ -123,6 +124,13 @@ public class Gui {
     @Produces({MediaType.TEXT_HTML})
     public InputStream hrs() {
     	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/home.html");
+    }
+    
+    @GET
+    @Path("/homejs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream homejs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/home.js");
     }
     
     @GET
@@ -462,112 +470,63 @@ public class Gui {
     	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/job_to_staff_form.js");
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    @POST
-   	@Path("/saveBonus")
-   	@Consumes(MediaType.APPLICATION_JSON)
-    public InputStream saveBonus(Bonus bonus) {
-    	//String name = Name;
-    	//int amount = Integer.parseInt(Amount);
-    	//String action =Action;
-    	server.sendSignal(new ICRUD.Bonus( bonus.name, bonus.amount , "NEW"));
-    	data.add(bonus.name+"/"+bonus.amount);
-    	type.add("bonus");
-    	return servletContext.getResourceAsStream("/WEB-INF/home.html");
+    @GET
+    @Path("/pay_home")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream pay_home() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/pay_home.html");
     }
-	
+    
+    @GET
+    @Path("/pay_list")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream pay_list() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/pay_list.html");
+    }
+    
+    @GET
+    @Path("/payjs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream payjs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/pay.js");
+    }
+    
+    @GET
+    @Path("/login")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream login() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/login.html");
+    }
+    
+    @GET
+    @Path("/loginjs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream loginjs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs/login.js");
+    }
+    
+    
     @POST
 	@Path("/saveEmployee")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public InputStream saveEmploye(Employee employee) {
-		//String FName = fName;
-		//String LName = lName;
-		//int nID = Integer.parseInt(NID);
-		//String action = Action;
-        server.sendSignal(new ICRUD.Employee( employee.fname, employee.lname , employee.nid, "NEW" ));
-        data.add(employee.fname+"/"+employee.lname+"/"+employee.nid);
+		
+        server.sendSignal(new IData.CreateEmployee(employee.employeeID, employee.nationalID, employee.firstName, employee.middleName, employee.lastName, employee.dateOfBirth, employee.degree, employee.gender));
+        data.add(employee.employeeID+"/"+employee.nationalID+"/"+employee.firstName+"/"+employee.middleName+"/"+employee.lastName+"/"+employee.dateOfBirth+"/"+employee.degree+"/"+employee.gender);
     	type.add("employee");
 		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
 	} 
     
-    @POST
-  	@Path("/saveGrade")
-  	@Consumes(MediaType.APPLICATION_JSON)
-  	public InputStream saveGrade(Grade grade) {
-  		//int value = Integer.parseInt(Value);
-  		//String action = Action;
-        server.sendSignal(new ICRUD.Grade( grade.value, "NEW" ));
-        data.add(grade.value + "");
-    	type.add("grade");
-  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
-  	} 
-      
-    @POST
-  	@Path("/saveJob")
-  	@Consumes(MediaType.APPLICATION_JSON)
-  	public InputStream saveJob(Job job) {
-  		//int step = Integer.parseInt(Step);
-  		//int grade = Integer.parseInt(Grade);
-    	//int amount = Integer.parseInt(Amount);
-  		//String action = Action;
-  		//String name = Name;
-        server.sendSignal(new ICRUD.Job(job.step, job.grade, job.amount, job.name, "NEW"));
-        data.add(job.step+"/"+job.grade+"/"+job.amount+"/"+job.name);
-    	type.add("job");
-  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
-  	} 
-      
+    
     @POST
   	@Path("/saveLeave")
   	@Consumes(MediaType.APPLICATION_JSON)
   	public InputStream saveLeave(Leave leave) {
-  		//String name = Name;
-    	//int maxDays = Integer.parseInt(MaxDays);
-  		//String action = Action;
-        server.sendSignal(new ICRUD.Leave(leave.name, leave.maximumDays, "NEW"));
-        data.add(leave.name+"/"+leave.maximumDays);
+  		
+        server.sendSignal(new IData.CreateLeaveSpecification(leave.name, leave.maximumDays, leave.minimumDays));
+        data.add(leave.name+"/"+leave.maximumDays+"/"+leave.minimumDays);
     	type.add("leave");
-  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
-  	} 
-   
-   
-    
-    @POST
-  	@Path("/saveStep")
-  	@Consumes(MediaType.APPLICATION_JSON)
-  	public InputStream saveStep(Step step) {
-    	//int value = Integer.parseInt(Value);
-  		//String action = Action;
-        server.sendSignal(new ICRUD.Step(step.value, "NEW"));
-        data.add(step.value+"");
-    	type.add("step");
-  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
-  	} 
-    
-    @POST
-  	@Path("/saveEmployeeBonus")
-  	@Consumes(MediaType.APPLICATION_JSON)
-  	public InputStream saveEmployeeBonus(EmployeeBonus employeeBonus) {
-    	//int nid = Integer.parseInt(Nid);
-  		//String bonusname = Bonusname;
-    	LocalDate base = LocalDate.parse("1970-01-01", DateTimeFormatter.ISO_LOCAL_DATE);
-    	LocalDate d1 = LocalDate.parse(employeeBonus.start, DateTimeFormatter.ISO_LOCAL_DATE);
-    	LocalDate d2 = LocalDate.parse(employeeBonus.end, DateTimeFormatter.ISO_LOCAL_DATE);
-    	Duration diff1 = Duration.between(base.atStartOfDay(), d1.atStartOfDay());
-    	Duration diff2 = Duration.between(base.atStartOfDay(), d2.atStartOfDay());
-    	int diffsecond1 = (int) diff1.getSeconds();
-    	int diffsecond2 = (int) diff2.getSeconds();
-        server.sendSignal(new IOps.Employee_Bonus(employeeBonus.nid, employeeBonus.name, diffsecond1, diffsecond2, "NEW"));
-        data.add(employeeBonus.nid+"/"+employeeBonus.name+"/"+employeeBonus.start+"/"+employeeBonus.end);
-    	type.add("employeeBonus");
+    	leaves.add(leave.name);
   		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
   	} 
     
@@ -575,35 +534,21 @@ public class Gui {
   	@Path("/saveEmployeeCommence")
   	@Consumes(MediaType.APPLICATION_JSON)
   	public InputStream saveEmployeeCommence(EmployeeCommence employeeCommence) {
-    	//int nid = Integer.parseInt(Nid);
+    	
     	int x = employeeCommence.nid;
     	System.out.println(employeeCommence.nid);
     	System.out.println(x);
-        server.sendSignal(new IOps.Employee_Commence(employeeCommence.nid));
+        server.sendSignal(new IOps.CommenceEmployee(employeeCommence.nid));
         data.add(employeeCommence.nid+"");
     	type.add("employeeCommence");
   		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
   	} 
-    
-    @POST
-  	@Path("/saveEmployeeJob")
-  	@Consumes(MediaType.APPLICATION_JSON)
-  	public InputStream saveEmployeeJob(EmployeeJob employeeJob) {
-    	//int nid = Integer.parseInt(Nid);
-        server.sendSignal(new IOps.Employee_Job(employeeJob.job, employeeJob.nid, "NEW", true));
-        data.add(employeeJob.job+"/"+employeeJob.nid);
-    	type.add("employeeJob");
-  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
-  	} 
-    
+   
     @POST
   	@Path("/saveLeaveRequest")
   	@Consumes(MediaType.APPLICATION_JSON)
   	public InputStream saveLeaveRequest(LeaveRequest leaveRequest) {
-    	//String start = Start;
-    	//String end = End;
-    	//int nid = Integer.parseInt(NID);
-    	//String leave = Leave;
+    	
     	LocalDate base = LocalDate.parse("1970-01-01", DateTimeFormatter.ISO_LOCAL_DATE);
     	LocalDate d1 = LocalDate.parse(leaveRequest.start, DateTimeFormatter.ISO_LOCAL_DATE);
     	LocalDate d2 = LocalDate.parse(leaveRequest.end, DateTimeFormatter.ISO_LOCAL_DATE);
@@ -613,33 +558,15 @@ public class Gui {
     	int diffsecond2 = (int) diff2.getSeconds();
     	System.out.println(diffsecond1);
     	System.out.println(diffsecond2);
-        server.sendSignal(new IOps.Leave_Request(diffsecond1, diffsecond2, leaveRequest.nid, leaveRequest.leave));
+        server.sendSignal(new IOps.RequestEmployeeLeave(diffsecond1, diffsecond2, leaveRequest.nid, leaveRequest.leave));
         data.add(leaveRequest.start+"/"+leaveRequest.end+"/"+leaveRequest.nid+"/"+leaveRequest.leave);
     	type.add("leaveRequest");
   		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
   	} 
     
-    @POST
-  	@Path("/saveLeaveReturn")
-  	@Consumes(MediaType.APPLICATION_JSON)
-  	public InputStream saveLeaveReturn(EmployeeReturn employeeReturn) {
-    	//int nid = Integer.parseInt(NID);
-        server.sendSignal(new IOps.Leave_Return(employeeReturn.nid));
-        data.add(employeeReturn.nid+"");
-    	type.add("employeeReturn");
-  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
-  	} 
     
-    @POST
-  	@Path("/requestEmployeePayment")
-  	@Consumes(MediaType.APPLICATION_JSON)
-  	public InputStream saveLeaveReturn(EmployeePayment employeePayment) {
-    	//int nid = Integer.parseInt(NID);
-        server.sendSignal(new IOps.Request_Employee_Payment(employeePayment.nid));
-        data.add(employeePayment.nid+"");
-    	type.add("employeePayment");
-  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
-  	} 
+    
+   
     
     @GET
   	@Path("/messages")
@@ -664,19 +591,18 @@ public class Gui {
 			 
 			 
 		
-    	server.sendSignal(new ICRUD.Employee("Ahmed", "Fahad", 1111, "NEW"));
+    	server.sendSignal(new IData.CreateEmployee(10, 1011, "Ahmed", "Saud", "Fahad", 1995, "Software", "Male"));
     	Thread.sleep(5000);
-    	server.sendSignal(new IOps.Employee_Commence(1111));
+    	server.sendSignal(new IData.CreateEmployee(10, 1012, "Khalid", "Aziz", "Tariq", 1996, "Engineer", "Male"));
     	Thread.sleep(5000);
-    	server.sendSignal(new ICRUD.Grade(1, "NEW"));
+    	server.sendSignal(new IOps.CommenceEmployee(1011));
     	Thread.sleep(5000);
-    	server.sendSignal(new ICRUD.Step(1000, "NEW"));
+    	server.sendSignal(new IOps.CommenceEmployee(1012));
     	Thread.sleep(5000);
-    	server.sendSignal(new ICRUD.Job(1000, 1, 500, "Developer", "NEW"));
+    	server.sendSignal(new IData.ReadEmployeeList());
     	Thread.sleep(5000);
-    	server.sendSignal(new IOps.Employee_Job(1, 1111, "NEW", true));
-    	Thread.sleep(5000);
-    	server.sendSignal(new IOps.Request_Employee_Payment(1111));
+    	all.clear();
+    	System.out.println(all);
     	 }catch(Exception e) {
 			 i = 0;
 			 System.out.print(e.getMessage());
@@ -685,59 +611,23 @@ public class Gui {
     	return servletContext.getResourceAsStream("/WEB-INF/allEmployees.html");
     }
     
-	@GET
-	@Path("/listLeave")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response allLeave() {
-		ArrayList<String> name = new ArrayList<>();
-		try {
-			 Connection conn = null;
-			 Statement stmt = null;
-			 Class.forName("com.mysql.jdbc.Driver");
-		     conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/HR", "root", "Feras123h");
-			 stmt = conn.createStatement();
-			 ResultSet rs = stmt.executeQuery("SELECT * FROM LISTOFLEAVES ");
-			 while(rs.next()) {
-				 name.add(rs.getString("name"));
-				 System.out.println(rs.getString("name"));
-			 }
-			 
-			 //System.out.println(name);
-			 //JSONObject list = new JSONObject();
-			 //list.put("name", name);
-			// System.out.println(list.toString());
-			 return Response.ok(name).build();
-		}catch(Exception e) {
-			System.out.print(e.getMessage());
-		}
-		return Response.ok().build();
-	}
-	
 	
 
 	@GET
 	@Path("/listEmployees")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listEmployees() {
-		ArrayList<ArrayList> employees = new ArrayList<>();
+		List<List<String>> employees = new ArrayList<>();
 		try {
-			Connection conn = null;
-			 Statement stmt = null;
-			 Class.forName("com.mysql.jdbc.Driver");
-		     conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/HR", "root", "Feras123h");
-			 stmt = conn.createStatement();
-			 ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEE ");
-			 while(rs.next()) {
-				 ArrayList<String> employee = new ArrayList<>();
-				 employee.add(""+rs.getInt("id"));
-				 employee.add(rs.getString("first"));
-				 employee.add(rs.getString("last"));
-				 employee.add(rs.getString("state"));
-				 employees.add(employee);
-				 //System.out.println(employee);
-				 //System.out.println(employees);
-			 }
-			 return Response.ok(employees).build();
+			server.sendSignal(new IData.ReadEmployeeList());
+			Thread.sleep(1000);
+			int counter = all.size();
+			for(int i = 0; i < counter; i++)
+				employees.add(all.get(i));
+			all.clear();
+			System.out.println(employees);
+			return Response.ok(employees).build();
+			
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -749,7 +639,11 @@ public class Gui {
 	public void setReply(String m) {
 		reply = m;
 	}
-	
+
+	List<List<String>> all = new ArrayList<List<String>>();
+	public void setReplyList(List<String> data) {
+		all.add(data);
+	}
 	public String getReply() {
 		return reply;
 	}

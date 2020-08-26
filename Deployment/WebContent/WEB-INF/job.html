@@ -45,6 +45,7 @@
      const action =  actionInput.value;
 
      console.log({ job, nid, action});
+     alert('Processing!');
     }
 
    
@@ -65,7 +66,7 @@
       methods: {
         processForm: function() {
           console.log({ job: this.job, nid: this.nid, action: this.action, });
-          
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/saveEmployeeJob', {

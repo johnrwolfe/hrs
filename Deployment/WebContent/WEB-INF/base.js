@@ -34,7 +34,8 @@ Vue.component('mynavbar', {
           '<li class="nav-item">'+
             '<a class="nav-link" href="{% url '+'initiative:index'+' %}">المبادرات</a>'+
           '</li>'+
-             '<li class="nave-item"><a class="nav-link" href="{% url '+'log:logout'+' %}"> للخروج   </a></li>'+
+             '<li class="nave-item"><a class="nav-link" href="login"> تسجيل دخول   </a></li>'+
+
                          
 
            
@@ -74,6 +75,25 @@ Vue.component('mynavbar', {
 '</div>'
   });
 
+  
+  
+  Vue.component('myheader',{
+	  template: '<div id="header"></div>'
+  });
+  
+  Vue.component('myjs',{
+	  template: '<div id="js"></div>'
+  });
+  
+  Vue.component('mycontent',{
+	  template: '<div id="content"></div>'
+  });
+
+  Vue.component('mypagination',{
+	  template: '<div id="pagination"></div>'
+  });
+  
+  
   var app = new Vue({
     el:'#app'
   })

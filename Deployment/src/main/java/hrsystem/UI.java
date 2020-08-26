@@ -35,8 +35,9 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 //import ui.shared.IEP;
-import shared.ICRUD;
+
 import shared.IOps;
+import interfaces.IData;
 
 
 public class UI extends Component<UI> {
@@ -62,7 +63,7 @@ public class UI extends Component<UI> {
     
        if (requester != null) {
             try {
-                requester.sendMessage(new ICRUD.Reply(p_msg, p_state));
+                requester.sendMessage(new IData.Reply(p_msg, p_state));
             } catch ( IOException e ) {
                 LOG().LogInfo("Connection lost.");
                 requester.tearDown();
@@ -72,6 +73,34 @@ public class UI extends Component<UI> {
         
     }
 
+    public void SendLeaveSpecification( final String p_Name,  final int p_MaximumDays,  final int p_MinimumDays,  final int p_Size ) throws XtumlException {
+    
+        if (requester != null) {
+             try {
+                 requester.sendMessage(new IData.SendLeaveSpecification( p_Name, p_MaximumDays, p_MinimumDays, p_Size ));
+             } catch ( IOException e ) {
+                 LOG().LogInfo("Connection lost.");
+                 requester.tearDown();
+                 requester = null;
+             }
+         }
+         
+     }
+
+
+     public void SendEmployee( final int p_EmployeeID,  final int p_NationalID,  final String p_FirstName,  final String p_MiddleName,  final String p_LastName,  final int p_DateOfBirth,  final String p_Degree,  final String p_Gender,  final int p_StartDate,  final int p_LeaveBalance,  final int p_SickLeaveBalance,  final int p_Size ) throws XtumlException {
+    
+        if (requester != null) {
+             try {
+                 requester.sendMessage(new IData.SendEmployee(p_EmployeeID, p_NationalID, p_FirstName, p_MiddleName, p_LastName, p_DateOfBirth, p_Degree, p_Gender, p_StartDate, p_LeaveBalance, p_SickLeaveBalance, p_Size ));
+             } catch ( IOException e ) {
+                 LOG().LogInfo("Connection lost.");
+                 requester.tearDown();
+                 requester = null;
+             }
+         }
+         
+     }
 
 
     // relates and unrelates
@@ -163,51 +192,57 @@ public class UI extends Component<UI> {
  public void listen() throws XtumlException {
         String signal_no = poll();
         switch (signal_no) {
-        case "Bonus":
-            App().Bonus((String) requester.message.get(0), Double.parseDouble((String) requester.message.get(1)), (String) requester.message.get(2));
-            break;
-        case "Employee":
-            App().Employee((String) requester.message.get(0), (String) requester.message.get(1), Integer.parseInt((String) requester.message.get(2)), (String) requester.message.get(3));
-            break;
-        case "Grade":
-            App().Grade(Integer.parseInt((String) requester.message.get(0)), (String) requester.message.get(1));
-            break;
-        case "Job":
-            App().Job(Integer.parseInt((String) requester.message.get(0)), Integer.parseInt((String) requester.message.get(1)), Double.parseDouble((String) requester.message.get(2)), (String) requester.message.get(3), (String) requester.message.get(4));
-            break;
-        case "Leave":
-            App().Leave((String) requester.message.get(0), Integer.parseInt((String) requester.message.get(1)), (String) requester.message.get(2));
-            break;
-        case "Payment":
-            App().Payment();
-            break;
-        case "Step":
-            App().Step(Integer.parseInt((String) requester.message.get(0)), (String) requester.message.get(1));
+        case "SendLeaveSpecification":
+        	App().SendLeaveSpecification( (String) requester.message.get(0), Integer.parseInt((String) requester.message.get(1)),  Integer.parseInt((String) requester.message.get(2)), Integer.parseInt((String) requester.message.get(3)));
             break;
         case "Reply":
-            App().Reply((String) requester.message.get(0), Boolean.parseBoolean((String) requester.message.get(1)));
+        	App().Reply( (String) requester.message.get(0), Boolean.parseBoolean((String) requester.message.get(1)) );
             break;
-        case "Employee_Bonus":
-            AppOps().Employee_Bonus(Integer.parseInt((String) requester.message.get(0)), (String) requester.message.get(1), Integer.parseInt((String) requester.message.get(2)), Integer.parseInt((String) requester.message.get(3)), (String) requester.message.get(4));    
+        case "SendEmployee":
+        	App().SendEmployee( Integer.parseInt((String) requester.message.get(0)),  Integer.parseInt((String) requester.message.get(1)),  (String) requester.message.get(2),  (String) requester.message.get(3),  (String) requester.message.get(4),  Integer.parseInt((String) requester.message.get(5)),  (String) requester.message.get(6),  (String) requester.message.get(7),  Integer.parseInt((String) requester.message.get(8)),  Integer.parseInt((String) requester.message.get(9)),  Integer.parseInt((String) requester.message.get(10)),  Integer.parseInt((String) requester.message.get(11)) );
             break;
-        case "Employee_Commence":
-            AppOps().Employee_Commence(Integer.parseInt((String) requester.message.get(0)));
-        	break;
-        case "Employee_Job":
-            AppOps().Employee_Job(Integer.parseInt((String) requester.message.get(0)), Integer.parseInt((String) requester.message.get(1)), (String) requester.message.get(2), Boolean.parseBoolean((String) requester.message.get(3)));
-        	break;
-        case "Leave_Request":
-            AppOps().Leave_Request(Integer.parseInt((String) requester.message.get(0)), Integer.parseInt((String) requester.message.get(1)), Integer.parseInt((String) requester.message.get(2)), (String) requester.message.get(3));
-        	break;
-        case "Leave_Return":
-            AppOps().Leave_Return(Integer.parseInt((String) requester.message.get(0)));
-        	break;
-        case "Request_Employee_Payment":
-            AppOps().Request_Employee_Payment(Integer.parseInt((String) requester.message.get(0)));
-        	break;
+        case "ReadEmployeeList":
+        	App().ReadEmployeeList();
+            break;
+        case "ReadLeaveSpecification":
+        	App().ReadLeaveSpecification();
+            break;
+        case "CreateLeaveSpecification":
+        	App().CreateLeaveSpecification( (String) requester.message.get(0),   Integer.parseInt((String) requester.message.get(1)),   Integer.parseInt((String) requester.message.get(2)));
+            break;
+        case "DeleteLeaveSpecification":
+        	App().DeleteLeaveSpecification( (String) requester.message.get(0) );
+            break;
+        case "CreateEmployee":
+        	App().CreateEmployee( Integer.parseInt((String) requester.message.get(0)),  Integer.parseInt((String) requester.message.get(1)), (String) requester.message.get(2),  (String) requester.message.get(3),  (String) requester.message.get(4),  Integer.parseInt((String) requester.message.get(5)), (String) requester.message.get(6),  (String) requester.message.get(7)  );
+            break;
         case "Return_Employee_Payment":
-            AppOps().Return_Employee_Payment(Double.parseDouble((String) requester.message.get(0)), (String) requester.message.get(1), Integer.parseInt((String) requester.message.get(2)));
-        	break;
+        	AppOps().Return_Employee_Payment( Double.parseDouble((String) requester.message.get(0)),  (String) requester.message.get(1),  Integer.parseInt((String) requester.message.get(2)) );
+            break;
+        case "RequestEmployeeLeave":
+        	AppOps().RequestEmployeeLeave( Integer.parseInt((String) requester.message.get(0)),  Integer.parseInt((String) requester.message.get(1)),  Integer.parseInt((String) requester.message.get(2)),  (String) requester.message.get(3));
+            break;
+        case "CommenceEmployee":
+        	AppOps().CommenceEmployee( Integer.parseInt((String) requester.message.get(0)) );
+            break;
+        case "ApproveEmployeeLeave":
+        	AppOps().ApproveEmployeeLeave( Integer.parseInt((String) requester.message.get(0)) );
+            break;
+        case "GenerateEmployeePayslip":
+        	AppOps().GenerateEmployeePayslip(  Integer.parseInt((String) requester.message.get(0))  );
+            break;
+        case "AssignJobToEmployee":
+        	AppOps().AssignJobToEmployee( Integer.parseInt((String) requester.message.get(0)),  Integer.parseInt((String) requester.message.get(1)),  (String) requester.message.get(2),  Boolean.parseBoolean((String) requester.message.get(3)) );
+            break;
+        case "ReturnFromLeave":
+        	AppOps().ReturnFromLeave( Integer.parseInt((String) requester.message.get(0)) );
+            break;
+        case "RejectEmployeeLeave":
+        	AppOps().RejectEmployeeLeave( Integer.parseInt((String) requester.message.get(0)) );
+            break;
+        case "AssignBonusToEmployee":
+        	AppOps().AssignBonusToEmployee( Integer.parseInt((String) requester.message.get(0)),  (String) requester.message.get(1),  Integer.parseInt((String) requester.message.get(2)),  Integer.parseInt((String) requester.message.get(3)), (String) requester.message.get(4));
+            break;
         case "SOCKET_ERROR":
             LOG().LogFailure("Socket listener shuting down.");
             getRunContext().execute(new HaltExecutionTask());
@@ -223,7 +258,7 @@ public class UI extends Component<UI> {
         });
     }
 
-  private int connect() {
+    private int connect() {
         if ( null == requester ) requester = new GuiConnection(LOG());
         try {
             requester.connect();
@@ -257,6 +292,7 @@ public class UI extends Component<UI> {
         }
         else return "SOCKET_ERROR";
     }
+
 
     private static class GuiConnection {
     	

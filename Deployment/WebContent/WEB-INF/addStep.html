@@ -42,6 +42,7 @@
      const action =  actionInput.value;
 
      console.log({ value, action});
+     alert('Processing!');
     }
 
    
@@ -61,6 +62,7 @@
       methods: {
         processForm: function() {
           console.log({ value: this.value, action: this.action});
+          alert('Processing');
         },
       submitProduct: function () {
     	  axios.post('http://localhost:8080/Deployment/home/page/saveStep', {
