@@ -620,7 +620,7 @@ public class Gui {
 		List<List<String>> employees = new ArrayList<>();
 		try {
 			server.sendSignal(new IData.ReadEmployeeList());
-			Thread.sleep(100);
+			Thread.sleep(5000);
 			int counter = all.size();
 			for(int i = 0; i < counter; i++)
 				employees.add(all.get(i));
