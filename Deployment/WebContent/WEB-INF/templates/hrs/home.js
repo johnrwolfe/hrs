@@ -1,7 +1,7 @@
 Vue.component('mynavbar', {
     template:' <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">'+
     '<div class="container">'+
-      '<a class="navbar-brand" href="/Deployment/home/page/">نظام إدارة الموارد</a>'+
+      '<a class="navbar-brand" href="/Deployment/home/ar/">نظام إدارة الموارد</a>'+
       '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="true" aria-label="Toggle navigation">'+
         '<span class="navbar-toggler-icon"></span>'+
       '</button>'+
@@ -17,7 +17,7 @@ Vue.component('mynavbar', {
            
 
 
-            '<a class="nav-link" href="/Deployment/home/page/">'+
+            '<a class="nav-link" href="/Deployment/home/ar/">'+
 
              ' الرئيسية'+
               '<span class="sr-only">(current)</span>'+
@@ -35,7 +35,8 @@ Vue.component('mynavbar', {
             '<a class="nav-link" href="{% url '+'initiative:index'+' %}">المبادرات</a>'+
           '</li>'+
              '<li class="nave-item"><a class="nav-link" href="login"> تسجيل دخول    </a></li>'+
-                         
+
+             '<li class="nave-item"><a class="nav-link" href="/Deployment/home/eng/"> English   </a></li>'+           
 
            
         '</ul>'+

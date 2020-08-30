@@ -1,7 +1,7 @@
 Vue.component('mynavbar', {
     template:' <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">'+
     '<div class="container">'+
-      '<a class="navbar-brand" href="/Deployment/home/page/">Resource Managment System</a>'+
+      '<a class="navbar-brand" href="/Deployment/home/ar/">Resource Management System</a>'+
       '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="true" aria-label="Toggle navigation">'+
         '<span class="navbar-toggler-icon"></span>'+
       '</button>'+
@@ -14,7 +14,7 @@ Vue.component('mynavbar', {
             
 
 
-            '<a class="nav-link" href="/Deployment/home/page/">'+
+            '<a class="nav-link" href="/Deployment/home/ar/">'+
 
              ' Home'+
               '<span class="sr-only">(current)</span>'+
@@ -31,8 +31,9 @@ Vue.component('mynavbar', {
           '<li class="nav-item">'+
             '<a class="nav-link" href="{% url '+'initiative:index'+' %}">Initiatives</a>'+
           '</li>'+
-             '<li class="nave-item"><a class="nav-link" href="{% url '+'log:logout'+' %}"> Logout  </a></li>'+
-                         
+             '<li class="nave-item"><a class="nav-link" href="login"> Login  </a></li>'+
+
+             '<li class="nave-item"><a class="nav-link" href="/Deployment/home/ar/"> العربية   </a></li>'+      
 
            
         '</ul>'+

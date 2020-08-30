@@ -29,36 +29,36 @@ public class JobSetImpl extends InstanceSet<JobSet,Job> implements JobSet {
 
     // attributes
     @Override
-    public void setSalary( double m_Salary ) throws XtumlException {
-        for ( Job job : this ) job.setSalary( m_Salary );
-    }
-    @Override
-    public void setDescription( int m_Description ) throws XtumlException {
-        for ( Job job : this ) job.setDescription( m_Description );
+    public void setPensionDeduction( double m_PensionDeduction ) throws XtumlException {
+        for ( Job job : this ) job.setPensionDeduction( m_PensionDeduction );
     }
     @Override
     public void setJob_ID( int m_Job_ID ) throws XtumlException {
         for ( Job job : this ) job.setJob_ID( m_Job_ID );
     }
     @Override
-    public void setPromotionDate( int m_PromotionDate ) throws XtumlException {
-        for ( Job job : this ) job.setPromotionDate( m_PromotionDate );
+    public void setDescription( String m_Description ) throws XtumlException {
+        for ( Job job : this ) job.setDescription( m_Description );
     }
     @Override
-    public void setStep( int m_Step ) throws XtumlException {
-        for ( Job job : this ) job.setStep( m_Step );
-    }
-    @Override
-    public void setPensionDeduction( double m_PensionDeduction ) throws XtumlException {
-        for ( Job job : this ) job.setPensionDeduction( m_PensionDeduction );
+    public void setSalary( double m_Salary ) throws XtumlException {
+        for ( Job job : this ) job.setSalary( m_Salary );
     }
     @Override
     public void setAppointmentDate( int m_AppointmentDate ) throws XtumlException {
         for ( Job job : this ) job.setAppointmentDate( m_AppointmentDate );
     }
     @Override
+    public void setStep( int m_Step ) throws XtumlException {
+        for ( Job job : this ) job.setStep( m_Step );
+    }
+    @Override
     public void setTitle( String m_Title ) throws XtumlException {
         for ( Job job : this ) job.setTitle( m_Title );
+    }
+    @Override
+    public void setPromotionDate( int m_PromotionDate ) throws XtumlException {
+        for ( Job job : this ) job.setPromotionDate( m_PromotionDate );
     }
 
 
@@ -70,15 +70,15 @@ public class JobSetImpl extends InstanceSet<JobSet,Job> implements JobSet {
         return jobrecordset;
     }
     @Override
-    public EmployeeSet R20_to_be_assigned_to_an_Employee() throws XtumlException {
+    public EmployeeSet R20_to_be_assigned_to_Employee() throws XtumlException {
         EmployeeSet employeeset = new EmployeeSetImpl();
-        for ( Job job : this ) employeeset.add( job.R20_to_be_assigned_to_an_Employee() );
+        for ( Job job : this ) employeeset.add( job.R20_to_be_assigned_to_Employee() );
         return employeeset;
     }
     @Override
-    public EmployeeSet R6_is_assigned_to_an_Employee() throws XtumlException {
+    public EmployeeSet R6_is_assigned_to_Employee() throws XtumlException {
         EmployeeSet employeeset = new EmployeeSetImpl();
-        for ( Job job : this ) employeeset.add( job.R6_is_assigned_to_an_Employee() );
+        for ( Job job : this ) employeeset.add( job.R6_is_assigned_to_Employee() );
         return employeeset;
     }
     @Override

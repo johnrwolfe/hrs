@@ -17,7 +17,6 @@
   <myheader id="header"></myheader>
   <myjs id="js"></myjs>
   <mycontent id="content"></mycontent>
-  <mypagination id="pagination"></mypagination>
   <myfooter id="footer"></myfooter>
   </div>
   
@@ -28,7 +27,7 @@
   min-height: 94.5vh;
   position: relative;
   margin: 0;
-  padding-bottom: 100px; //height of the footer
+  padding-bottom: 100px; 
   box-sizing: border-box;
 }
 
@@ -80,22 +79,17 @@
     <div class="col-md-6">
     <div align="left"> <a href="bonus_delete">حذف </a> | <a href="{% url 'hr:update_bonus' bonus.id %} ">تعديل  </a></div>
         <p><strong>المسمى:</strong> {{bonus.name}}</p>
-        {% if bonus.amount is None %}
-            <p><strong>المبلغ:</strong> ـــ</p>
-        {% else %}
+       
         <p><strong>المبلغ:</strong> {{bonus.amount}}</p>
-        {% endif %}
-         {% if bonus.percentage is None %}
-            <p><strong>النسبة:</strong> ـــ</p>
-         {% else %}
+       
             <p><strong>النسبة:</strong> {{bonus.percentage}}</p>
-        {% endif %}
+       
 
 
     </div>
     </div>
 
- {% endblock %}
+
               </div>
         </div>
     

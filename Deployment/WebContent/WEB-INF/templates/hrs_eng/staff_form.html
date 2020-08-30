@@ -1,0 +1,164 @@
+<html>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link id="bootstrapcss" href="bootstrap" rel="stylesheet">
+    <link id="headercss" href="headercss" rel="stylesheet">
+   	<link id="stylecss" href="stylecss" rel="stylesheet">
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+   
+  
+    <style>
+      body {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; 
+  box-sizing: border-box;
+}
+   
+#footer {
+  position: absolute;
+  bottom: 0;
+  color:white;
+  width: 100%;
+}
+</style>
+  
+ <div id='app'>
+  <mynavbar></mynavbar>
+  <myfooter id="footer"></myfooter>
+  </div>  
+  <div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'hr:index' %}"> Human Resources</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#home-navbarResponsive" aria-controls="home-navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+      <div class="collapse navbar-collapse" id="home-navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+             	
+            <li class="nav-item">
+            <a class="nav-link" href="staff_home">Employees</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="overtime_home">Overtime</a>
+          </li>
+             <li class="nav-item">
+            <a class="nav-link" href="leave_home">Leaves</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="job_home">Jobs</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="grade_home">Grades</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="department_home">Departments</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="pay_home">Payroll</a>
+          </li>
+
+
+           
+        </ul>
+      </div>
+    </div>
+  </nav>
+  </div>
+  
+   <div   id="content_links">
+     <div class="row" align="left">
+    <div class="col-md-2">
+         
+            <ul class="list-unstyled" align="left">
+                <br> <br> <br>
+
+                <li><a href="hrs">Home</a></li>
+                <br>
+                <li><a href="staff_list">List Of Employees</a></li>
+                <li><a href="staff_form">Add an Employee</a> </li>
+                 <li><a href="staff_commence">Commence an Employee</a> </li>
+                 <li><a href="staff_leave">Request Leave</a> </li>
+                 <li><a href="staff_return">Employee Return From Leave</a> </li>
+                <br>
+                <br>
+                <li><a href="staff_bonus_list">List Of Employees Bonus</a></li>
+                <li><a href="staff_bonus_form">Add a Bonus to an Employee</a></li>
+        </ul>
+        
+        
+         </div>
+    <div class="col-md-8"><br><hr>
+              <div id="action-home">
+              	<form id="signup" @submit.prevent="processForm" @submit="submitProduct">
+  			 	<p>Employee ID:</p>
+                <input type="text" name="employeeID" v-model="employeeID"/><br><br>
+                <p>National ID:</p>
+                <input type="text" name="nid" v-model="nationalID"/><br><br>
+  			 	<p>First Name:</p>
+                <input type="text" name="firstName" v-model="firstName"/><br><br>
+                <p>Middle Name:</p>
+                <input type="text" name="middleName" v-model="middleName"/><br><br>
+                <p>Last Name:</p>
+                <input type="text" name="lastName" v-model="lastName"/><br><br>
+                <p>Date of Birth:</p>
+                <input type="text" name="dateOfBirth" v-model="dateOfBirth"/><br><br>
+                <p>Degree:</p>
+                <input list="degrees" name="degree" v-model="degree"/><br><br>
+                <datalist id="degrees">
+				  <option v-for="option in options" v-bind:value="option">
+				  </option>
+				  </datalist>
+                <p>Gender:</p>
+                <input list="genders" name="gender" v-model="gender"/><br><br>
+                <datalist id="genders">
+				  <option v-for="select in selects" v-bind:value="select">
+				  </option>
+				  </datalist>
+                <div>
+                <br><br>
+     			<input type="submit" value="Submit">
+     			</div>
+     			</form>
+     			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+              <script class="vue" src="staff_formjs"></script>	
+              </div>
+              
+              
+    </div>
+    </div>
+    </div>
+     <div id="home-pagination">
+<div class="row">
+    <div class="col-md-3"></div>
+ <div class="col-md-8">
+     
+       
+    
+ </div>
+</div>
+</div>
+
+     		<script src='basejs'></script>	 
+			<script>
+			var con = new Vue({
+			    el:'#navlist',
+			    data: {
+			        a: true,
+			        b: false
+			    }
+			  })
+			</script>
+
+
+</html>

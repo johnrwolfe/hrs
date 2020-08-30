@@ -37,20 +37,20 @@ import interfaces.IData;
 import shared.IOps;
 import io.ciera.runtime.summit.interfaces.IMessage;
 
-@Path("/page")
+@Path("/ar")
 public class Gui {
-	int i = 0;
+	static int i = 0;
 	
 	
 	List<String> data = new ArrayList<String>();
 	List<String> type = new ArrayList<String>();
 	List<String> leaves = new ArrayList<String>();
    
-    ApplicationConnection server = null;
-    ConnectionHandler connHandler = null;
+    public static ApplicationConnection server = null;
+    public static ConnectionHandler connHandler = null;
    
     public void setApplicationConnection(ApplicationConnection server) {
-        this.server = server;
+        Gui.server = server;
     }
 
     public void sendSignal(IMessage message) {
@@ -72,7 +72,8 @@ public class Gui {
 		 
 		 try {
 			 Runtime.getRuntime().exec(new String[]{"sh","/run.sh"});
-			
+			 Thread.sleep(200);
+			 server.sendSignal(new IData.Initialize());
 			 
 		 }catch(Exception e) {
 			 i = 0;
@@ -640,7 +641,7 @@ public class Gui {
 		reply = m;
 	}
 
-	List<List<String>> all = new ArrayList<List<String>>();
+	static List<List<String>> all = new ArrayList<List<String>>();
 	public void setReplyList(List<String> data) {
 		all.add(data);
 	}

@@ -25,12 +25,12 @@ public class ScaleSetImpl extends InstanceSet<ScaleSet,Scale> implements ScaleSe
 
     // attributes
     @Override
-    public void setName( String m_Name ) throws XtumlException {
-        for ( Scale scale : this ) scale.setName( m_Name );
+    public void setDescription( String m_Description ) throws XtumlException {
+        for ( Scale scale : this ) scale.setDescription( m_Description );
     }
     @Override
-    public void setDescription( int m_Description ) throws XtumlException {
-        for ( Scale scale : this ) scale.setDescription( m_Description );
+    public void setName( String m_Name ) throws XtumlException {
+        for ( Scale scale : this ) scale.setName( m_Name );
     }
 
 

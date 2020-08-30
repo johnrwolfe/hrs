@@ -1,0 +1,153 @@
+<html>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+   
+<link id="bootstrapcss" href="bootstrap" rel="stylesheet">
+    <link id="headercss" href="headercss" rel="stylesheet">
+   	<link id="stylecss" href="stylecss" rel="stylesheet">
+  
+ 
+<div id="app">
+  <mynavbar></mynavbar>
+  <myheader id="header"></myheader>
+  <myjs id="js"></myjs>
+  <mycontent id="content"></mycontent>
+  <myfooter id="footer"></myfooter>
+  </div>
+  
+  <script src='homejs'></script>
+  
+<style>
+    #app {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; 
+  box-sizing: border-box;
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  color:white;
+  width: 100%;
+}
+</style>
+
+
+
+    <div  style="display: none">
+    <div   id="content_links">
+    <div class="row" align="left">
+    <div class="col-md-2">
+         
+            <ul class="list-unstyled" align="left">
+                <br> <br> <br>
+
+                <li><a href="hrs">Home</a></li>
+                <br>
+                <li><a href="staff_list">List Of Employees</a></li>
+                <li><a href="staff_form">Add an Employee</a> </li>
+                 <li><a href="staff_commence">Commence an Employee</a> </li>
+                 <li><a href="staff_leave">Request Leave</a> </li>
+                 <li><a href="staff_return">Employee Return From Leave</a> </li>
+                <br>
+                <br>
+                <li><a href="staff_bonus_list">List Of Employees Bonus</a></li>
+                <li><a href="staff_bonus_form">Add a Bonus to an Employee</a></li>
+        </ul>
+         </div>
+    <div class="col-md-8"><br><hr>
+         
+              <div id="action-home">
+              		
+         
+<div class="row">
+        <div class="col-md-1"> </div>
+
+<div class="col-md-10">
+   
+        <h4>New Employee</h4>
+
+ 
+    <h4>Employee {{staff.first_name}} {{staff.last_name}} </h4>
+    <a href="staff_delete">Delete </a> |
+                       <a href="{% url 'hr:update_staff' staff.id %} ">Edit  </a> |
+                           <a href="{% url 'hr:staff' staff.id %} "> Profile </a> |
+  
+    <hr>
+</div>
+</div>
+
+<div class="row">
+        <div class="col-md-1"> </div>
+
+<div class="col-md-8" align="left">
+    
+                       <a href="register"> Create an Account  </a>|
+       
+                        <a href="register"> Edit Account  </a>|
+      
+                <a href="staff_pay"> Salary structure </a> |
+                <a href="staff_bonus_form">Add Bonus </a>
+   
+ </div>
+</div>
+    <div class="row">
+                <div class="col-md-3"> </div>
+
+<div class="col-md-6" align="left">
+
+   <div id="detail">
+    <br>
+    <p><strong>User Name: </strong> {{staff.user.username}}</p>
+
+<br>
+<p><strong>Date Of Birth: </strong> {{staff.birth_date}}</p>
+    <p><strong>National ID:</strong> {{staff.national_ID}}</p>
+
+<p><strong>Brief biography:</strong> {{staff.short_bio}}</p>
+    <p><strong>Degree:</strong> {{staff.get_degree_display}}</p>
+
+<p><strong>Job:</strong> {{staff.job}}</p>
+    <p><strong>Department</strong> {{staff.department}}</p>
+
+    <p><strong>Grade:</strong> {{staff.grade}}</p>
+    <p><strong>Salary:</strong> {{staff.grade.salary}}</p>
+        <p><strong>Curriculum:</strong> {{staff.short_bio}}</p>
+
+
+<br>
+<p><strong>Regular leave balance:</strong> {{staff.available_leave}}</p>
+<p><strong>Regular leave balance:</strong> {{staff.available_sick_leave}}</p>
+</div>
+
+</div>
+    </div>
+
+
+
+              </div>
+              <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+              <script class="vue"></script>
+              
+    </div>
+    </div>
+    </div>
+    </div>
+     <script> 
+    $(function(){
+      $("#content").html($("#content_links").html());
+    });
+    </script> 
+    
+</html>
+
+

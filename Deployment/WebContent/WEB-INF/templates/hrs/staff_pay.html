@@ -19,7 +19,6 @@
   <myheader id="header"></myheader>
   <myjs id="js"></myjs>
   <mycontent id="content"></mycontent>
-  <mypagination id="pagination"></mypagination>
   <myfooter id="footer"></myfooter>
   </div>
   
@@ -30,7 +29,7 @@
   min-height: 94.5vh;
   position: relative;
   margin: 0;
-  padding-bottom: 100px; //height of the footer
+  padding-bottom: 100px; 
   box-sizing: border-box;
 }
 
@@ -76,11 +75,8 @@
 
 <br>
 
-{% if staff_pay_list %}
-    {% for staff_pay in staff_pay_list %}
 <p><strong>{{staff_pay.bonus}}:</strong> <a href="{{staff_pay.get_absolute_url}}">{{staff_pay.bonus_amount}}</a></p>
-    {% endfor %}
-{% endif %}
+   
 <hr>
   <p><strong>المجموع:</strong> {{staff.total_pay}}</p>
 

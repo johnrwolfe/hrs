@@ -110,27 +110,7 @@
     <div class="col-md-3"></div>
  <div class="col-md-8">
      
-        <div class="home-pagination">
-            <span class="page-links">
-                
-                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">السابق</a> 
-                
-                <span class="page-current">
-                   
-                        {{ page_obj.number }} من صفحتين
-                   <br>
-                        {{ page_obj.number }} من {{ page_obj.paginator.num_pages }} صفحات
-                    <br>
-                        {{ page_obj.number }} من {{ page_obj.paginator.num_pages }} صفحة
-                    
-
-                </span>
-                
-                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">التالي</a>
-               
-            </span>
-        </div>
-        
+       
     
  </div>
 </div>

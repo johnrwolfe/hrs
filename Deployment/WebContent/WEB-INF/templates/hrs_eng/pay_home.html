@@ -1,0 +1,103 @@
+<html>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+    
+<link id="bootstrapcss" href="bootstrap" rel="stylesheet">
+    <link id="headercss" href="headercss" rel="stylesheet">
+   	<link id="stylecss" href="stylecss" rel="stylesheet">
+  
+  
+<div id="app">
+  <mynavbar></mynavbar>
+  <myheader id="header"></myheader>
+  <myjs id="js"></myjs>
+  <mycontent id="content"></mycontent>
+  <myfooter id="footer"></myfooter>
+  </div>
+  
+  <script src='payjs'></script>
+  
+<style>
+    #app {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; //height of the footer
+  box-sizing: border-box;
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  color:white;
+  width: 100%;
+}
+</style>
+
+
+
+
+    <div  style="display: none">
+    <div   id="content_links">
+    <div class="row" align="left">
+    <div class="col-md-2">
+            <ul class="list-unstyled">
+                <br> <br> <br>
+
+                <li><a href="hrs">Home Page</a></li>
+                <br>
+                <li><a href="pay_list">Review Payroll</a> </li>
+                
+
+        </ul>
+ </div>
+
+  <div class="col-md-8"><br><hr>
+  <div id="action-pay">
+          <h3>Payroll Summary</h3>
+
+<div class="row">
+        <div class="col-md-5">
+              <h4 align="left">Summary Of System Content</h4>
+        <hr>
+        <p align="left">Payroll Database Contains the following:</p>
+        <ul align="left">
+
+                            <li><b>Maximum Salary:</b>{{max_pay.pay_max}}</li>
+
+                <li><b> Minimum Salary:</b> {{min_pay.pay_min}}</li>
+                <li><b> Average Salary:</b> {{average_pay.pay_average|floatformat:2}}</li>
+
+
+
+        </ul>
+        </div>
+    <div class="col-md-4">
+<div id="pay-detail">
+
+     </div>
+    </div>
+</div>
+
+</div>
+</div>
+    </div>
+    </div>
+    </div>
+    
+     <script> 
+    $(function(){
+      $("#content").html($("#content_links").html());
+    });
+    </script> 
+    
+</html>
+

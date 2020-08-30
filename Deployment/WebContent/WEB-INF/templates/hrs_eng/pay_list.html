@@ -1,0 +1,327 @@
+<html>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+    
+<link id="bootstrapcss" href="bootstrap" rel="stylesheet">
+    <link id="headercss" href="headercss" rel="stylesheet">
+   	<link id="stylecss" href="stylecss" rel="stylesheet">
+  
+  
+<div id="app">
+  <mynavbar></mynavbar>
+  <myheader id="header"></myheader>
+  <myjs id="js"></myjs>
+  <mycontent id="content"></mycontent>
+  <myfooter id="footer"></myfooter>
+  </div>
+  
+  <script src='payjs'></script>
+  
+<style>
+    #app {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; //height of the footer
+  box-sizing: border-box;
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  color:white;
+  width: 100%;
+}
+
+th, td {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  padding-top: 0;
+  
+}
+</style>
+
+
+
+
+
+
+ <div   id="content_links" style="display: none">
+    <div class="row" align="left">
+    <div class="col-md-2">
+         
+            <ul class="list-unstyled">
+                <br> <br> <br>
+
+                <li><a href="hrs">Home Page</a></li>
+                <br>
+                <li><a href="pay_list">Review Payroll</a> </li>
+
+        </ul>
+       
+ </div>
+
+  <div class="col-md-8"><br><hr>
+  <div id="action-pay">
+        
+<h3 align="left">Review Employees Payroll</h3>
+<br>
+
+<div class="row">
+	<ul align="left">
+         <li>
+         <div>
+        <a>Wilt Chamberlain</a>
+        <a onclick="openTab('b1');" style="color:#007bff"> View</a>
+        </div>
+        <div id="b1" class="containerTab" style="display:none;">
+  <!-- If you want the ability to close the container, add a close button -->
+  <span onclick="this.parentElement.style.display='none'" class="closebtn" style="color: red">x</span>
+  <table  style=" width: 100%">
+	  <tr>
+		  <th>Salary</th>
+		  <th>First Bonus</th>
+		  <th>Second Bonus</th>
+		  <th>Third Bonus</th>
+	  </tr>
+	  <tr>
+		  <td>1000</td>
+		  <td>100 </td>
+		  <td>200</td>
+		  <td>70</td>
+	  </tr>
+	  <tr>
+		  <td>
+		  <hr>
+		  <input type="radio" id="approve-salary-wilt" name="salary-wilt" value="approve">
+  			<label for="approve-salary-wilt">Approve</label><br>
+  			 <input type="radio" id="on-hold-salary-wilt"name="salary-wilt" value="on-hold">
+ 			 <label for="on-hold-salary-wilt">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-1-wilt" name="bonus-1-wilt" value="approve">
+  			<label for="approve-bonus-1-wilt">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-1-wilt" name="bonus-1-wilt" value="on-hold">
+ 			 <label for="on-hold-bonus-1-wilt">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-2-wilt" name="bonus-2-wilt" value="approve">
+  			<label for="approve-bonus-2-wilt">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-2-wilt" name="bonus-2-wilt" value="on-hold">
+ 			 <label for="on-hold-bonus-2-wilt">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-3-wilt" name="bonus-3-wilt" value="approve">
+  			<label for="approve-bonus-3-wilt">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-3-wilt" name="bonus-3-wilt" value="on-hold">
+ 			 <label for="on-hold-bonus-3-wilt">On-hold for further review</label><br>
+		  </td>
+	  </tr>
+  </table>
+</div>
+		</li>
+		<li>
+		<div>
+        <a>Bill Russell</a>
+        <a onclick="openTab('b2');" style="color:#007bff"> View</a>
+        </div>
+        <div id="b2" class="containerTab" style="display:none;">
+  <!-- If you want the ability to close the container, add a close button -->
+  <span onclick="this.parentElement.style.display='none'" class="closebtn" style="color: red">x</span>
+  <table style=" width: 100%">
+	  <tr>
+		 <th>Salary</th>
+		  <th>First Bonus</th>
+		  <th>Second Bonus</th>
+		  <th>Third Bonus</th>
+	  </tr>
+	  <tr>
+		  <td>5000</td>
+		  <td>500</td>
+		  <td>1000</td>
+		  <td>350</td>
+	  </tr>
+	  <tr>
+		  <td>
+		  <hr>
+		  <input type="radio" id="approve-salary-bill" name="salary-bill" value="approve">
+  			<label for="approve-salary-bill">Approve</label><br>
+  			 <input type="radio" id="on-hold-salary-bill"name="salary-bill" value="on-hold">
+ 			 <label for="on-hold-salary-bill">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-1-bill" name="bonus-1-bill" value="approve">
+  			<label for="approve-bonus-1-bill">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-1-bill" name="bonus-1-bill" value="on-hold">
+ 			 <label for="on-hold-bonus-1-bill">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-2-bill" name="bonus-2-bill" value="approve">
+  			<label for="approve-bonus-2-bill">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-2-bill" name="bonus-2-bill" value="on-hold">
+ 			 <label for="on-hold-bonus-2-bill">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-3-bill" name="bonus-3-bill" value="approve">
+  			<label for="approve-bonus-3-bill">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-3-bill" name="bonus-3-bill" value="on-hold">
+ 			 <label for="on-hold-bonus-3-bill">On-hold for further review</label><br>
+		  </td>
+	  </tr>
+  </table>
+</div>
+		</li>
+		<li>
+		<div>
+        <a>Magic Johnson</a>
+        <a onclick="openTab('b3');" style="color:#007bff"> View</a>
+        </div>
+        <div id="b3" class="containerTab" style="display:none;">
+  <!-- If you want the ability to close the container, add a close button -->
+  <span onclick="this.parentElement.style.display='none'" class="closebtn" style="color: red">x</span>
+  <table style=" width: 100%">
+	  <tr>
+		  <th>Salary</th>
+		  <th>First Bonus</th>
+		  <th>Second Bonus</th>
+		  <th>Third Bonus</th>
+	  </tr>
+	  <tr>
+		  <td>4000</td>
+		  <td>400</td>
+		  <td>800</td>
+		  <td>280</td>
+	  </tr>
+	  <tr>
+		  <td>
+		  <hr>
+		  <input type="radio" id="approve-salary-magic" name="salary-magic" value="approve">
+  			<label for="approve-salary-magic">Approve</label><br>
+  			 <input type="radio" id="on-hold-salary-magic"name="salary-magic" value="on-hold">
+ 			 <label for="on-hold-salary-magic">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-1-magic" name="bonus-1-magic" value="approve">
+  			<label for="approve-bonus-1-magic">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-1-magic" name="bonus-1-magic" value="on-hold">
+ 			 <label for="on-hold-bonus-1-magic">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-2-magic" name="bonus-2-magic" value="approve">
+  			<label for="approve-bonus-2-magic">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-2-magic" name="bonus-2-magic" value="on-hold">
+ 			 <label for="on-hold-bonus-2-magic">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-3-magic" name="bonus-3-magic" value="approve">
+  			<label for="approve-bonus-3-magic">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-3-magic" name="bonus-3-magic" value="on-hold">
+ 			 <label for="on-hold-bonus-3-magic">On-hold for further review</label><br>
+		  </td>
+	  </tr>
+  </table>
+</div>
+		</li>
+		<li>
+		<div>
+        <a>Larry Bird</a>
+        <a onclick="openTab('b4');" style="color:#007bff"> View</a>
+        </div>
+        <div id="b4" class="containerTab" style="display:none;">
+  <!-- If you want the ability to close the container, add a close button -->
+  <span onclick="this.parentElement.style.display='none'" class="closebtn" style="color: red">x</span>
+  <table style=" width: 100%">
+	  <tr>
+		  <th>Salary</th>
+		  <th>First Bonus</th>
+		  <th>Second Bonus</th>
+		  <th>Third Bonus</th>
+	  </tr>
+	  <tr>
+		  <td>10000</td>
+		  <td>1000</td>
+		  <td>2000</td>
+		  <td>700</td>
+	  </tr>
+	  <tr>
+		  <td>
+		  <hr>
+		  <input type="radio" id="approve-salary-bird" name="salary-bird" value="approve">
+  			<label for="approve-salary-bird">Approve</label><br>
+  			 <input type="radio" id="on-hold-salary-bird"name="salary-bird" value="on-hold">
+ 			 <label for="on-hold-salary-bird">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-1-bird" name="bonus-1-bird" value="approve">
+  			<label for="approve-bonus-1-bird">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-1-bird" name="bonus-1-bird" value="on-hold">
+ 			 <label for="on-hold-bonus-1-bird">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-2-bird" name="bonus-2-bird" value="approve">
+  			<label for="approve-bonus-2-bird">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-2-bird" name="bonus-2-bird" value="on-hold">
+ 			 <label for="on-hold-bonus-2-bird">On-hold for further review</label><br>
+		  </td>
+		  <td>
+		  <hr>
+		   <input type="radio" id="approve-bonus-3-bird" name="bonus-3-bird" value="approve">
+  			<label for="approve-bonus-3-bird">Approve</label><br>
+  			 <input type="radio" id="on-hold-bonus-3-bird" name="bonus-3-bird" value="on-hold">
+ 			 <label for="on-hold-bonus-3-bird">On-hold for further review</label><br>
+		  </td>
+	  </tr>
+  </table>
+</div>
+		</li>
+		<input type="submit" value="Submit">
+	</ul>
+	
+   
+    </div>
+<br>
+   
+
+
+  
+</div>
+</div>
+    </div>
+    </div>
+
+
+
+
+  <script> 
+    $(function(){
+      $("#content").html($("#content_links").html());
+    });
+    function openTab(tabName) {
+    	  var i, x;
+    	  x = document.getElementsByClassName("containerTab");
+    	  for (i = 0; i < x.length; i++) {
+    	    x[i].style.display = "none";
+    	  }
+    	  document.getElementById(tabName).style.display = "block";
+    	}
+    </script> 
+</html>

@@ -38,16 +38,16 @@ public class LeaveSetImpl extends InstanceSet<LeaveSet,Leave> implements LeaveSe
 
     // selections
     @Override
+    public EmployeeSet R11_consumed_by_Employee() throws XtumlException {
+        EmployeeSet employeeset = new EmployeeSetImpl();
+        for ( Leave leave : this ) employeeset.add( leave.R11_consumed_by_Employee() );
+        return employeeset;
+    }
+    @Override
     public LeaveSpecificationSet R15_is_specified_by_a_LeaveSpecification() throws XtumlException {
         LeaveSpecificationSet leavespecificationset = new LeaveSpecificationSetImpl();
         for ( Leave leave : this ) leavespecificationset.add( leave.R15_is_specified_by_a_LeaveSpecification() );
         return leavespecificationset;
-    }
-    @Override
-    public EmployeeSet R2_is_consumed_by_a_Employee() throws XtumlException {
-        EmployeeSet employeeset = new EmployeeSetImpl();
-        for ( Leave leave : this ) employeeset.add( leave.R2_is_consumed_by_a_Employee() );
-        return employeeset;
     }
     @Override
     public EmployeeSet R5_is_currently_taken_by_Employee() throws XtumlException {

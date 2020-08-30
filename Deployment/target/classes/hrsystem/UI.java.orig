@@ -3,6 +3,7 @@ package hrsystem;
 
 import hrsystem.ui.UIApp;
 import hrsystem.ui.UIAppOps;
+import hrsystem.ui.UIAuthenticate;
 
 import io.ciera.runtime.summit.application.IApplication;
 import io.ciera.runtime.summit.application.IRunContext;
@@ -32,12 +33,14 @@ public class UI extends Component<UI> {
     }
 
     // domain functions
+    public void CreateEmployee() throws XtumlException {
+    }
+
     public void Reply( final String p_msg,  final boolean p_state ) throws XtumlException {
         context().Reply( p_msg, p_state );
     }
 
     public void ReplyUsernamePassword( final String p_Username,  final String p_Password,  final boolean p_state ) throws XtumlException {
-        context().ReplyUsernamePassword( p_Username, p_Password, p_state );
     }
 
     public void SendEmployee( final int p_EmployeeID,  final int p_NationalID,  final String p_FirstName,  final String p_MiddleName,  final String p_LastName,  final int p_DateOfBirth,  final String p_Degree,  final String p_Gender,  final int p_StartDate,  final int p_LeaveBalance,  final int p_SickLeaveBalance,  final int p_Size ) throws XtumlException {
@@ -69,6 +72,11 @@ public class UI extends Component<UI> {
     public UIAppOps AppOps() {
         if ( null == UIAppOps ) UIAppOps = new UIAppOps( this, null );
         return UIAppOps;
+    }
+    private UIAuthenticate UIAuthenticate;
+    public UIAuthenticate Authenticate() {
+        if ( null == UIAuthenticate ) UIAuthenticate = new UIAuthenticate( this, null );
+        return UIAuthenticate;
     }
 
 

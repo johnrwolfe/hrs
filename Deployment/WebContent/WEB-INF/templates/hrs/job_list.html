@@ -17,7 +17,6 @@
   <myheader id="header"></myheader>
   <myjs id="js"></myjs>
   <mycontent id="content"></mycontent>
-  <mypagination id="pagination"></mypagination>
   <myfooter id="footer"></myfooter>
   </div>
   
@@ -28,7 +27,7 @@
   min-height: 94.5vh;
   position: relative;
   margin: 0;
-  padding-bottom: 100px; //height of the footer
+  padding-bottom: 100px; 
   box-sizing: border-box;
 }
 
@@ -90,8 +89,6 @@
         </div>
 </div>
 
-{% if job_list %}
-     {% for job in job_list %}
 <div class="row align-right">
     <div class="col-md-1"></div>
 
@@ -103,12 +100,7 @@
 
 </div>
 <br>
-    {%  endfor %}
-{% else %}
-    <p>لا توجد وظائف حاليا</p>
-
-{% endif %}
-    {% endblock %}
+   
               </div>
     </div>
     </div>
