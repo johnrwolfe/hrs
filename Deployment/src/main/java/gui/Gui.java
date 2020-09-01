@@ -72,8 +72,8 @@ public class Gui {
 		 i++;
 		 
 		 try {
-			// Runtime.getRuntime().exec(new String[]{"sh","/run.sh"});
-			 Thread.sleep(5000);
+			Runtime.getRuntime().exec(new String[]{"sh","/run.sh"});
+			 Thread.sleep(200);
 			 server.sendSignal(new IData.Initialize());
 			 
 		 }catch(Exception e) {
