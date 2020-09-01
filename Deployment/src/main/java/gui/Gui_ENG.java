@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import com.sun.jersey.api.view.Viewable;
 
+import interfaces.IAuthentication;
 import interfaces.IData;
 import shared.IOps;
 import io.ciera.runtime.summit.interfaces.IMessage;
@@ -43,7 +44,6 @@ public class Gui_ENG extends Gui{
 	
 	List<String> data = new ArrayList<String>();
 	List<String> type = new ArrayList<String>();
-	List<String> leaves = new ArrayList<String>();
    
 
   
@@ -61,8 +61,8 @@ public class Gui_ENG extends Gui{
    		 Gui.i++;
    		 
    		 try {
-   			 Runtime.getRuntime().exec(new String[]{"sh","/run.sh"});
-			 Thread.sleep(200);
+   			 //Runtime.getRuntime().exec(new String[]{"sh","/run.sh"});
+			 Thread.sleep(5000);
    			 Gui.server.sendSignal(new IData.Initialize());
    			 
    		 }catch(Exception e) {
@@ -71,7 +71,7 @@ public class Gui_ENG extends Gui{
    		 }
     	}
     	
-    	return servletContext.getResourceAsStream("/WEB-INF/erp-theme/templates/erp_eng/home.html");
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/login.html");
     }
     
     
@@ -147,10 +147,24 @@ public class Gui_ENG extends Gui{
     }
     
     @GET
+    @Path("/staff_listjs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream staff_listjs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/staff_list.js");
+    }
+    
+    @GET
     @Path("/staff_detail")
     @Produces({MediaType.TEXT_HTML})
     public InputStream staff_detail() {
     	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/staff_detail.html");
+    }
+    
+    @GET
+    @Path("/staff_detailjs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream staff_detailjs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/staff_detail.js");
     }
     
     @GET
@@ -243,6 +257,20 @@ public class Gui_ENG extends Gui{
     public InputStream staff_bonus_delete() {
     	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/staff_bonus_confirm_delete.html");
     }
+    
+    @GET
+    @Path("/manageLeave")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream manageLeave() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/manage_leave.html");
+    }
+    
+    @GET
+    @Path("/manageLeavejs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream manageLeavejs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/manage_leave.js");
+    }
    
     @GET
     @Path("/register")
@@ -299,6 +327,13 @@ public class Gui_ENG extends Gui{
     @Produces({MediaType.TEXT_HTML})
     public InputStream leave_delete() {
     	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/leave_confirm_delete.html");
+    }
+    
+    @GET
+    @Path("/leave_deletejs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream leave_deletejs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/leave_delete.js");
     }
     
     @GET
@@ -497,6 +532,104 @@ public class Gui_ENG extends Gui{
     	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/login.js");
     }
     
+    @GET
+    @Path("/new_account")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream new_account() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/new_account.html");
+    }
+    
+    @GET
+    @Path("/new_accountjs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream new_accountjs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/new_account.js");
+    }
+    
+    @GET
+    @Path("/overtime_home")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream overtime_home() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/overtime_home.html");
+    }
+    
+    @GET
+    @Path("/overtime_list")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream overtime_list() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/overtime_list.html");
+    }
+    
+    @GET
+    @Path("/overtime_detail")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream overtime_detail() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/overtime_detail.html");
+    }
+    
+    @GET
+    @Path("/overtime_form")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream overtime_form() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/overtime_form.html");
+    }
+    
+    @GET
+    @Path("/overtime_formjs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream overtime_formjs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/overtime_form.js");
+    }
+    
+    @GET
+    @Path("/overtime_delete")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream overtime_delete() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/overtime_confirm_delete.html");
+    }
+    
+    @GET
+    @Path("/department_home")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream department_home() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/department_home.html");
+    }
+    
+    @GET
+    @Path("/department_list")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream department_list() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/department_list.html");
+    }
+    
+    @GET
+    @Path("/department_detail")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream department_detail() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/department_detail.html");
+    }
+    
+    @GET
+    @Path("/department_form")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream department_form() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/department_form.html");
+    }
+    
+    @GET
+    @Path("/department_formjs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream department_formjs() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/department_form.js");
+    }
+    
+    @GET
+    @Path("/department_delete")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream department_delete() {
+    	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/department_confirm_delete.html");
+    }
+    
     
     @POST
 	@Path("/saveEmployee")
@@ -518,7 +651,6 @@ public class Gui_ENG extends Gui{
     	Gui.server.sendSignal(new IData.CreateLeaveSpecification(leave.name, leave.maximumDays, leave.minimumDays));
         data.add(leave.name+"/"+leave.maximumDays+"/"+leave.minimumDays);
     	type.add("leave");
-    	leaves.add(leave.name);
   		return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/home.html");	
   	} 
     
@@ -555,6 +687,157 @@ public class Gui_ENG extends Gui{
     	type.add("leaveRequest");
   		return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/home.html");	
   	} 
+    
+    @POST
+  	@Path("/saveEmployeeBonus")
+  	@Consumes(MediaType.APPLICATION_JSON)
+  	public InputStream saveEmployeeBonus(BonusToEmployee bonus) {
+    	
+    	LocalDate base = LocalDate.parse("1970-01-01", DateTimeFormatter.ISO_LOCAL_DATE);
+    	LocalDate d1 = LocalDate.parse(bonus.start, DateTimeFormatter.ISO_LOCAL_DATE);
+    	LocalDate d2 = LocalDate.parse(bonus.end, DateTimeFormatter.ISO_LOCAL_DATE);
+    	Duration diff1 = Duration.between(base.atStartOfDay(), d1.atStartOfDay());
+    	Duration diff2 = Duration.between(base.atStartOfDay(), d2.atStartOfDay());
+    	int diffsecond1 = (int) diff1.getSeconds();
+    	int diffsecond2 = (int) diff2.getSeconds();
+    	System.out.println(diffsecond1);
+    	System.out.println(diffsecond2);
+        server.sendSignal(new IOps.AssignBonusToEmployee(bonus.nid, bonus.name, diffsecond1, diffsecond2, "NEW"));
+        data.add(bonus.nid+"/"+bonus.name+"/"+bonus.start+"/"+bonus.end);
+    	type.add("employeeBonus");
+  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
+  	} 
+  	
+  	@POST
+  	@Path("/saveEmployeeJob")
+  	@Consumes(MediaType.APPLICATION_JSON)
+  	public InputStream saveEmployeeJob(JobToEmployee job) {
+        server.sendSignal(new IOps.AssignJobToEmployee(job.job, job.nid, "NEW", true) );
+        data.add(job.job+"/"+job.nid);
+    	type.add("employeeJob");
+  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
+  	}
+  	
+  	@GET
+  	@Path("/listOfRequestedLeaves")
+  	@Produces(MediaType.APPLICATION_JSON)
+  	public Response allRequestedLeaves() {
+  		return Response.ok(nidOfRequestedLeaves).build();
+  	}
+  	
+  	@POST
+  	@Path("/approvedLeave")
+  	@Produces(MediaType.APPLICATION_JSON)
+  	public InputStream approvedLeave(ApprovedLeave leave) {
+  		int size = nidOfRequestedLeaves.size();
+  		for(int j = 0; j < size; j++) {
+  			if(nidOfRequestedLeaves.get(j).get(0).equals(leave.nid.get(0))) {
+  				server.sendSignal(new IOps.ApproveEmployeeLeave(Integer.parseInt(leave.nid.get(0))));
+  				nidOfRequestedLeaves.remove(j);
+  				System.out.println(nidOfRequestedLeaves);
+  			}
+  		}
+  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
+  	}
+  	
+  	@POST
+  	@Path("/rejectLeave")
+  	@Produces(MediaType.APPLICATION_JSON)
+  	public InputStream rejectLeave(ApprovedLeave leave) {
+  		int size = nidOfRequestedLeaves.size();
+  		for(int j = 0; j < size; j++) {
+  			if(nidOfRequestedLeaves.get(j).get(0).equals(leave.nid.get(0))) {
+  				server.sendSignal(new IOps.RejectEmployeeLeave(Integer.parseInt(leave.nid.get(0))));
+  				nidOfRequestedLeaves.remove(j);
+  				System.out.println(nidOfRequestedLeaves);
+  			}
+  		}
+  		return servletContext.getResourceAsStream("/WEB-INF/home.html");	
+  	}
+    
+    
+    @POST
+    @Path("/create_account")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public InputStream Create_account(CreateAccount account) {
+    	server.sendSignal(new IAuthentication.CreateNewAccount(account.fname, account.lname, account.employeeID));
+    	return servletContext.getResourceAsStream("/WEB-INF/erp-theme/templates/erp/home.html");
+    }
+    
+    
+    
+    
+    
+    
+  	
+  	
+  	
+  	
+  	@POST
+  	@Path("/check")
+  	@Consumes(MediaType.APPLICATION_JSON)
+  	public InputStream use(Users user) {
+  		
+  		server.sendSignal(new IAuthentication.CheckUsernamePassword(user.user, user.password));
+  		return servletContext.getResourceAsStream("/WEB-INF/erp-theme/templates/erp/home.html");
+  	}
+  	
+  	
+  	@GET
+  	@Path("/checked")
+  	@Consumes(MediaType.APPLICATION_JSON)
+  	public InputStream us() {
+  		try {
+  			Thread.sleep(1000);
+  			if(reply.equals("0")) {
+  				return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/login.html");
+  			}
+  		}catch(Exception e){
+  			
+  		}
+  		return servletContext.getResourceAsStream("/WEB-INF/erp-theme/templates/erp_eng/home.html");
+  	}
+  	
+  	@POST
+  	@Path("/deleteLeave")
+  	@Consumes(MediaType.APPLICATION_JSON)
+  	public InputStream delete_Leave(DeleteLeave leave) {
+  		server.sendSignal(new IData.DeleteLeaveSpecification(leave.name));
+  		return servletContext.getResourceAsStream("WEB-INF/templates/hrs_eng/home.html");
+  	}
+  	
+  	
+  	
+  	
+  	@POST
+  	@Path("/getEmployeeID")
+  	@Consumes(MediaType.APPLICATION_JSON)
+  	public void getEmployeeID(Employee employee) {
+  		employeeID = employee.employeeID;
+  		System.out.println(employeeID);
+  	}
+  	
+  	@GET
+  	@Path("/employeeInfo")
+  	@Produces(MediaType.APPLICATION_JSON)
+  	public Response employeeInfo() {
+  		List<String> emp = new ArrayList<String>();
+  		int size = employees.size();
+  		for(int j = 0; j < size; j++) {
+  			if(Integer.parseInt(employees.get(j).get(0)) == employeeID) {
+  				int innerSize = employees.get(j).size();
+  				for(int k = 0; k < innerSize; k++) {
+  					emp.add(employees.get(j).get(k));
+  				}
+  				System.out.println(emp);
+  				return Response.ok(emp).build();
+  			}
+  		}
+  		return Response.ok().build();
+  	}
+  	
+  	
+  	
     
     
     
@@ -603,13 +886,13 @@ public class Gui_ENG extends Gui{
     	return servletContext.getResourceAsStream("/WEB-INF/templates/hrs_eng/home.html");
     }
     
-	
+    List<List<String>> employees = new ArrayList<>();
 
 	@GET
 	@Path("/listEmployees")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listEmployees() {
-		List<List<String>> employees = new ArrayList<>();
+		employees.clear();
 		try {
 			Gui.server.sendSignal(new IData.ReadEmployeeList());
 			Thread.sleep(100);
@@ -625,6 +908,56 @@ public class Gui_ENG extends Gui{
 		}
 		return Response.ok().build();
 	}
+	
+	
+	@GET
+	@Path("/listLeave")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listLeaves() {
+		List<String> leav = new ArrayList<String>();
+		try {
+			server.sendSignal(new IData.ReadLeaveSpecification());
+			Thread.sleep(100);
+			int counter = leaves.size();
+			for(int i = 0; i < counter; i++)
+				leav.add(leaves.get(i).get(0));
+			leaves.clear();
+			System.out.println(leav);
+			return Response.ok(leav).build();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return Response.ok().build();
+		
+	}
+	
+	
+	@GET
+	@Path("/listAllLeaves")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listAllLeaves() {
+		List<List<String>> leav = new ArrayList<>();
+		try {
+			server.sendSignal(new IData.ReadLeaveSpecification());
+			Thread.sleep(100);
+			int counter = leaves.size();
+			for(int i = 0; i < counter; i++)
+				leav.add(leaves.get(i));
+			leaves.clear();
+			System.out.println(leav);
+			return Response.ok(leav).build();
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return Response.ok().build();
+		
+	}
+	
+	
+	
+
 	
 	private String reply;
 	

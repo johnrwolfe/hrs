@@ -126,15 +126,6 @@ public class DepartmentImpl extends ModelInstance<Department,Hr> implements Depa
     }
     private String m_Manager;
     @Override
-    public void setManager(String m_Manager) throws XtumlException {
-        checkLiving();
-        if (StringUtil.inequality(m_Manager, this.m_Manager)) {
-            final String oldValue = this.m_Manager;
-            this.m_Manager = m_Manager;
-            getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_Manager", oldValue, this.m_Manager));
-        }
-    }
-    @Override
     public String getManager() throws XtumlException {
         checkLiving();
         {
@@ -142,6 +133,15 @@ public class DepartmentImpl extends ModelInstance<Department,Hr> implements Depa
             self().setManager(( employee.getFirstName() + " " ) + employee.getLastName());
         }
         return m_Manager;
+    }
+    @Override
+    public void setManager(String m_Manager) throws XtumlException {
+        checkLiving();
+        if (StringUtil.inequality(m_Manager, this.m_Manager)) {
+            final String oldValue = this.m_Manager;
+            this.m_Manager = m_Manager;
+            getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_Manager", oldValue, this.m_Manager));
+        }
     }
 
 
@@ -264,11 +264,11 @@ class EmptyDepartment extends ModelInstance<Department,Hr> implements Department
     public void setDescription( String m_Description ) throws XtumlException {
         throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
-    public void setManager( String m_Manager ) throws XtumlException {
-        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
-    }
     public String getManager() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
+    }
+    public void setManager( String m_Manager ) throws XtumlException {
+        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
 
 

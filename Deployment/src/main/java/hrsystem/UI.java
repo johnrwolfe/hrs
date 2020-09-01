@@ -74,11 +74,11 @@ public class UI extends Component<UI> {
         
     }
 
-    public void ReplyUsernamePassword( final String p_Username,  final String p_Password,  final boolean p_state ) throws XtumlException {
+    public void ReplyUsernamePassword( final int p_EmployeeID,  final String p_Username,  final String p_msg,  final boolean p_state ) throws XtumlException {
     
         if (requester != null) {
              try {
-                 requester.sendMessage(new IAuthentication.Reply(p_Username, p_Password, p_state));
+                 requester.sendMessage(new IAuthentication.Reply(p_EmployeeID, p_Username, p_msg, p_state));
              } catch ( IOException e ) {
                  LOG().LogInfo("Connection lost.");
                  requester.tearDown();
@@ -219,7 +219,7 @@ public class UI extends Component<UI> {
             break;
         case "Reply":
             try {
-                Authenticate().Reply((String) requester.message.get(0), (String) requester.message.get(1),Boolean.parseBoolean((String) requester.message.get(2)) );
+                Authenticate().Reply(Integer.parseInt((String) requester.message.get(0)), (String) requester.message.get(1), (String) requester.message.get(2), Boolean.parseBoolean((String) requester.message.get(3)) );
             } catch(Exception e) {
                 App().Reply( (String) requester.message.get(0), Boolean.parseBoolean((String) requester.message.get(1)) );
             }
@@ -284,8 +284,8 @@ public class UI extends Component<UI> {
         case "CreateNewAccount":
             Authenticate().CreateNewAccount( (String) requester.message.get(0),  (String) requester.message.get(1), Integer.parseInt((String) requester.message.get(2)));
             break;
-        case "GetUsernamePassword":
-            Authenticate().GetUsernamePassword( Integer.parseInt((String) requester.message.get(0)));
+        case "CheckUsernamePassword":
+            Authenticate().CheckUsernamePassword( (String) requester.message.get(0), (String) requester.message.get(1));
             break;
         case "SOCKET_ERROR":
             LOG().LogFailure("Socket listener shuting down.");

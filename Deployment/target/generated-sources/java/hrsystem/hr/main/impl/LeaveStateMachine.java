@@ -89,9 +89,9 @@ public class LeaveStateMachine extends StateMachine<Leave,Hr> {
     @Override
     public ITransition[][] getStateEventMatrix() {
         return new ITransition[][] {
-            { (event) -> {AwaitingApproval_Reject_txn_to_Rejected_action();Rejected_entry_action();return Rejected;},
+            { (event) -> {AwaitingApproval_Approve_txn_to_Approved_action();Approved_entry_action();return Approved;},
               CANT_HAPPEN,
-              (event) -> {AwaitingApproval_Approve_txn_to_Approved_action();Approved_entry_action();return Approved;},
+              (event) -> {AwaitingApproval_Reject_txn_to_Rejected_action();Rejected_entry_action();return Rejected;},
               CANT_HAPPEN
             },
             { CANT_HAPPEN,

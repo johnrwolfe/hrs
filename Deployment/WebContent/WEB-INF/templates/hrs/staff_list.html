@@ -6,109 +6,71 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-<script>
-$(document).ready( function(){
-    	var xmlhttp = new XMLHttpRequest();
-    	var breeds = {};
-    	var here
-    	function sendXHR(type, url, data, callback) {
-    		xmlhttp = new XMLHttpRequest() || new window.ActiveXObject("Microsoft.XMLHTTP");
-    		xmlhttp.open(type, url, true);
-    		xmlhttp.send(data);
-    		xmlhttp.onreadystatechange = function() { // Use onreadystatechange instead onload.
-    	      if (this.status === 200 && this.readyState === 4) {
-    	        callback(this.response);
-    	        var list = JSON.parse(xmlhttp.responseText);
-    	        var opt = document.getElementById("employees");
-    	        var w = null;
-    	        var j;
-    	        console.log(list);
-    	        for (i in list){
-    	        	if(w == null){
-    	        		w = "<tr>"+
-    	                 	"<th>الرقم الوظيفي</th>"+
-    	                 	"<th>رقم الهوية الوطنية/رقم الاقامة</th>"+
-    	                 	"<th>الاسم الاول</th>"+
-    	                 	"<th>الاسم الثاني</th>"+
-    	                 	"<th>الاسم الاخير</th>"+
-    	                 	"<th>تاريخ الميلاد</th>"+
-    	                 	"<th>الدرجة العلمية</th>"+
-    	                 	"<th>الجنس</th>"+
-    	                 	"<th>تاريخ البدء</th>"+
-    	                 	"<th>رصيد الاجازات</th>"+
-    	                 	"<th>رصيد الاجازات المرضية</th>"+
-    	                 "</tr><tr>";
-    	                 var k = 0;
-    	                 for(j in list[i]){
-    	                	 if(k == 0){
-    	                		 list[i].pop();
-    	                		 k = 1;
-    	                	 }
-    	                 w += "<td>"+ list[i][j] + "</td>";
-    	                 }
-    	                 w += "</tr>";
-    	        	}else{
-    	        		var k = 0;
-   	                 for(j in list[i]){
-   	                	 if(k == 0){
-   	                		 list[i].pop();
-   	                		 k = 1;
-   	                	 }
-   	                 w += "<td>"+ list[i][j] + "</td>";
-   	                 }
-   	                 w += "</tr>";
-    	        	}
-    	        	
-    	        	
-    	        }
-    	        opt.innerHTML = w;
-    	      }
-    	    };
-    	  }
-		
-		sendXHR("GET", "listEmployees", null, function(response) {
-		breeds = JSON.parse(response);
-		});
-    });
-    </script>
-    
+
    
 <link id="bootstrapcss" href="bootstrap" rel="stylesheet">
     <link id="headercss" href="headercss" rel="stylesheet">
    	<link id="stylecss" href="stylecss" rel="stylesheet">
   
- 
-<div id="app">
-  <mynavbar></mynavbar>
-  <myheader id="header"></myheader>
-  <myjs id="js"></myjs>
-  <mycontent id="content"></mycontent>
-  <myfooter id="footer"></myfooter>
-  </div>
+   
   
-  <script src='homejs'></script>
-  
-<style>
-    #app {
-  min-height: 94.5vh;
-  position: relative;
-  margin: 0;
-  padding-bottom: 100px; 
-  box-sizing: border-box;
-}
-
-
+    <style>
+   
 #footer {
   position: absolute;
-  bottom: 0;
+  bottom: 54;
   color:white;
   width: 100%;
 }
 </style>
+  
+ <div id='app'>
+  <mynavbar></mynavbar>
+  <myfooter id="footer"></myfooter>
+  </div>  
+  <div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'hr:index' %}"> الموارد البشرية</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#home-navbarResponsive" aria-controls="home-navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+      <div class="collapse navbar-collapse" id="home-navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+             	
+            <li class="nav-item">
+            <a class="nav-link" href="staff_home">الموظفون</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="overtime_home">خارج الدوام</a>
+          </li>
+             <li class="nav-item">
+            <a class="nav-link" href="leave_home">الإجازات</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="job_home">الوظائف</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="grade_home">المراتب</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="department_home">الإدارات</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="pay_home">Payroll</a>
+          </li>
 
 
+           
+        </ul>
+      </div>
+    </div>
+  </nav>
+  </div>
 
-    <div  style="display: none">
+
     <div   id="content_links">
     <div class="row">
     <div class="col-md-2">
@@ -122,7 +84,9 @@ $(document).ready( function(){
                 <li><a href="staff_form">إضافة موظف</a> </li>
                  <li><a href="staff_commence">بدء موظف</a> </li>
                  <li><a href="staff_leave">طلب اجازة</a> </li>
+                 <li><a href="manageLeave">الموافقة على اجازة</a> </li>
                  <li><a href="staff_return">عودة الموظف من الاجازة</a> </li>
+                 <li><a href="new_account">اضافة حساب جديد</a> </li>
                 <br>
                 <br>
                 <li><a href="staff_bonus_list">استعراض بدلات الموظفين</a></li>
@@ -138,24 +102,28 @@ $(document).ready( function(){
 <br>
 
 <div class="row align-right">
+		<form id="signup-form" @submit.prevent="processForm" style="width:50%">
 		<table id="employees" style="width:100%">
+				<tr>
+    	                 	<th>الاسم الاول</th>
+    	                 	<th>الاسم الثاني</th>
+    	                 	<th>الاسم الاخير</th>
+    	           </tr>
+    	           <tr v-for="employee in allEmployees" @click="seeID" v-bind:id="employee[0]" style="color: #007bff">
+    	           <td v-for="emp in employee.slice(2,5)">{{emp}}</td>	
+    	           </tr>
 		</table>
-
+		</form>
     </div>
 <br>
    
               </div>
               <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-              <script class="vue"></script>
+              <script class="vue" src="staff_listjs"></script>
               
     </div>
     </div>
     </div>
-    </div>
-     <script> 
-    $(function(){
-      $("#content").html($("#content_links").html());
-    });
-    </script> 
-    
+
+     <script src='basejs'></script>	 
 </html>

@@ -7,12 +7,10 @@ Vue.component('mynavbar', {
       '</button>'+
       '<div class="collapse navbar-collapse" id="navbarResponsive">'+
         '<ul class="navbar-nav ml-auto">'+
-                      '<li class="nav-item active">'+
+                      '<li class="nav-item ">'+
 
             
 
-               
-                '<li class="nave-item"><a class="nav-link" href="{% url '+'log:logout'+' %}"> للخروج   </a></li>'+
 
            
 

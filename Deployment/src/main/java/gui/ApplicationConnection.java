@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.IAuthentication;
 import interfaces.IData;
 
 /**
@@ -72,18 +73,26 @@ public class ApplicationConnection extends Thread {
                     // work out the data type of the incoming message
                     // and set the action (run()) to be carried out
                     switch (data.getId()) {
+                    case IAuthentication.SIGNAL_NO_REPLY:
+                    	app.setReply( (String) data.get(0) );
+                    	break;
                     case IData.SIGNAL_NO_REPLY:
                     	app.setReply( (String) data.get(0) );
                     	break;
                     case IData.SIGNAL_NO_SENDLEAVESPECIFICATION:
+                    	List<String> leave = new ArrayList<String>();
                     	for(int i = 0; i < 4; i++)
-                    		app.setReply( (String) data.get(i) );
+                    		  leave.add( (String) data.get(i) );
+                    	app.setReplyLeave(leave);
                     	break;
                     case IData.SIGNAL_NO_SENDEMPLOYEE:
                     	List<String> employee = new ArrayList<String>();
                     	for(int i = 0; i < 12; i++)
                     		  employee.add( (String) data.get(i) );
                     	app.setReplyList(employee);
+                    	break;
+                    case IData.SIGNAL_NO_REPLYNEWEMPLOYEE:
+                    	app.setReply( (String) data.get(0) );
                     	break;
                     default:
                         break;

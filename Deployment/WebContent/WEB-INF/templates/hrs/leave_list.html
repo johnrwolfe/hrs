@@ -12,6 +12,70 @@
     <link id="headercss" href="headercss" rel="stylesheet">
    	<link id="stylecss" href="stylecss" rel="stylesheet">
   
+  <script>
+$(document).ready( function(){
+    	var xmlhttp = new XMLHttpRequest();
+    	var breeds = {};
+    	var here
+    	function sendXHR(type, url, data, callback) {
+    		xmlhttp = new XMLHttpRequest() || new window.ActiveXObject("Microsoft.XMLHTTP");
+    		xmlhttp.open(type, url, true);
+    		xmlhttp.send(data);
+    		xmlhttp.onreadystatechange = function() { // Use onreadystatechange instead onload.
+    	      if (this.status === 200 && this.readyState === 4) {
+    	        callback(this.response);
+    	        var list = JSON.parse(xmlhttp.responseText);
+    	        var opt = document.getElementById("leaves");
+    	        var w = null;
+    	        var j;
+    	        console.log(list);
+    	        for (i in list){
+    	        	if(w == null){
+    	        		w = "<tr>"+
+    	                 	"<th>اسم الاجازة</th>"+
+    	                 	"<th>الحد الاقصى للايام</th>"+
+    	                 	"<th>الحد الادنى للايام</th>"+
+    	                 "</tr><tr>";
+    	                 var k = 0;
+    	                 for(j in list[i]){
+    	                	 if(k == 0){
+    	                		 list[i].pop();
+    	                		 k = 1;
+    	                	 }
+    	                 w += "<td>"+ list[i][j] + "</td>";
+    	                 }
+    	                 w += "</tr>";
+    	        	}else{
+    	        		var k = 0;
+   	                 for(j in list[i]){
+   	                	 if(k == 0){
+   	                		 list[i].pop();
+   	                		 k = 1;
+   	                	 }
+   	                 w += "<td>"+ list[i][j] + "</td>";
+   	                 }
+   	                 w += "</tr>";
+    	        	}
+    	        	
+    	        	
+    	        }
+    	        opt.innerHTML = w;
+    	      }
+    	    };
+    	  }
+		
+		sendXHR("GET", "listAllLeaves", null, function(response) {
+		breeds = JSON.parse(response);
+		});
+    });
+    </script>
+    
+  
+  
+  
+  
+  
+  
 <div id="app">
   <mynavbar></mynavbar>
   <myheader id="header"></myheader>
@@ -52,6 +116,7 @@
                 <br>
                 <li><a href="leave_list">استعراض الإجازات</a> </li>
                 <li><a href="leave_form">استحداث إجازة</a> </li>
+                <li><a href="leave_delete">إلغاء إجازة</a> </li>
         </ul>
        
          </div>
@@ -62,13 +127,10 @@
 <br>
 
 <div class="row align-right">
-
-         <div class="col-md-3">
-        <a href="leave_detail">{{leave}} </a>
-        </div>
-        <div class="col-md-3"> {{leave.name}}</div>
-        <div class="col-md-3">{{leave.max_of_days}}</div>
-
+		<table id="leaves" style="width:100%">
+		</table>
+        
+        
     </div>
 <br>
    
