@@ -1,0 +1,374 @@
+<html>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script> 
+    $(function(){
+      var xmlhttp = new XMLHttpRequest();
+  	var breeds = {};
+  	var here
+  	function sendXHR(type, url, data, callback) {
+  		xmlhttp = new XMLHttpRequest() || new window.ActiveXObject("Microsoft.XMLHTTP");
+  		xmlhttp.open(type, url, true);
+  		xmlhttp.send(data);
+  		xmlhttp.onreadystatechange = function() { // Use onreadystatechange instead onload.
+  	      if (this.status === 200 && this.readyState === 4) {
+  	        callback(this.response);
+				var list = JSON.parse(xmlhttp.responseText)
+				var i = 0;
+				var opt = document.getElementById("messages");
+				var w = null;
+				var j = 0;
+				for (i in list){
+					j = 0;
+					if(w == null){
+						for(j in list[i])
+							if(j == 0){
+								console.log(i, j);
+								console.log(list[i][j]);
+								if(list[i][j]==="bonus"){
+									
+									w = "<p> Bonus Added</p>";
+									w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+									w += "<hr>";
+								}else{
+									if(list[i][j]==="employee"){
+										
+										w = "<p> Employee Added</p>";
+										w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+										w += "<hr>";
+									}else{
+										if(list[i][j]==="grade"){
+											
+											w = "<p> Grade Added</p>";
+											w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+											w += "<hr>";
+									}else{
+											if(list[i][j]==="job"){
+												
+												w = "<p> Job Added</p>";
+												w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+												w += "<hr>";
+											}else{
+												if(list[i][j]==="leave"){
+													
+													w = "<p> Leave Added</p>";
+													w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+													w += "<hr>";
+												}else{
+													if(list[i][j]==="step"){
+														
+														w = "<p> Step Added</p>";
+														w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+														w += "<hr>";
+													}else{
+														if(list[i][j]==="employeeBonus"){
+															
+															w = "<p>Bonus Added to an Employee</p>";
+															w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+															w += "<hr>";
+														}else{
+															if(list[i][j]==="employeeCommence"){
+																
+																w = "<p> Employee has Commenced</p>";
+																w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																w += "<hr>";
+															}else{
+																if(list[i][j]==="employeeJob"){
+																	
+																	w = "<p>Job Added to an Employee</p>";
+																	w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																	w += "<hr>";
+																}else{
+																	if(list[i][j]==="employeeReturn"){
+																		
+																		w = "<p>Employee returned from Leave</p>";
+																		w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																		w += "<hr>";
+																	}else{
+																		if(list[i][j]==="leaveRequest"){
+																			
+																			w = "<p> Employee Requested Leave</p>";
+																			w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																			w += "<hr>";
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								
+							}else{
+								console.log(i, j);
+								console.log(list[i][j]);
+						if(list[i][j]==="bonus"){
+							
+							w += "<p> Bonus Added</p>";
+							w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+							w += "<hr>";
+						}else{
+							if(list[i][j]==="employee"){
+								
+								w += "<p> Employee Added</p>";
+								w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+								w += "<hr>";
+							}else{
+								if(list[i][j]==="grade"){
+									
+									w += "<p> Grade Added</p>";
+									w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+									w += "<hr>";
+							}else{
+									if(list[i][j]==="job"){
+										
+										w += "<p> Job Added</p>";
+										w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+										w += "<hr>";
+									}else{
+										if(list[i][j]==="leave"){
+											
+											w += "<p> Leave Added</p>";
+											w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+											w += "<hr>";
+										}else{
+											if(list[i][j]==="step"){
+												
+												w += "<p> Step Added</p>";
+												w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+												w += "<hr>";
+											}else{
+												if(list[i][j]==="employeeBonus"){
+													
+													w += "<p> Bonus Added to an Employee</p>";
+													w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+													w += "<hr>";
+												}else{
+													if(list[i][j]==="employeeCommence"){
+														
+														w += "<p> Employee has Commenced</p>";
+														w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+														w += "<hr>";
+													}else{
+														if(list[i][j]==="employeeJob"){
+															
+															w += "<p> Job Added to an Employee</p>";
+															w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+															w += "<hr>";
+														}else{
+															if(list[i][j]==="employeeReturn"){
+																
+																w += "<p> Employee returned from Leave</p>";
+																w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																w += "<hr>";
+															}else{
+																if(list[i][j]==="leaveRequest"){
+																	
+																	w += "<p> Employee Requested Leave</p>";
+																	w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																	w += "<hr>";
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+							}
+					}else{
+						j=0;
+						for(j in list[i]){
+							console.log(i, j);
+							console.log(list[i][j]);
+					if(list[i][j]==="bonus"){
+						
+						w += "<p> Bonus Added</p>";
+						w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+						w += "<hr>";
+					}else{
+						if(list[i][j]==="employee"){
+							
+							w += "<p> Employee Added</p>";
+							w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+							w += "<hr>";
+						}else{
+							if(list[i][j]==="grade"){
+								
+								w += "<p> Grade Added</p>";
+								w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+								w += "<hr>";
+						}else{
+								if(list[i][j]==="job"){
+									
+									w += "<p> Job Added</p>";
+									w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+									w += "<hr>";
+								}else{
+									if(list[i][j]==="leave"){
+										
+										w += "<p> Leave Added</p>";
+										w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+										w += "<hr>";
+									}else{
+										if(list[i][j]==="step"){
+											
+											w += "<p> Step Added</p>";
+											w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+											w += "<hr>";
+										}else{
+											if(list[i][j]==="employeeBonus"){
+												
+												w += "<p> Bonus Added to an Employee</p>";
+												w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+												w += "<hr>";
+											}else{
+												if(list[i][j]==="employeeCommence"){
+													
+													w += "<p> Employee has Commenced</p>";
+													w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+													w += "<hr>";
+												}else{
+													if(list[i][j]==="employeeJob"){
+														
+														w += "<p> Job Added to an Employee</p>";
+														w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+														w += "<hr>";
+													}else{
+														if(list[i][j]==="employeeReturn"){
+															
+															w += "<p> Employee returned from Leave</p>";
+															w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+															w += "<hr>";
+														}else{
+															if(list[i][j]==="leaveRequest"){
+																
+																w += "<p> Employee Requested Leave</p>";
+																w+= "<p>"+ list[1][j].replace(/\//g, "، "); +"</p>";
+																w += "<hr>";
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+						
+						}
+					}
+					
+				}
+				opt.innerHTML = w;
+				
+  	      }
+  	    };
+  	  }
+		
+		sendXHR("GET", "messages", null, function(response) {
+		breeds = JSON.parse(response);
+		});
+    });
+    </script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+  
+    
+<link id="bootstrapcss" href="bootstrap" rel="stylesheet">
+    <link id="headercss" href="headercss" rel="stylesheet">
+   	<link id="stylecss" href="stylecss" rel="stylesheet">
+  
+<div id="app">
+  <mynavbar></mynavbar>
+  <myheader id="header"></myheader>
+  <myjs id="js"></myjs>
+<mycontent id="content"></mycontent>
+  <myfooter id="footer"></myfooter>
+  </div>
+  
+  <script src='homejs'></script>
+  
+<style>
+    #app {
+  min-height: 94.5vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 100px; 
+  box-sizing: border-box;
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  color:white;
+  width: 100%;
+}
+</style>
+ 
+
+
+<div style="display: none">
+   <div id="home-content">
+<div class="row" align="left">
+    <div class="col-md-2">
+             
+
+    </div>
+    <div class="col-md-8"><br><hr>
+              <div id="action">
+            <p>Welcome to The Human Resources System </p>
+        <p>This System was Prepared as a Prototype, Which was Developed using the ultra-fast Modeling Methodology</p>
+        <br>
+            <h4>Summary Of System Content</h4>
+        <hr>
+        <p>System Database Contains the Following:</p>
+        <ul align="left">
+                <li><b>Number Of Employees:</b> {{num_of_staff}}</li>
+                <li><b>On the Job:</b> {{num_on_vacation}}</li>
+
+                <li><b>Average Age Of Employees:</b> {{avg_age}}</li>
+
+                <li><b>Number Of Jobs:</b> {{num_of_jobs}}</li>
+                <li><b>Number of jobs occupied:</b> {{num_of_jobs}}</li>
+                <li><b>Number Of Job Opportunities:</b> {{num_of_jobs}}</li>
+                
+        </ul>
+        <div style="background-color: lightyellow">
+        	<b>System Notifications:</b>
+        	<div id="messages"></div>
+        </div>
+        </div>
+         
+    </div>
+    
+</div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</div>
+</div>
+
+
+
+<script> 
+$(document).ready( function() {
+   $("#content").html($("#home-content").html());
+});
+    
+</script>
+</html>

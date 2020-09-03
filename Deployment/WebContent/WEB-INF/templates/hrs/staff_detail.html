@@ -12,39 +12,65 @@
     <link id="headercss" href="headercss" rel="stylesheet">
    	<link id="stylecss" href="stylecss" rel="stylesheet">
   
- 
-<div id="app">
-  <mynavbar></mynavbar>
-  <myheader id="header"></myheader>
-  <myjs id="js"></myjs>
-  <mycontent id="content"></mycontent>
-  <mypagination id="pagination"></mypagination>
-  <myfooter id="footer"></myfooter>
-  </div>
+   
   
-  <script src='homejs'></script>
-  
-<style>
-    #app {
-  min-height: 94.5vh;
-  position: relative;
-  margin: 0;
-  padding-bottom: 100px; //height of the footer
-  box-sizing: border-box;
-}
-
-
+    <style>
+   
 #footer {
   position: absolute;
-  bottom: 0;
+  bottom: 54;
   color:white;
   width: 100%;
 }
 </style>
+  
+ <div id='app'>
+  <mynavbar></mynavbar>
+  <myfooter id="footer"></myfooter>
+  </div>  
+  <div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'hr:index' %}"> الموارد البشرية</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#home-navbarResponsive" aria-controls="home-navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+      <div class="collapse navbar-collapse" id="home-navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+             	
+            <li class="nav-item">
+            <a class="nav-link" href="staff_home">الموظفون</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="overtime_home">خارج الدوام</a>
+          </li>
+             <li class="nav-item">
+            <a class="nav-link" href="leave_home">الإجازات</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="job_home">الوظائف</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="grade_home">المراتب</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="department_home">الإدارات</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="pay_home">Payroll</a>
+          </li>
 
 
+           
+        </ul>
+      </div>
+    </div>
+  </nav>
+  </div>
 
-    <div  style="display: none">
+
     <div   id="content_links">
     <div class="row">
     <div class="col-md-2">
@@ -58,7 +84,9 @@
                 <li><a href="staff_form">إضافة موظف</a> </li>
                  <li><a href="staff_commence">بدء موظف</a> </li>
                  <li><a href="staff_leave">طلب اجازة</a> </li>
+                 <li><a href="manageLeave">الموافقة على اجازة</a> </li>
                  <li><a href="staff_return">عودة الموظف من الاجازة</a> </li>
+                 <li><a href="new_account">اضافة حساب جديد</a> </li>
                 <br>
                 <br>
                 <li><a href="staff_bonus_list">استعراض بدلات الموظفين</a></li>
@@ -66,8 +94,9 @@
         </ul>
         
          </div>
-    <div class="col-md-8"><br><hr>
+    <div class="col-md-9"><br><hr>
          
+              
               <div id="action-home">
               		
          
@@ -75,15 +104,12 @@
         <div class="col-md-1"> </div>
 
 <div class="col-md-10">
-    {% if staff is None %}
-        <h4>موظف جديد</h4>
-
-    {% else %}
-    <h4>الموظف {{staff.first_name}} {{staff.last_name}} </h4>
+   
+    <h4>الموظف {{employee[2]}} {{employee[4]}}</h4>
     <a href="staff_delete">حذف </a> |
                        <a href="{% url 'hr:update_staff' staff.id %} ">تعديل  </a> |
                            <a href="{% url 'hr:staff' staff.id %} ">الملف الشخصي  </a> |
-    {% endif %}
+   
     <hr>
 </div>
 </div>
@@ -92,16 +118,14 @@
         <div class="col-md-1"> </div>
 
 <div class="col-md-8" align="left">
-    {% if staff is not None %}
-
-        {% if staff.user == None %}
+   
                        <a href="register">انشئ حساب  </a>|
-        {% else %}
+       
                         <a href="register">عدل الحساب  </a>|
-        {% endif %}
+        
                 <a href="staff_pay">هيكل المرتب </a> |
                 <a href="staff_bonus_form">إضافة بدل </a>
-    {% endif %}
+  
  </div>
 </div>
     <div class="row">
@@ -109,50 +133,42 @@
 
 <div class="col-md-6" align="right">
 
-   <div id="detail">
+   <div>
     <br>
-    <p><strong>حساب المستخدم:</strong> {{staff.user.username}}</p>
+    <p><strong>الرقم الوظيفي:</strong> {{employee[0]}}</p>
 
 <br>
-<p><strong>تاريخ الميلاد:</strong> {{staff.birth_date}}</p>
-    <p><strong>السجل المدني:</strong> {{staff.national_ID}}</p>
+<p><strong> رقم الهوية الوطنية/رقم الاقامة:</strong> {{employee[1]}}</p>
+    <p><strong>الاسم الاول:</strong> {{employee[2]}}</p>
 
-<p><strong>سيرة مختصرة:</strong> {{staff.short_bio}}</p>
-    <p><strong>الدرجة العلمية:</strong> {{staff.get_degree_display}}</p>
+<p><strong>الاسم الثاني:</strong> {{employee[3]}}</p>
+    <p><strong>الاسم الاخير:</strong> {{employee[4]}}</p>
 
-<p><strong>الوظيفة:</strong> {{staff.job}}</p>
-    <p><strong>الإدارة:</strong> {{staff.department}}</p>
+<p><strong>تاريخ الميلاد:</strong> {{employee[5]}}</p>
+    <p><strong>الدرجة العلمية:</strong> {{employee[6]}}</p>
 
-    <p><strong>المرتبة:</strong> {{staff.grade}}</p>
-    <p><strong>الراتب:</strong> {{staff.grade.salary}}</p>
-        <p><strong>السيرة:</strong> {{staff.short_bio}}</p>
-
-
-<br>
-<p><strong>رصيد الإجازات العادية:</strong> {{staff.available_leave}}</p>
-<p><strong>رصيد الإجازات المرضية:</strong> {{staff.available_sick_leave}}</p>
-<p><strong>رصيد الإجازات المرضية:</strong> {{staff.available_sick_leave}}</p>
+    <p><strong>الجنس:</strong> {{employee[7]}}</p>
+    <p><strong>تاريخ البدء:</strong> {{employee[8]}}</p>
+        <p><strong>رصيد الإجازات العادية:</strong> {{employee[9]}}</p>
+        
+<p><strong>رصيد الإجازات المرضية:</strong> {{employee[10]}}</p>
 </div>
 
 </div>
     </div>
 
 
-    {% endblock %}
+  
 
               </div>
               <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-              <script class="vue"></script>
+              <script class="vue" src="staff_detailjs"></script>
               
     </div>
     </div>
     </div>
-    </div>
-     <script> 
-    $(function(){
-      $("#content").html($("#content_links").html());
-    });
-    </script> 
+   
+     <script src='basejs'></script>	 
     
 </html>
 

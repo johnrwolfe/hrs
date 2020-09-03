@@ -1,0 +1,28 @@
+                    <ul class="list-unstyled">
+
+
+             {% if request.user|has_group:"employee" %}
+                <br>
+                <li><a href="{% url 'accounts:profile' %}">الرئيسية</a></li>
+                <br>
+                <li><a href="{% url 'accounts:directory' %}">دليل الموظفين</a></li>
+                <br>
+                <li><a href="{% url 'accounts:leave' %}">تقديم إجازة</a></li>
+
+             {% else %}
+                <br>
+                <li><a href="{% url 'hrs:profile' %}">الرئيسية</a></li>
+                <br>
+                <li><a href="{% url 'hr:staff' %}">استعراض الموظفين</a></li>
+                <li><a href="{% url 'hr:create_staff' %} ">إضافة موظف</a> </li>
+                <br>
+                <li><a href="{% url 'hr:jobs' %}">استعراض الوظائف</a></li>
+                <li><a href="{% url 'hr:create_job' %} ">استحداث وظيفة</a> </li>
+
+                <br>
+                <li><a href="{% url 'hr:grades' %} ">استعراض المراتب</a> </li>
+                <li><a href="{% url 'hr:create_grade' %} ">استحداث مرتبة</a> </li>
+
+             {% endif %}
+
+                    </ul>

@@ -18,7 +18,7 @@
   min-height: 94.5vh;
   position: relative;
   margin: 0;
-  padding-bottom: 100px; //height of the footer
+  padding-bottom: 100px; 
   box-sizing: border-box;
 }
    
@@ -88,7 +88,9 @@
                 <li><a href="staff_form">إضافة موظف</a> </li>
                  <li><a href="staff_commence">بدء موظف</a> </li>
                  <li><a href="staff_leave">طلب اجازة</a> </li>
+                 <li><a href="manageLeave">الموافقة على اجازة</a> </li>
                  <li><a href="staff_return">عودة الموظف من الاجازة</a> </li>
+                 <li><a href="new_account">اضافة حساب جديد</a> </li>
                 <br>
                 <br>
                 <li><a href="staff_bonus_list">استعراض بدلات الموظفين</a></li>
@@ -141,26 +143,7 @@
     <div class="col-md-3"></div>
  <div class="col-md-8">
      
-        <div class="home-pagination">
-            <span class="page-links">
-                
-                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">السابق</a> 
-                
-                <span class="page-current">
-                   
-                        {{ page_obj.number }} من صفحتين
-                   <br>
-                        {{ page_obj.number }} من {{ page_obj.paginator.num_pages }} صفحات
-                    <br>
-                        {{ page_obj.number }} من {{ page_obj.paginator.num_pages }} صفحة
-                    
-
-                </span>
-                
-                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">التالي</a>
-               
-            </span>
-        </div>
+       
         
     
  </div>

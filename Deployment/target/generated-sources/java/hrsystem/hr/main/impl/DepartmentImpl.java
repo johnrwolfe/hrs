@@ -37,7 +37,7 @@ public class DepartmentImpl extends ModelInstance<Department,Hr> implements Depa
     private DepartmentImpl( Hr context ) {
         this.context = context;
         m_Name = "";
-        m_Mission = 0;
+        m_Mission = "";
         m_Description = "";
         m_Manager = "";
         R21_holds_Employee_set = new EmployeeSetImpl();
@@ -46,7 +46,7 @@ public class DepartmentImpl extends ModelInstance<Department,Hr> implements Depa
         R23_is_managed_by_Employee_inst = EmployeeImpl.EMPTY_EMPLOYEE;
     }
 
-    private DepartmentImpl( Hr context, UniqueId instanceId, String m_Name, int m_Mission, String m_Description, String m_Manager ) {
+    private DepartmentImpl( Hr context, UniqueId instanceId, String m_Name, String m_Mission, String m_Description, String m_Manager ) {
         super(instanceId);
         this.context = context;
         this.m_Name = m_Name;
@@ -68,7 +68,7 @@ public class DepartmentImpl extends ModelInstance<Department,Hr> implements Depa
         else throw new InstancePopulationException( "Instance already exists within this population." );
     }
 
-    public static Department create( Hr context, UniqueId instanceId, String m_Name, int m_Mission, String m_Description, String m_Manager ) throws XtumlException {
+    public static Department create( Hr context, UniqueId instanceId, String m_Name, String m_Mission, String m_Description, String m_Manager ) throws XtumlException {
         Department newDepartment = new DepartmentImpl( context, instanceId, m_Name, m_Mission, m_Description, m_Manager );
         if ( context.addInstance( newDepartment ) ) {
             return newDepartment;
@@ -94,20 +94,20 @@ public class DepartmentImpl extends ModelInstance<Department,Hr> implements Depa
         checkLiving();
         return m_Name;
     }
-    private int m_Mission;
+    private String m_Mission;
     @Override
-    public void setMission(int m_Mission) throws XtumlException {
+    public String getMission() throws XtumlException {
         checkLiving();
-        if (m_Mission != this.m_Mission) {
-            final int oldValue = this.m_Mission;
+        return m_Mission;
+    }
+    @Override
+    public void setMission(String m_Mission) throws XtumlException {
+        checkLiving();
+        if (StringUtil.inequality(m_Mission, this.m_Mission)) {
+            final String oldValue = this.m_Mission;
             this.m_Mission = m_Mission;
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_Mission", oldValue, this.m_Mission));
         }
-    }
-    @Override
-    public int getMission() throws XtumlException {
-        checkLiving();
-        return m_Mission;
     }
     private String m_Description;
     @Override
@@ -252,11 +252,11 @@ class EmptyDepartment extends ModelInstance<Department,Hr> implements Department
     public String getName() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
     }
-    public void setMission( int m_Mission ) throws XtumlException {
-        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
-    }
-    public int getMission() throws XtumlException {
+    public String getMission() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
+    }
+    public void setMission( String m_Mission ) throws XtumlException {
+        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
     public String getDescription() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );

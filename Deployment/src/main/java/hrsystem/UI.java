@@ -2,7 +2,7 @@ package hrsystem;
 
 
 import hrsystem.ui.UIApp;
-//import hrsystem.ui.UIApp_Leave;
+import hrsystem.ui.UIAuthenticate;
 import hrsystem.ui.UIAppOps;
 
 import io.ciera.runtime.summit.application.IApplication;
@@ -34,10 +34,9 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-//import ui.shared.IEP;
-
 import shared.IOps;
 import interfaces.IData;
+import interfaces.IAuthentication;
 
 
 public class UI extends Component<UI> {
@@ -46,6 +45,7 @@ public class UI extends Component<UI> {
     private static final int SOCKET_ERROR = -1;
     private UIApp UIApp;
     private UIAppOps UIAppOps;
+    private UIAuthenticate UIAuthenticate;
 
 
     public UI(IApplication app, IRunContext runContext, int populationId) {
@@ -55,6 +55,7 @@ public class UI extends Component<UI> {
 		LOG = null;
         UIApp = null;
         UIAppOps =null;
+        UIAuthenticate =null;
 
     }
 
@@ -72,6 +73,20 @@ public class UI extends Component<UI> {
         }
         
     }
+
+    public void ReplyUsernamePassword( final int p_EmployeeID,  final String p_Username,  final String p_msg,  final boolean p_state ) throws XtumlException {
+    
+        if (requester != null) {
+             try {
+                 requester.sendMessage(new IAuthentication.Reply(p_EmployeeID, p_Username, p_msg, p_state));
+             } catch ( IOException e ) {
+                 LOG().LogInfo("Connection lost.");
+                 requester.tearDown();
+                 requester = null;
+             }
+         }
+         
+     }
 
     public void SendLeaveSpecification( final String p_Name,  final int p_MaximumDays,  final int p_MinimumDays,  final int p_Size ) throws XtumlException {
     
@@ -102,6 +117,8 @@ public class UI extends Component<UI> {
          
      }
 
+     
+
 
     // relates and unrelates
 
@@ -121,6 +138,11 @@ public class UI extends Component<UI> {
     public UIAppOps AppOps() {
         if ( null == UIAppOps ) UIAppOps = new UIAppOps( this, null );
         return UIAppOps;
+    }
+
+    public UIAuthenticate Authenticate() {
+        if ( null == UIAuthenticate ) UIAuthenticate = new UIAuthenticate( this, null );
+        return UIAuthenticate;
     }
 
 
@@ -196,13 +218,23 @@ public class UI extends Component<UI> {
         	App().SendLeaveSpecification( (String) requester.message.get(0), Integer.parseInt((String) requester.message.get(1)),  Integer.parseInt((String) requester.message.get(2)), Integer.parseInt((String) requester.message.get(3)));
             break;
         case "Reply":
-        	App().Reply( (String) requester.message.get(0), Boolean.parseBoolean((String) requester.message.get(1)) );
+            try {
+                Authenticate().Reply(Integer.parseInt((String) requester.message.get(0)), (String) requester.message.get(1), (String) requester.message.get(2), Boolean.parseBoolean((String) requester.message.get(3)) );
+            } catch(Exception e) {
+                App().Reply( (String) requester.message.get(0), Boolean.parseBoolean((String) requester.message.get(1)) );
+            }
+            break;
+        case "ReplyNewEmployee":
+        	App().ReplyNewEmployee( (String) requester.message.get(0), (String) requester.message.get(1) );
             break;
         case "SendEmployee":
         	App().SendEmployee( Integer.parseInt((String) requester.message.get(0)),  Integer.parseInt((String) requester.message.get(1)),  (String) requester.message.get(2),  (String) requester.message.get(3),  (String) requester.message.get(4),  Integer.parseInt((String) requester.message.get(5)),  (String) requester.message.get(6),  (String) requester.message.get(7),  Integer.parseInt((String) requester.message.get(8)),  Integer.parseInt((String) requester.message.get(9)),  Integer.parseInt((String) requester.message.get(10)),  Integer.parseInt((String) requester.message.get(11)) );
             break;
         case "ReadEmployeeList":
         	App().ReadEmployeeList();
+            break;
+        case "Initialize":
+        	App().Initialize();
             break;
         case "ReadLeaveSpecification":
         	App().ReadLeaveSpecification();
@@ -242,6 +274,18 @@ public class UI extends Component<UI> {
             break;
         case "AssignBonusToEmployee":
         	AppOps().AssignBonusToEmployee( Integer.parseInt((String) requester.message.get(0)),  (String) requester.message.get(1),  Integer.parseInt((String) requester.message.get(2)),  Integer.parseInt((String) requester.message.get(3)), (String) requester.message.get(4));
+            break;
+        case "AddToGroup":
+            Authenticate().AddToGroup( Integer.parseInt((String) requester.message.get(0)),  (String) requester.message.get(1));
+            break;
+        case "ChangePassword":
+            Authenticate().ChangePassword( (String) requester.message.get(0),  (String) requester.message.get(1), (String) requester.message.get(2));
+            break;
+        case "CreateNewAccount":
+            Authenticate().CreateNewAccount( (String) requester.message.get(0),  (String) requester.message.get(1), Integer.parseInt((String) requester.message.get(2)));
+            break;
+        case "CheckUsernamePassword":
+            Authenticate().CheckUsernamePassword( (String) requester.message.get(0), (String) requester.message.get(1));
             break;
         case "SOCKET_ERROR":
             LOG().LogFailure("Socket listener shuting down.");

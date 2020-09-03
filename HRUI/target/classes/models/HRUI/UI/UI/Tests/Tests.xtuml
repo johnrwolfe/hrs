@@ -1,0 +1,139 @@
+-- BP 7.1.6 content: Package syschar: 3 persistence-version: 7.1.6
+
+INSERT INTO EP_PKG
+	VALUES ("f302aa73-3b6f-4030-b781-5dff4a4ef1da",
+	"00000000-0000-0000-0000-000000000000",
+	"2c3138a3-3ff5-4efa-8889-cc3514678e23",
+	'Tests',
+	'',
+	0);
+INSERT INTO GD_MD
+	VALUES ("67e19237-57dd-49a3-8d8c-efa2ae8e4868",
+	112,
+	"f302aa73-3b6f-4030-b781-5dff4a4ef1da",
+	108,
+	0,
+	0,
+	1,
+	1,
+	1,
+	12,
+	1,
+	0,
+	0,
+	0,
+	0,
+	0,
+	'',
+	'HRUI::UI::UI::Tests');
+INSERT INTO DIM_DIA
+	VALUES ("67e19237-57dd-49a3-8d8c-efa2ae8e4868",
+	'',
+	1.000000,
+	0.000000,
+	0.000000,
+	"00000000-0000-0000-0000-000000000000");
+INSERT INTO S_SYNC
+	VALUES ("f2de74a3-1d81-43fa-b9d8-bc1b6ad23edd",
+	"00000000-0000-0000-0000-000000000000",
+	'CreateEmployee',
+	'',
+	'
+',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	0);
+INSERT INTO PE_PE
+	VALUES ("f2de74a3-1d81-43fa-b9d8-bc1b6ad23edd",
+	1,
+	"f302aa73-3b6f-4030-b781-5dff4a4ef1da",
+	"00000000-0000-0000-0000-000000000000",
+	1);
+INSERT INTO S_SYNC
+	VALUES ("ad6d3233-b5e2-4c11-848f-ab48760c4f3b",
+	"00000000-0000-0000-0000-000000000000",
+	'changePassword',
+	'',
+	'Authenticate::ChangePassword( Username:"Khalid.Alrajeh", OldPassword:"7(!d&KhalidAlrajeh", NewPassword:"7(!d&" );
+
+LOG::LogInfo(message:"Test: Change Password second test");	
+
+Authenticate::ChangePassword( Username:"Khalid.Alrajeh", OldPassword:"7(!d&KhalidAlrajeh", NewPassword:"7(!d&" ); ',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	0);
+INSERT INTO PE_PE
+	VALUES ("ad6d3233-b5e2-4c11-848f-ab48760c4f3b",
+	1,
+	"f302aa73-3b6f-4030-b781-5dff4a4ef1da",
+	"00000000-0000-0000-0000-000000000000",
+	1);
+INSERT INTO S_SYNC
+	VALUES ("b2439f63-f5bc-4995-8528-0208b7719024",
+	"00000000-0000-0000-0000-000000000000",
+	'checkUsernamePassword',
+	'',
+	'LOG::LogInfo(message:"Test: Check Username and Password first test: correct username and password");	
+Authenticate::CheckUsernamePassword( Username:"Khalid.Alrajeh", Password:"7(!d&KhalidAlrajeh" );
+
+LOG::LogInfo(message:"Test: Check Username and Password second test: wrong username and password");	
+Authenticate::CheckUsernamePassword( Username:"Khalid", Password:"7(" );
+
+LOG::LogInfo(message:"Test: Check Username and Password third test: wrong username and correct password");	
+Authenticate::CheckUsernamePassword( Username:"Khalid", Password:"7(!d&KhalidAlrajeh" );
+
+
+LOG::LogInfo(message:"Test: Check Username and Password forth test: correct username and wrong password");	
+Authenticate::CheckUsernamePassword( Username:"Khalid.Alrajeh", Password:"7(!d" );
+
+',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	0);
+INSERT INTO PE_PE
+	VALUES ("b2439f63-f5bc-4995-8528-0208b7719024",
+	1,
+	"f302aa73-3b6f-4030-b781-5dff4a4ef1da",
+	"00000000-0000-0000-0000-000000000000",
+	1);
+INSERT INTO S_SYNC
+	VALUES ("0e20bc57-5bd8-4433-bd89-1b72641d90d7",
+	"00000000-0000-0000-0000-000000000000",
+	'leaveRequest',
+	'',
+	'//AppOps::RequestEmployeeLeave( Starting:TIM::, Ending:, EmployeeID:1420000, LeaveName: ) ',
+	"ba5eda7a-def5-0000-0000-000000000000",
+	1,
+	'',
+	0);
+INSERT INTO PE_PE
+	VALUES ("0e20bc57-5bd8-4433-bd89-1b72641d90d7",
+	1,
+	"f302aa73-3b6f-4030-b781-5dff4a4ef1da",
+	"00000000-0000-0000-0000-000000000000",
+	1);
+INSERT INTO PE_PE
+	VALUES ("f302aa73-3b6f-4030-b781-5dff4a4ef1da",
+	1,
+	"00000000-0000-0000-0000-000000000000",
+	"f859e576-0e98-4f6e-9102-2f3ef0483432",
+	7);
+INSERT INTO C_C_PROXY
+	VALUES ("f859e576-0e98-4f6e-9102-2f3ef0483432",
+	"00000000-0000-0000-0000-000000000000",
+	"00000000-0000-0000-0000-000000000000",
+	'UI',
+	'',
+	0,
+	"00000000-0000-0000-0000-000000000000",
+	0,
+	'',
+	'../UI.xtuml');
+INSERT INTO S_SYS_PROXY
+	VALUES ("2c3138a3-3ff5-4efa-8889-cc3514678e23",
+	'HRUI',
+	1,
+	'../../../HRUI.xtuml');

@@ -41,7 +41,7 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
         m_NumberOfSteps = 0;
         R12_is_part_of_Scale_inst = ScaleImpl.EMPTY_SCALE;
         R14_follows_Grade_inst = GradeImpl.EMPTY_GRADE;
-        R14_proceeds_Grade_inst = GradeImpl.EMPTY_GRADE;
+        R14_succeed_Grade_inst = GradeImpl.EMPTY_GRADE;
         R9_assigned_Job_set = new JobSetImpl();
     }
 
@@ -54,7 +54,7 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
         this.m_NumberOfSteps = m_NumberOfSteps;
         R12_is_part_of_Scale_inst = ScaleImpl.EMPTY_SCALE;
         R14_follows_Grade_inst = GradeImpl.EMPTY_GRADE;
-        R14_proceeds_Grade_inst = GradeImpl.EMPTY_GRADE;
+        R14_succeed_Grade_inst = GradeImpl.EMPTY_GRADE;
         R9_assigned_Job_set = new JobSetImpl();
     }
 
@@ -80,11 +80,6 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
     // attributes
     private String m_Name;
     @Override
-    public String getName() throws XtumlException {
-        checkLiving();
-        return m_Name;
-    }
-    @Override
     public void setName(String m_Name) throws XtumlException {
         checkLiving();
         if (StringUtil.inequality(m_Name, this.m_Name)) {
@@ -92,6 +87,11 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
             this.m_Name = m_Name;
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_Name", oldValue, this.m_Name));
         }
+    }
+    @Override
+    public String getName() throws XtumlException {
+        checkLiving();
+        return m_Name;
     }
     private double m_Allowance;
     @Override
@@ -125,11 +125,6 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
     }
     private int m_NumberOfSteps;
     @Override
-    public int getNumberOfSteps() throws XtumlException {
-        checkLiving();
-        return m_NumberOfSteps;
-    }
-    @Override
     public void setNumberOfSteps(int m_NumberOfSteps) throws XtumlException {
         checkLiving();
         if (m_NumberOfSteps != this.m_NumberOfSteps) {
@@ -137,6 +132,11 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
             this.m_NumberOfSteps = m_NumberOfSteps;
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_NumberOfSteps", oldValue, this.m_NumberOfSteps));
         }
+    }
+    @Override
+    public int getNumberOfSteps() throws XtumlException {
+        checkLiving();
+        return m_NumberOfSteps;
     }
 
 
@@ -181,14 +181,14 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
     public Grade R14_follows_Grade() throws XtumlException {
         return R14_follows_Grade_inst;
     }
-    private Grade R14_proceeds_Grade_inst;
+    private Grade R14_succeed_Grade_inst;
     @Override
-    public void setR14_proceeds_Grade( Grade inst ) {
-        R14_proceeds_Grade_inst = inst;
+    public void setR14_succeed_Grade( Grade inst ) {
+        R14_succeed_Grade_inst = inst;
     }
     @Override
-    public Grade R14_proceeds_Grade() throws XtumlException {
-        return R14_proceeds_Grade_inst;
+    public Grade R14_succeed_Grade() throws XtumlException {
+        return R14_succeed_Grade_inst;
     }
     private JobSet R9_assigned_Job_set;
     @Override
@@ -237,11 +237,11 @@ public class GradeImpl extends ModelInstance<Grade,Hr> implements Grade {
 class EmptyGrade extends ModelInstance<Grade,Hr> implements Grade {
 
     // attributes
-    public String getName() throws XtumlException {
-        throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
-    }
     public void setName( String m_Name ) throws XtumlException {
         throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
+    }
+    public String getName() throws XtumlException {
+        throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
     }
     public double getAllowance() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
@@ -255,11 +255,11 @@ class EmptyGrade extends ModelInstance<Grade,Hr> implements Grade {
     public double getBaseSalary() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
     }
-    public int getNumberOfSteps() throws XtumlException {
-        throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
-    }
     public void setNumberOfSteps( int m_NumberOfSteps ) throws XtumlException {
         throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
+    }
+    public int getNumberOfSteps() throws XtumlException {
+        throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
     }
 
 
@@ -276,7 +276,7 @@ class EmptyGrade extends ModelInstance<Grade,Hr> implements Grade {
         return GradeImpl.EMPTY_GRADE;
     }
     @Override
-    public Grade R14_proceeds_Grade() {
+    public Grade R14_succeed_Grade() {
         return GradeImpl.EMPTY_GRADE;
     }
     @Override

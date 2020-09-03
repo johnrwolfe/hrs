@@ -67,16 +67,16 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
         m_LeaveBalance = 0;
         m_SickLeaveBalance = 0;
         R102_is_notified_by_ApproveLeave_set = new ApproveLeaveSetImpl();
+        R11_consumed_Leave_set = new LeaveSetImpl();
         R19_was_given_a_Bonus_set = new BonusSetImpl();
         R1_occupied_JobRecord_set = new JobRecordSetImpl();
-        R20_to_be_promoted_to_a_Job_inst = JobImpl.EMPTY_JOB;
+        R20_to_be_promoted_to_Job_inst = JobImpl.EMPTY_JOB;
         R21_working_within_Department_inst = DepartmentImpl.EMPTY_DEPARTMENT;
         R23_manages_Department_set = new DepartmentSetImpl();
-        R2_consumed_Leave_set = new LeaveSetImpl();
         R3_an_earning_or_a_deduction_is_recorded_in_a_PayslipItem_set = new PayslipItemSetImpl();
         R4_gets_a_Bonus_set = new BonusSetImpl();
         R5_is_taking_a_Leave_inst = LeaveImpl.EMPTY_LEAVE;
-        R6_currently_occupies_a_Job_inst = JobImpl.EMPTY_JOB;
+        R6_currently_occupies_Job_inst = JobImpl.EMPTY_JOB;
         R7_is_planning_to_take__Leave_inst = LeaveImpl.EMPTY_LEAVE;
         statemachine = new EmployeeStateMachine(this, context());
     }
@@ -96,16 +96,16 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
         this.m_LeaveBalance = m_LeaveBalance;
         this.m_SickLeaveBalance = m_SickLeaveBalance;
         R102_is_notified_by_ApproveLeave_set = new ApproveLeaveSetImpl();
+        R11_consumed_Leave_set = new LeaveSetImpl();
         R19_was_given_a_Bonus_set = new BonusSetImpl();
         R1_occupied_JobRecord_set = new JobRecordSetImpl();
-        R20_to_be_promoted_to_a_Job_inst = JobImpl.EMPTY_JOB;
+        R20_to_be_promoted_to_Job_inst = JobImpl.EMPTY_JOB;
         R21_working_within_Department_inst = DepartmentImpl.EMPTY_DEPARTMENT;
         R23_manages_Department_set = new DepartmentSetImpl();
-        R2_consumed_Leave_set = new LeaveSetImpl();
         R3_an_earning_or_a_deduction_is_recorded_in_a_PayslipItem_set = new PayslipItemSetImpl();
         R4_gets_a_Bonus_set = new BonusSetImpl();
         R5_is_taking_a_Leave_inst = LeaveImpl.EMPTY_LEAVE;
-        R6_currently_occupies_a_Job_inst = JobImpl.EMPTY_JOB;
+        R6_currently_occupies_Job_inst = JobImpl.EMPTY_JOB;
         R7_is_planning_to_take__Leave_inst = LeaveImpl.EMPTY_LEAVE;
         statemachine = new EmployeeStateMachine(this, context(), initialState);
     }
@@ -143,6 +143,11 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
     // attributes
     private int m_EmployeeID;
     @Override
+    public int getEmployeeID() throws XtumlException {
+        checkLiving();
+        return m_EmployeeID;
+    }
+    @Override
     public void setEmployeeID(int m_EmployeeID) throws XtumlException {
         checkLiving();
         if (m_EmployeeID != this.m_EmployeeID) {
@@ -150,11 +155,6 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
             this.m_EmployeeID = m_EmployeeID;
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_EmployeeID", oldValue, this.m_EmployeeID));
         }
-    }
-    @Override
-    public int getEmployeeID() throws XtumlException {
-        checkLiving();
-        return m_EmployeeID;
     }
     private int m_NationalID;
     @Override
@@ -188,6 +188,11 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
     }
     private String m_MiddleName;
     @Override
+    public String getMiddleName() throws XtumlException {
+        checkLiving();
+        return m_MiddleName;
+    }
+    @Override
     public void setMiddleName(String m_MiddleName) throws XtumlException {
         checkLiving();
         if (StringUtil.inequality(m_MiddleName, this.m_MiddleName)) {
@@ -195,11 +200,6 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
             this.m_MiddleName = m_MiddleName;
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_MiddleName", oldValue, this.m_MiddleName));
         }
-    }
-    @Override
-    public String getMiddleName() throws XtumlException {
-        checkLiving();
-        return m_MiddleName;
     }
     private String m_LastName;
     @Override
@@ -218,6 +218,11 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
     }
     private int m_DateOfBirth;
     @Override
+    public int getDateOfBirth() throws XtumlException {
+        checkLiving();
+        return m_DateOfBirth;
+    }
+    @Override
     public void setDateOfBirth(int m_DateOfBirth) throws XtumlException {
         checkLiving();
         if (m_DateOfBirth != this.m_DateOfBirth) {
@@ -226,12 +231,12 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_DateOfBirth", oldValue, this.m_DateOfBirth));
         }
     }
-    @Override
-    public int getDateOfBirth() throws XtumlException {
-        checkLiving();
-        return m_DateOfBirth;
-    }
     private String m_Degree;
+    @Override
+    public String getDegree() throws XtumlException {
+        checkLiving();
+        return m_Degree;
+    }
     @Override
     public void setDegree(String m_Degree) throws XtumlException {
         checkLiving();
@@ -240,11 +245,6 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
             this.m_Degree = m_Degree;
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_Degree", oldValue, this.m_Degree));
         }
-    }
-    @Override
-    public String getDegree() throws XtumlException {
-        checkLiving();
-        return m_Degree;
     }
     private String m_Gender;
     @Override
@@ -343,7 +343,7 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
 
     @Override
     public double getSalary() throws XtumlException {
-        Job job = self().R6_currently_occupies_a_Job();
+        Job job = self().R6_currently_occupies_Job();
         return job.getSalary();
     }
 
@@ -371,7 +371,7 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
         }
         @Override
         public int getId() {
-            return 2;
+            return 5;
         }
         @Override
         public String getClassName() {
@@ -384,7 +384,7 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
         }
         @Override
         public int getId() {
-            return 1;
+            return 0;
         }
         @Override
         public String getClassName() {
@@ -397,7 +397,7 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
         }
         @Override
         public int getId() {
-            return 5;
+            return 4;
         }
         @Override
         public String getClassName() {
@@ -410,7 +410,7 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
         }
         @Override
         public int getId() {
-            return 4;
+            return 1;
         }
         @Override
         public String getClassName() {
@@ -436,7 +436,7 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
         }
         @Override
         public int getId() {
-            return 0;
+            return 2;
         }
         @Override
         public String getClassName() {
@@ -458,6 +458,19 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
     @Override
     public ApproveLeaveSet R102_is_notified_by_ApproveLeave() throws XtumlException {
         return R102_is_notified_by_ApproveLeave_set;
+    }
+    private LeaveSet R11_consumed_Leave_set;
+    @Override
+    public void addR11_consumed_Leave( Leave inst ) {
+        R11_consumed_Leave_set.add(inst);
+    }
+    @Override
+    public void removeR11_consumed_Leave( Leave inst ) {
+        R11_consumed_Leave_set.remove(inst);
+    }
+    @Override
+    public LeaveSet R11_consumed_Leave() throws XtumlException {
+        return R11_consumed_Leave_set;
     }
     private BonusSet R19_was_given_a_Bonus_set;
     @Override
@@ -485,14 +498,14 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
     public JobRecordSet R1_occupied_JobRecord() throws XtumlException {
         return R1_occupied_JobRecord_set;
     }
-    private Job R20_to_be_promoted_to_a_Job_inst;
+    private Job R20_to_be_promoted_to_Job_inst;
     @Override
-    public void setR20_to_be_promoted_to_a_Job( Job inst ) {
-        R20_to_be_promoted_to_a_Job_inst = inst;
+    public void setR20_to_be_promoted_to_Job( Job inst ) {
+        R20_to_be_promoted_to_Job_inst = inst;
     }
     @Override
-    public Job R20_to_be_promoted_to_a_Job() throws XtumlException {
-        return R20_to_be_promoted_to_a_Job_inst;
+    public Job R20_to_be_promoted_to_Job() throws XtumlException {
+        return R20_to_be_promoted_to_Job_inst;
     }
     private Department R21_working_within_Department_inst;
     @Override
@@ -515,19 +528,6 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
     @Override
     public DepartmentSet R23_manages_Department() throws XtumlException {
         return R23_manages_Department_set;
-    }
-    private LeaveSet R2_consumed_Leave_set;
-    @Override
-    public void addR2_consumed_Leave( Leave inst ) {
-        R2_consumed_Leave_set.add(inst);
-    }
-    @Override
-    public void removeR2_consumed_Leave( Leave inst ) {
-        R2_consumed_Leave_set.remove(inst);
-    }
-    @Override
-    public LeaveSet R2_consumed_Leave() throws XtumlException {
-        return R2_consumed_Leave_set;
     }
     private PayslipItemSet R3_an_earning_or_a_deduction_is_recorded_in_a_PayslipItem_set;
     @Override
@@ -564,14 +564,14 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
     public Leave R5_is_taking_a_Leave() throws XtumlException {
         return R5_is_taking_a_Leave_inst;
     }
-    private Job R6_currently_occupies_a_Job_inst;
+    private Job R6_currently_occupies_Job_inst;
     @Override
-    public void setR6_currently_occupies_a_Job( Job inst ) {
-        R6_currently_occupies_a_Job_inst = inst;
+    public void setR6_currently_occupies_Job( Job inst ) {
+        R6_currently_occupies_Job_inst = inst;
     }
     @Override
-    public Job R6_currently_occupies_a_Job() throws XtumlException {
-        return R6_currently_occupies_a_Job_inst;
+    public Job R6_currently_occupies_Job() throws XtumlException {
+        return R6_currently_occupies_Job_inst;
     }
     private Leave R7_is_planning_to_take__Leave_inst;
     @Override
@@ -616,11 +616,11 @@ public class EmployeeImpl extends ModelInstance<Employee,Hr> implements Employee
 class EmptyEmployee extends ModelInstance<Employee,Hr> implements Employee {
 
     // attributes
-    public void setEmployeeID( int m_EmployeeID ) throws XtumlException {
-        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
-    }
     public int getEmployeeID() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
+    }
+    public void setEmployeeID( int m_EmployeeID ) throws XtumlException {
+        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
     public void setNationalID( int m_NationalID ) throws XtumlException {
         throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
@@ -634,11 +634,11 @@ class EmptyEmployee extends ModelInstance<Employee,Hr> implements Employee {
     public String getFirstName() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
     }
-    public void setMiddleName( String m_MiddleName ) throws XtumlException {
-        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
-    }
     public String getMiddleName() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
+    }
+    public void setMiddleName( String m_MiddleName ) throws XtumlException {
+        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
     public String getLastName() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
@@ -646,17 +646,17 @@ class EmptyEmployee extends ModelInstance<Employee,Hr> implements Employee {
     public void setLastName( String m_LastName ) throws XtumlException {
         throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
-    public void setDateOfBirth( int m_DateOfBirth ) throws XtumlException {
-        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
-    }
     public int getDateOfBirth() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
     }
-    public void setDegree( String m_Degree ) throws XtumlException {
+    public void setDateOfBirth( int m_DateOfBirth ) throws XtumlException {
         throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
     public String getDegree() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
+    }
+    public void setDegree( String m_Degree ) throws XtumlException {
+        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
     public void setGender( String m_Gender ) throws XtumlException {
         throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
@@ -699,6 +699,10 @@ class EmptyEmployee extends ModelInstance<Employee,Hr> implements Employee {
         return (new ApproveLeaveSetImpl());
     }
     @Override
+    public LeaveSet R11_consumed_Leave() {
+        return (new LeaveSetImpl());
+    }
+    @Override
     public BonusSet R19_was_given_a_Bonus() {
         return (new BonusSetImpl());
     }
@@ -707,7 +711,7 @@ class EmptyEmployee extends ModelInstance<Employee,Hr> implements Employee {
         return (new JobRecordSetImpl());
     }
     @Override
-    public Job R20_to_be_promoted_to_a_Job() {
+    public Job R20_to_be_promoted_to_Job() {
         return JobImpl.EMPTY_JOB;
     }
     @Override
@@ -717,10 +721,6 @@ class EmptyEmployee extends ModelInstance<Employee,Hr> implements Employee {
     @Override
     public DepartmentSet R23_manages_Department() {
         return (new DepartmentSetImpl());
-    }
-    @Override
-    public LeaveSet R2_consumed_Leave() {
-        return (new LeaveSetImpl());
     }
     @Override
     public PayslipItemSet R3_an_earning_or_a_deduction_is_recorded_in_a_PayslipItem() {
@@ -735,7 +735,7 @@ class EmptyEmployee extends ModelInstance<Employee,Hr> implements Employee {
         return LeaveImpl.EMPTY_LEAVE;
     }
     @Override
-    public Job R6_currently_occupies_a_Job() {
+    public Job R6_currently_occupies_Job() {
         return JobImpl.EMPTY_JOB;
     }
     @Override

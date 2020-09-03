@@ -1,6 +1,7 @@
 package hrsystem;
 
 
+import hrsystem.hr.HrAuthenticate;
 import hrsystem.hr.HrUI;
 import hrsystem.hr.HrUI_Ops;
 import hrsystem.hr.main.Bonus;
@@ -63,6 +64,7 @@ import io.ciera.runtime.summit.exceptions.BadArgumentException;
 import io.ciera.runtime.summit.exceptions.EmptyInstanceException;
 import io.ciera.runtime.summit.exceptions.ModelIntegrityException;
 import io.ciera.runtime.summit.exceptions.XtumlException;
+import io.ciera.runtime.summit.types.StringUtil;
 import io.ciera.runtime.summit.util.LOG;
 import io.ciera.runtime.summit.util.TIM;
 import io.ciera.runtime.summit.util.impl.LOGImpl;
@@ -93,28 +95,28 @@ public class Hr extends Component<Hr> {
         PayslipItem_extent = new PayslipItemSetImpl();
         Scale_extent = new ScaleSetImpl();
         R102_ApproveLeave_notifies_Employee_extent = new RelationshipSet();
+        R11_Leave_consumed_by_Employee_extent = new RelationshipSet();
         R12_Grade_is_part_of_Scale_extent = new RelationshipSet();
         R14_Grade_follows_Grade_extent = new RelationshipSet();
         R15_Leave_is_specified_by_a_LeaveSpecification_extent = new RelationshipSet();
         R16_Bonus_is_specified_by_BonusSpecification_extent = new RelationshipSet();
-        R17_JobRecord_proceeded_by_JobRecord_extent = new RelationshipSet();
+        R17_JobRecord_preceded_by_JobRecord_extent = new RelationshipSet();
         R18_PayslipItem_listed_after_PayslipItem_extent = new RelationshipSet();
         R19_Bonus_given_in_the_past_to_an_Employee_extent = new RelationshipSet();
         R1_JobRecord_occupied_Job_extent = new RelationshipSet();
         R1_JobRecord_was_assigned_to_Employee_extent = new RelationshipSet();
-        R20_Job_to_be_assigned_to_an_Employee_extent = new RelationshipSet();
+        R20_Employee_to_be_promoted_to_Job_extent = new RelationshipSet();
         R21_Employee_working_within_Department_extent = new RelationshipSet();
         R22_Department_is_part_of_Department_extent = new RelationshipSet();
         R23_Department_is_managed_by_Employee_extent = new RelationshipSet();
-        R2_Leave_is_consumed_by_a_Employee_extent = new RelationshipSet();
         R3_PayslipItem_records_an_earning_or_deduction_to_Employee_extent = new RelationshipSet();
         R4_Bonus_is_given_to_an_Employee_extent = new RelationshipSet();
-        R5_Employee_is_taking_a_Leave_extent = new RelationshipSet();
-        R6_Employee_currently_occupies_a_Job_extent = new RelationshipSet();
+        R5_Leave_is_currently_taken_by_Employee_extent = new RelationshipSet();
+        R6_Employee_currently_occupies_Job_extent = new RelationshipSet();
         R7_Employee_is_planning_to_take__Leave_extent = new RelationshipSet();
         R9_Job_assigned_Grade_extent = new RelationshipSet();
-        TIM = null;
         LOG = null;
+        TIM = null;
         classDirectory = new TreeMap<>();
         classDirectory.put("ApproveLeave", ApproveLeaveImpl.class);
         classDirectory.put("BP", BonusImpl.class);
@@ -131,6 +133,510 @@ public class Hr extends Component<Hr> {
     }
 
     // domain functions
+    public void CreateEmployee() throws XtumlException {
+    }
+
+    public void CreatePEI_Bonus() throws XtumlException {
+        BonusSpecification bonus = BonusSpecificationImpl.create( context() );
+        bonus.setName("1.5 hour overtime");
+        bonus.setPercent(0.15);
+        context().LOG().LogInfo( "Bonus: Created " + bonus.getName() );
+        bonus = BonusSpecificationImpl.create( context() );
+        bonus.setName("Scarcity");
+        bonus.setPercent(0.3);
+        context().LOG().LogInfo( "Bonus: Created " + bonus.getName() );
+        bonus = BonusSpecificationImpl.create( context() );
+        bonus.setName("Computing");
+        bonus.setPercent(0.25);
+        context().LOG().LogInfo( "Bonus: Created " + bonus.getName() );
+        bonus = BonusSpecificationImpl.create( context() );
+        bonus.setName("Research");
+        bonus.setPercent(0.4);
+        context().LOG().LogInfo( "Bonus: Created " + bonus.getName() );
+    }
+
+    public void CreatePEI_Departments() throws XtumlException {
+        Department departmentHR = DepartmentImpl.create( context() );
+        departmentHR.setName("Human Resources");
+        departmentHR.setMission("Manages employees functions");
+        context().LOG().LogInfo( "Department: Created " + departmentHR.getName() );
+        Employee mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1422222);
+        context().relate_R23_Department_is_managed_by_Employee( departmentHR, mgr );
+        context().relate_R21_Employee_working_within_Department( mgr, departmentHR );
+        context().Authenticate().AddToGroup( mgr.getEmployeeID(), "Managers" );
+        context().Authenticate().AddToGroup( mgr.getEmployeeID(), "HR" );
+        mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1421111);
+        context().relate_R21_Employee_working_within_Department( mgr, departmentHR );
+        context().Authenticate().AddToGroup( mgr.getEmployeeID(), "HR" );
+        mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1420000);
+        context().relate_R21_Employee_working_within_Department( mgr, departmentHR );
+        context().Authenticate().AddToGroup( mgr.getEmployeeID(), "HR" );
+        Department departmentFin = DepartmentImpl.create( context() );
+        departmentFin.setName("Finance Resources");
+        departmentFin.setMission("Manages finance ");
+        context().LOG().LogInfo( "Department: Created " + departmentFin.getName() );
+        mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1427777);
+        context().relate_R23_Department_is_managed_by_Employee( departmentFin, mgr );
+        context().relate_R21_Employee_working_within_Department( mgr, departmentFin );
+        context().Authenticate().AddToGroup( mgr.getEmployeeID(), "Managers" );
+        mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1426666);
+        context().relate_R21_Employee_working_within_Department( mgr, departmentHR );
+        mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1425555);
+        context().relate_R21_Employee_working_within_Department( mgr, departmentHR );
+        Department vpServices = DepartmentImpl.create( context() );
+        vpServices.setName("Vice President for Services");
+        vpServices.setMission("Manage organization supporting services");
+        context().LOG().LogInfo( "Department: Created " + vpServices.getName() );
+        mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1424444);
+        context().relate_R23_Department_is_managed_by_Employee( vpServices, mgr );
+        context().relate_R21_Employee_working_within_Department( mgr, vpServices );
+        context().Authenticate().AddToGroup( mgr.getEmployeeID(), "Managers" );
+        Employee emp = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1428888);
+        context().relate_R21_Employee_working_within_Department( emp, vpServices );
+        emp = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1429999);
+        context().relate_R21_Employee_working_within_Department( emp, vpServices );
+        context().relate_R22_Department_is_part_of_Department( vpServices, departmentHR );
+        context().LOG().LogInfo( ( ( "Departments: related: " + vpServices.getName() ) + " to " ) + departmentHR.getName() );
+        Department President = DepartmentImpl.create( context() );
+        President.setName("President Office");
+        President.setMission("Manage all organization activities");
+        context().LOG().LogInfo( "Departments: created: " + President.getName() );
+        mgr = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1423333);
+        context().relate_R23_Department_is_managed_by_Employee( President, mgr );
+        context().relate_R21_Employee_working_within_Department( mgr, President );
+        context().Authenticate().AddToGroup( mgr.getEmployeeID(), "Managers" );
+        emp = context().Employee_instances().anyWhere(selected -> ((Employee)selected).getEmployeeID() == 1430000);
+        context().relate_R21_Employee_working_within_Department( emp, vpServices );
+        context().relate_R22_Department_is_part_of_Department( President, vpServices );
+        context().LOG().LogInfo( ( ( "Departments: related: " + vpServices.getName() ) + " to " ) + President.getName() );
+    }
+
+    public void CreatePEI_Employees() throws XtumlException {
+        Employee emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1420000);
+        emp.setNationalID(1041000000);
+        emp.setFirstName("Khalid");
+        emp.setMiddleName("Abdulaziz");
+        emp.setLastName("Alrajeh");
+        emp.setDateOfBirth(19691034);
+        emp.setDegree("Mcs");
+        emp.setGender("Male");
+        Job job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 1);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1421111);
+        emp.setNationalID(1041000001);
+        emp.setFirstName("Saad");
+        emp.setMiddleName("Abdullah");
+        emp.setLastName("Alassaf");
+        emp.setDateOfBirth(19691034);
+        emp.setDegree("Mcs");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 2);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1422222);
+        emp.setNationalID(1041000002);
+        emp.setFirstName("Saud");
+        emp.setMiddleName("Abdullah");
+        emp.setLastName("Almanea");
+        emp.setDateOfBirth(19691034);
+        emp.setDegree("Mcs");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 3);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1423333);
+        emp.setNationalID(1041000003);
+        emp.setFirstName("Khalid");
+        emp.setMiddleName("Abdulaziz");
+        emp.setLastName("Alfaleh");
+        emp.setDateOfBirth(19691034);
+        emp.setDegree("Mcs");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 4);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1424444);
+        emp.setNationalID(1041000004);
+        emp.setFirstName("Saud");
+        emp.setMiddleName("Abdullah");
+        emp.setLastName("Aba Alkhail");
+        emp.setDateOfBirth(19781012);
+        emp.setDegree("PhD");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 5);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1425555);
+        emp.setNationalID(1041000005);
+        emp.setFirstName("Saleh");
+        emp.setMiddleName("Fahad");
+        emp.setLastName("Alotaibi");
+        emp.setDateOfBirth(19811034);
+        emp.setDegree("Bsc");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 6);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1426666);
+        emp.setNationalID(1041000006);
+        emp.setFirstName("Riyadh");
+        emp.setMiddleName("Fahad");
+        emp.setLastName("Almutairi");
+        emp.setDateOfBirth(19821034);
+        emp.setDegree("Bsc");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 7);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1427777);
+        emp.setNationalID(1041000007);
+        emp.setFirstName("Raed");
+        emp.setMiddleName("Saad");
+        emp.setLastName("Alshareef");
+        emp.setDateOfBirth(19831034);
+        emp.setDegree("Bsc");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 8);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1428888);
+        emp.setNationalID(1041000008);
+        emp.setFirstName("Shaleh");
+        emp.setMiddleName("Gaed");
+        emp.setLastName("Alotaibi");
+        emp.setDateOfBirth(19841034);
+        emp.setDegree("Bsc");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 9);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1429999);
+        emp.setNationalID(1041000009);
+        emp.setFirstName("Sarah");
+        emp.setMiddleName("Abdullah");
+        emp.setLastName("Alameer");
+        emp.setDateOfBirth(19861034);
+        emp.setDegree("Bsc");
+        emp.setGender("Female");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 10);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+        emp = EmployeeImpl.create( context() );
+        emp.setEmployeeID(1430000);
+        emp.setNationalID(1041000010);
+        emp.setFirstName("Ahmad");
+        emp.setMiddleName("Ziyad");
+        emp.setLastName("Alshaikh");
+        emp.setDateOfBirth(20200318);
+        emp.setDegree("Bsc");
+        emp.setGender("Male");
+        job = context().Job_instances().anyWhere(selected -> ((Job)selected).getJob_ID() == 11);
+        context().relate_R6_Employee_currently_occupies_Job( emp, job );
+        context().Authenticate().CreateNewAccount( emp.getFirstName(), emp.getLastName(), emp.getEmployeeID() );
+        context().LOG().LogInfo( ( ( ( "Employee: Added " + emp.getFirstName() ) + " " ) + emp.getLastName() ) + " successfully." );
+    }
+
+    public void CreatePEI_Leave() throws XtumlException {
+        LeaveSpecification leaveSpecification = LeaveSpecificationImpl.create( context() );
+        leaveSpecification.setName("Regular Leave");
+        leaveSpecification.setMaximumDays(105);
+        leaveSpecification.setMinimumDays(5);
+        context().LOG().LogInfo( ( "Leave: Added " + leaveSpecification.getName() ) + " successfully." );
+        leaveSpecification = LeaveSpecificationImpl.create( context() );
+        leaveSpecification.setName("Sick Leave");
+        leaveSpecification.setMaximumDays(5);
+        leaveSpecification.setMinimumDays(1);
+        context().LOG().LogInfo( ( "Leave: Added " + leaveSpecification.getName() ) + " successfully." );
+        leaveSpecification = LeaveSpecificationImpl.create( context() );
+        leaveSpecification.setName("Exceptional Leave");
+        leaveSpecification.setMaximumDays(365);
+        leaveSpecification.setMinimumDays(180);
+        context().LOG().LogInfo( ( "Leave: Added " + leaveSpecification.getName() ) + " successfully." );
+    }
+
+    public void CreatePEI_Scale() throws XtumlException {
+        Scale scale = ScaleImpl.create( context() );
+        scale.setName("General Schedule");
+        scale.setDescription("The general scale of the organization");
+        context().LOG().LogInfo( ( "Scale: Added " + scale.getName() ) + " successfully." );
+        Grade grade = GradeImpl.create( context() );
+        grade.setName("1");
+        grade.setNumberOfSteps(15);
+        grade.setBaseSalary(3000);
+        grade.setAllowance(135);
+        context().relate_R12_Grade_is_part_of_Scale( grade, scale );
+        context().LOG().LogInfo( ( "Grade: Added " + grade.getName() ) + " successfully." );
+        Grade grade2 = GradeImpl.create( context() );
+        grade2.setName("2");
+        grade2.setNumberOfSteps(15);
+        grade2.setBaseSalary(3430);
+        grade2.setAllowance(165);
+        context().relate_R12_Grade_is_part_of_Scale( grade2, scale );
+        context().relate_R14_Grade_follows_Grade( grade2, grade );
+        context().LOG().LogInfo( ( "Grade: Added " + grade2.getName() ) + " successfully." );
+        Grade grade3 = GradeImpl.create( context() );
+        grade3.setName("3");
+        grade3.setNumberOfSteps(15);
+        grade3.setBaseSalary(3945);
+        grade3.setAllowance(190);
+        context().relate_R12_Grade_is_part_of_Scale( grade3, scale );
+        context().relate_R14_Grade_follows_Grade( grade3, grade2 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade3.getName() ) + " successfully." );
+        Grade grade4 = GradeImpl.create( context() );
+        grade4.setName("4");
+        grade4.setNumberOfSteps(15);
+        grade4.setBaseSalary(4530);
+        grade4.setAllowance(230);
+        context().relate_R12_Grade_is_part_of_Scale( grade4, scale );
+        context().relate_R14_Grade_follows_Grade( grade4, grade3 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade4.getName() ) + " successfully." );
+        Grade grade5 = GradeImpl.create( context() );
+        grade5.setName("5");
+        grade5.setNumberOfSteps(15);
+        grade5.setBaseSalary(5240);
+        grade5.setAllowance(265);
+        context().relate_R12_Grade_is_part_of_Scale( grade5, scale );
+        context().relate_R14_Grade_follows_Grade( grade5, grade4 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade5.getName() ) + " successfully." );
+        Grade grade6 = GradeImpl.create( context() );
+        grade6.setName("6");
+        grade6.setNumberOfSteps(15);
+        grade6.setBaseSalary(6065);
+        grade6.setAllowance(305);
+        context().relate_R12_Grade_is_part_of_Scale( grade6, scale );
+        context().relate_R14_Grade_follows_Grade( grade6, grade5 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade6.getName() ) + " successfully." );
+        Grade grade7 = GradeImpl.create( context() );
+        grade7.setName("7");
+        grade7.setNumberOfSteps(15);
+        grade7.setBaseSalary(7010);
+        grade7.setAllowance(365);
+        context().relate_R12_Grade_is_part_of_Scale( grade7, scale );
+        context().relate_R14_Grade_follows_Grade( grade7, grade6 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade7.getName() ) + " successfully." );
+        Grade grade8 = GradeImpl.create( context() );
+        grade8.setName("8");
+        grade8.setNumberOfSteps(15);
+        grade8.setBaseSalary(8010);
+        grade8.setAllowance(415);
+        context().relate_R12_Grade_is_part_of_Scale( grade8, scale );
+        context().relate_R14_Grade_follows_Grade( grade8, grade7 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade8.getName() ) + " successfully." );
+        Grade grade9 = GradeImpl.create( context() );
+        grade9.setName("9");
+        grade9.setNumberOfSteps(15);
+        grade9.setBaseSalary(9275);
+        grade9.setAllowance(470);
+        context().relate_R12_Grade_is_part_of_Scale( grade9, scale );
+        context().relate_R14_Grade_follows_Grade( grade9, grade8 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade9.getName() ) + " successfully." );
+        Grade grade10 = GradeImpl.create( context() );
+        grade10.setName("10");
+        grade10.setNumberOfSteps(15);
+        grade10.setBaseSalary(10275);
+        grade10.setAllowance(510);
+        context().relate_R12_Grade_is_part_of_Scale( grade10, scale );
+        context().relate_R14_Grade_follows_Grade( grade10, grade9 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade10.getName() ) + " successfully." );
+        Grade grade11 = GradeImpl.create( context() );
+        grade11.setName("11");
+        grade11.setNumberOfSteps(14);
+        grade11.setBaseSalary(11815);
+        grade11.setAllowance(530);
+        context().relate_R12_Grade_is_part_of_Scale( grade11, scale );
+        context().relate_R14_Grade_follows_Grade( grade11, grade10 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade11.getName() ) + " successfully." );
+        Grade grade12 = GradeImpl.create( context() );
+        grade12.setName("12");
+        grade12.setNumberOfSteps(13);
+        grade12.setBaseSalary(13435);
+        grade12.setAllowance(570);
+        context().relate_R12_Grade_is_part_of_Scale( grade12, scale );
+        context().relate_R14_Grade_follows_Grade( grade12, grade11 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade12.getName() ) + " successfully." );
+        Grade grade13 = GradeImpl.create( context() );
+        grade13.setName("13");
+        grade13.setNumberOfSteps(12);
+        grade13.setBaseSalary(15180);
+        grade13.setAllowance(605);
+        context().relate_R12_Grade_is_part_of_Scale( grade13, scale );
+        context().relate_R14_Grade_follows_Grade( grade13, grade12 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade13.getName() ) + " successfully." );
+        Grade grade14 = GradeImpl.create( context() );
+        grade14.setName("14");
+        grade14.setNumberOfSteps(11);
+        grade14.setBaseSalary(17015);
+        grade14.setAllowance(700);
+        context().relate_R12_Grade_is_part_of_Scale( grade14, scale );
+        context().relate_R14_Grade_follows_Grade( grade14, grade13 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade14.getName() ) + " successfully." );
+        Grade grade15 = GradeImpl.create( context() );
+        grade15.setName("15");
+        grade15.setNumberOfSteps(10);
+        grade15.setBaseSalary(20855);
+        grade15.setAllowance(865);
+        context().relate_R12_Grade_is_part_of_Scale( grade15, scale );
+        context().relate_R14_Grade_follows_Grade( grade15, grade14 );
+        context().LOG().LogInfo( ( "Grade: Added " + grade15.getName() ) + " successfully." );
+        Job job = JobImpl.create( context() );
+        job.setJob_ID(1);
+        job.setTitle("Front-End Junior Software Engineer ");
+        job.setDescription("Developing front end solutions");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(2);
+        job.setTitle("Back-End Junior Software Engineer ");
+        job.setDescription("Developing back end solutions");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(3);
+        job.setTitle("Senior Software Engineer ");
+        job.setDescription("Manging front/back end solutions");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "10"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(4);
+        job.setTitle("HR Specialist ");
+        job.setDescription("Recruting and evaluting employee profiles");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "9"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(5);
+        job.setTitle("Lead Software Engineer ");
+        job.setDescription("Manging software teams solutions");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "12"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(6);
+        job.setTitle("Finance Manager ");
+        job.setDescription("Manging finance");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "14"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(7);
+        job.setTitle("Payroll Manager ");
+        job.setDescription("Manging payroll");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "10"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(8);
+        job.setTitle("Budget Manager ");
+        job.setDescription("Manging budget");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "10"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(9);
+        job.setTitle("President ");
+        job.setDescription("Manges the organization");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "15"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(10);
+        job.setTitle("HR Expert ");
+        job.setDescription("Analyze HR Data");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "9"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(11);
+        job.setTitle("HR Specilast ");
+        job.setDescription("Works at HR");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(12);
+        job.setTitle("HR Specilast ");
+        job.setDescription("Works at HR");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(13);
+        job.setTitle("HR Specilast ");
+        job.setDescription("Works at HR");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(14);
+        job.setTitle("HR Specilast ");
+        job.setDescription("Works at HR");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(15);
+        job.setTitle("Finance Specilast ");
+        job.setDescription("Works at Finance");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+        job = JobImpl.create( context() );
+        job.setJob_ID(16);
+        job.setTitle("Finance Specilast ");
+        job.setDescription("Works at Finance");
+        job.setPensionDeduction(0.09);
+        grade = context().Grade_instances().anyWhere(selected -> StringUtil.equality(((Grade)selected).getName(), "8"));
+        context().relate_R9_Job_assigned_Grade( job, grade );
+        context().LOG().LogInfo( ( " Job: Added " + job.getTitle() ) + " successfully." );
+    }
+
+    public void Initialize() throws XtumlException {
+        context().CreatePEI_Leave();
+        context().CreatePEI_Scale();
+        context().CreatePEI_Employees();
+        context().CreatePEI_Departments();
+        context().CreatePEI_Bonus();
+    }
+
     public double getPartialPayment( final int p_Payment_Time,  final int p_Starting_Time,  final int p_Ending_Time,  final double p_Payment ) throws XtumlException {
         if ( p_Payment_Time >= p_Ending_Time && context().isLessThanMonth( p_Payment_Time, p_Ending_Time ) ) {
             int days = 30 - ( ( ( p_Payment_Time - p_Ending_Time ) / 24 ) * 60 ) * 60;
@@ -179,6 +685,26 @@ public class Hr extends Component<Hr> {
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
+    public void relate_R11_Leave_consumed_by_Employee( Leave form, Employee part ) throws XtumlException {
+        if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
+        if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
+        // TODO cardinality check
+        if ( R11_Leave_consumed_by_Employee_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.addR11_consumed_Leave(form);
+            form.setR11_consumed_by_Employee(part);
+        }
+        else throw new ModelIntegrityException( "Instances could not be related." );
+    }
+
+    public void unrelate_R11_Leave_consumed_by_Employee( Leave form, Employee part ) throws XtumlException {
+        if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
+        if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot unrelate empty instances." );
+        if ( R11_Leave_consumed_by_Employee_extent.remove( R11_Leave_consumed_by_Employee_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.removeR11_consumed_Leave(form);
+            form.setR11_consumed_by_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
+        }
+        else throw new ModelIntegrityException( "Instances could not be unrelated." );
+    }
     public void relate_R12_Grade_is_part_of_Scale( Grade form, Scale part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
@@ -204,7 +730,7 @@ public class Hr extends Component<Hr> {
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
         // TODO cardinality check
         if ( R14_Grade_follows_Grade_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR14_proceeds_Grade(form);
+            part.setR14_succeed_Grade(form);
             form.setR14_follows_Grade(part);
         }
         else throw new ModelIntegrityException( "Instances could not be related." );
@@ -214,7 +740,7 @@ public class Hr extends Component<Hr> {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot unrelate empty instances." );
         if ( R14_Grade_follows_Grade_extent.remove( R14_Grade_follows_Grade_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR14_proceeds_Grade(GradeImpl.EMPTY_GRADE);
+            part.setR14_succeed_Grade(GradeImpl.EMPTY_GRADE);
             form.setR14_follows_Grade(GradeImpl.EMPTY_GRADE);
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
@@ -259,23 +785,23 @@ public class Hr extends Component<Hr> {
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
-    public void relate_R17_JobRecord_proceeded_by_JobRecord( JobRecord form, JobRecord part ) throws XtumlException {
+    public void relate_R17_JobRecord_preceded_by_JobRecord( JobRecord form, JobRecord part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
         // TODO cardinality check
-        if ( R17_JobRecord_proceeded_by_JobRecord_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR17_preceded_by_JobRecord(form);
-            form.setR17_proceeded_by_JobRecord(part);
+        if ( R17_JobRecord_preceded_by_JobRecord_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR17_proceeded_by_JobRecord(form);
+            form.setR17_preceded_by_JobRecord(part);
         }
         else throw new ModelIntegrityException( "Instances could not be related." );
     }
 
-    public void unrelate_R17_JobRecord_proceeded_by_JobRecord( JobRecord form, JobRecord part ) throws XtumlException {
+    public void unrelate_R17_JobRecord_preceded_by_JobRecord( JobRecord form, JobRecord part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot unrelate empty instances." );
-        if ( R17_JobRecord_proceeded_by_JobRecord_extent.remove( R17_JobRecord_proceeded_by_JobRecord_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR17_preceded_by_JobRecord(JobRecordImpl.EMPTY_JOBRECORD);
-            form.setR17_proceeded_by_JobRecord(JobRecordImpl.EMPTY_JOBRECORD);
+        if ( R17_JobRecord_preceded_by_JobRecord_extent.remove( R17_JobRecord_preceded_by_JobRecord_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR17_proceeded_by_JobRecord(JobRecordImpl.EMPTY_JOBRECORD);
+            form.setR17_preceded_by_JobRecord(JobRecordImpl.EMPTY_JOBRECORD);
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
@@ -359,23 +885,23 @@ public class Hr extends Component<Hr> {
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
-    public void relate_R20_Job_to_be_assigned_to_an_Employee( Job form, Employee part ) throws XtumlException {
+    public void relate_R20_Employee_to_be_promoted_to_Job( Employee form, Job part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
         // TODO cardinality check
-        if ( R20_Job_to_be_assigned_to_an_Employee_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR20_to_be_promoted_to_a_Job(form);
-            form.setR20_to_be_assigned_to_an_Employee(part);
+        if ( R20_Employee_to_be_promoted_to_Job_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR20_to_be_assigned_to_Employee(form);
+            form.setR20_to_be_promoted_to_Job(part);
         }
         else throw new ModelIntegrityException( "Instances could not be related." );
     }
 
-    public void unrelate_R20_Job_to_be_assigned_to_an_Employee( Job form, Employee part ) throws XtumlException {
+    public void unrelate_R20_Employee_to_be_promoted_to_Job( Employee form, Job part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot unrelate empty instances." );
-        if ( R20_Job_to_be_assigned_to_an_Employee_extent.remove( R20_Job_to_be_assigned_to_an_Employee_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR20_to_be_promoted_to_a_Job(JobImpl.EMPTY_JOB);
-            form.setR20_to_be_assigned_to_an_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
+        if ( R20_Employee_to_be_promoted_to_Job_extent.remove( R20_Employee_to_be_promoted_to_Job_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR20_to_be_assigned_to_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
+            form.setR20_to_be_promoted_to_Job(JobImpl.EMPTY_JOB);
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
@@ -439,26 +965,6 @@ public class Hr extends Component<Hr> {
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
-    public void relate_R2_Leave_is_consumed_by_a_Employee( Leave form, Employee part ) throws XtumlException {
-        if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
-        if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
-        // TODO cardinality check
-        if ( R2_Leave_is_consumed_by_a_Employee_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.addR2_consumed_Leave(form);
-            form.setR2_is_consumed_by_a_Employee(part);
-        }
-        else throw new ModelIntegrityException( "Instances could not be related." );
-    }
-
-    public void unrelate_R2_Leave_is_consumed_by_a_Employee( Leave form, Employee part ) throws XtumlException {
-        if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
-        if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot unrelate empty instances." );
-        if ( R2_Leave_is_consumed_by_a_Employee_extent.remove( R2_Leave_is_consumed_by_a_Employee_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.removeR2_consumed_Leave(form);
-            form.setR2_is_consumed_by_a_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
-        }
-        else throw new ModelIntegrityException( "Instances could not be unrelated." );
-    }
     public void relate_R3_PayslipItem_records_an_earning_or_deduction_to_Employee( PayslipItem form, Employee part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
@@ -499,43 +1005,43 @@ public class Hr extends Component<Hr> {
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
-    public void relate_R5_Employee_is_taking_a_Leave( Employee form, Leave part ) throws XtumlException {
+    public void relate_R5_Leave_is_currently_taken_by_Employee( Leave form, Employee part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
         // TODO cardinality check
-        if ( R5_Employee_is_taking_a_Leave_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR5_is_currently_taken_by_Employee(form);
-            form.setR5_is_taking_a_Leave(part);
+        if ( R5_Leave_is_currently_taken_by_Employee_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR5_is_taking_a_Leave(form);
+            form.setR5_is_currently_taken_by_Employee(part);
         }
         else throw new ModelIntegrityException( "Instances could not be related." );
     }
 
-    public void unrelate_R5_Employee_is_taking_a_Leave( Employee form, Leave part ) throws XtumlException {
+    public void unrelate_R5_Leave_is_currently_taken_by_Employee( Leave form, Employee part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot unrelate empty instances." );
-        if ( R5_Employee_is_taking_a_Leave_extent.remove( R5_Employee_is_taking_a_Leave_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR5_is_currently_taken_by_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
-            form.setR5_is_taking_a_Leave(LeaveImpl.EMPTY_LEAVE);
+        if ( R5_Leave_is_currently_taken_by_Employee_extent.remove( R5_Leave_is_currently_taken_by_Employee_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR5_is_taking_a_Leave(LeaveImpl.EMPTY_LEAVE);
+            form.setR5_is_currently_taken_by_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
-    public void relate_R6_Employee_currently_occupies_a_Job( Employee form, Job part ) throws XtumlException {
+    public void relate_R6_Employee_currently_occupies_Job( Employee form, Job part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot relate empty instances." );
         // TODO cardinality check
-        if ( R6_Employee_currently_occupies_a_Job_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR6_is_assigned_to_an_Employee(form);
-            form.setR6_currently_occupies_a_Job(part);
+        if ( R6_Employee_currently_occupies_Job_extent.add( new Relationship( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR6_is_assigned_to_Employee(form);
+            form.setR6_currently_occupies_Job(part);
         }
         else throw new ModelIntegrityException( "Instances could not be related." );
     }
 
-    public void unrelate_R6_Employee_currently_occupies_a_Job( Employee form, Job part ) throws XtumlException {
+    public void unrelate_R6_Employee_currently_occupies_Job( Employee form, Job part ) throws XtumlException {
         if ( null == form || null == part ) throw new BadArgumentException( "Null instances passed." );
         if ( form.isEmpty() || part.isEmpty() ) throw new EmptyInstanceException( "Cannot unrelate empty instances." );
-        if ( R6_Employee_currently_occupies_a_Job_extent.remove( R6_Employee_currently_occupies_a_Job_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
-            part.setR6_is_assigned_to_an_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
-            form.setR6_currently_occupies_a_Job(JobImpl.EMPTY_JOB);
+        if ( R6_Employee_currently_occupies_Job_extent.remove( R6_Employee_currently_occupies_Job_extent.get( form.getInstanceId(), part.getInstanceId() ) ) ) {
+            part.setR6_is_assigned_to_Employee(EmployeeImpl.EMPTY_EMPLOYEE);
+            form.setR6_currently_occupies_Job(JobImpl.EMPTY_JOB);
         }
         else throw new ModelIntegrityException( "Instances could not be unrelated." );
     }
@@ -637,6 +1143,10 @@ public class Hr extends Component<Hr> {
     public IRelationshipSet R102_ApproveLeave_notifies_Employees() throws XtumlException {
         return R102_ApproveLeave_notifies_Employee_extent;
     }
+    private IRelationshipSet R11_Leave_consumed_by_Employee_extent;
+    public IRelationshipSet R11_Leave_consumed_by_Employees() throws XtumlException {
+        return R11_Leave_consumed_by_Employee_extent;
+    }
     private IRelationshipSet R12_Grade_is_part_of_Scale_extent;
     public IRelationshipSet R12_Grade_is_part_of_Scales() throws XtumlException {
         return R12_Grade_is_part_of_Scale_extent;
@@ -653,9 +1163,9 @@ public class Hr extends Component<Hr> {
     public IRelationshipSet R16_Bonus_is_specified_by_BonusSpecifications() throws XtumlException {
         return R16_Bonus_is_specified_by_BonusSpecification_extent;
     }
-    private IRelationshipSet R17_JobRecord_proceeded_by_JobRecord_extent;
-    public IRelationshipSet R17_JobRecord_proceeded_by_JobRecords() throws XtumlException {
-        return R17_JobRecord_proceeded_by_JobRecord_extent;
+    private IRelationshipSet R17_JobRecord_preceded_by_JobRecord_extent;
+    public IRelationshipSet R17_JobRecord_preceded_by_JobRecords() throws XtumlException {
+        return R17_JobRecord_preceded_by_JobRecord_extent;
     }
     private IRelationshipSet R18_PayslipItem_listed_after_PayslipItem_extent;
     public IRelationshipSet R18_PayslipItem_listed_after_PayslipItems() throws XtumlException {
@@ -673,9 +1183,9 @@ public class Hr extends Component<Hr> {
     public IRelationshipSet R1_JobRecord_was_assigned_to_Employees() throws XtumlException {
         return R1_JobRecord_was_assigned_to_Employee_extent;
     }
-    private IRelationshipSet R20_Job_to_be_assigned_to_an_Employee_extent;
-    public IRelationshipSet R20_Job_to_be_assigned_to_an_Employees() throws XtumlException {
-        return R20_Job_to_be_assigned_to_an_Employee_extent;
+    private IRelationshipSet R20_Employee_to_be_promoted_to_Job_extent;
+    public IRelationshipSet R20_Employee_to_be_promoted_to_Jobs() throws XtumlException {
+        return R20_Employee_to_be_promoted_to_Job_extent;
     }
     private IRelationshipSet R21_Employee_working_within_Department_extent;
     public IRelationshipSet R21_Employee_working_within_Departments() throws XtumlException {
@@ -689,10 +1199,6 @@ public class Hr extends Component<Hr> {
     public IRelationshipSet R23_Department_is_managed_by_Employees() throws XtumlException {
         return R23_Department_is_managed_by_Employee_extent;
     }
-    private IRelationshipSet R2_Leave_is_consumed_by_a_Employee_extent;
-    public IRelationshipSet R2_Leave_is_consumed_by_a_Employees() throws XtumlException {
-        return R2_Leave_is_consumed_by_a_Employee_extent;
-    }
     private IRelationshipSet R3_PayslipItem_records_an_earning_or_deduction_to_Employee_extent;
     public IRelationshipSet R3_PayslipItem_records_an_earning_or_deduction_to_Employees() throws XtumlException {
         return R3_PayslipItem_records_an_earning_or_deduction_to_Employee_extent;
@@ -701,13 +1207,13 @@ public class Hr extends Component<Hr> {
     public IRelationshipSet R4_Bonus_is_given_to_an_Employees() throws XtumlException {
         return R4_Bonus_is_given_to_an_Employee_extent;
     }
-    private IRelationshipSet R5_Employee_is_taking_a_Leave_extent;
-    public IRelationshipSet R5_Employee_is_taking_a_Leaves() throws XtumlException {
-        return R5_Employee_is_taking_a_Leave_extent;
+    private IRelationshipSet R5_Leave_is_currently_taken_by_Employee_extent;
+    public IRelationshipSet R5_Leave_is_currently_taken_by_Employees() throws XtumlException {
+        return R5_Leave_is_currently_taken_by_Employee_extent;
     }
-    private IRelationshipSet R6_Employee_currently_occupies_a_Job_extent;
-    public IRelationshipSet R6_Employee_currently_occupies_a_Jobs() throws XtumlException {
-        return R6_Employee_currently_occupies_a_Job_extent;
+    private IRelationshipSet R6_Employee_currently_occupies_Job_extent;
+    public IRelationshipSet R6_Employee_currently_occupies_Jobs() throws XtumlException {
+        return R6_Employee_currently_occupies_Job_extent;
     }
     private IRelationshipSet R7_Employee_is_planning_to_take__Leave_extent;
     public IRelationshipSet R7_Employee_is_planning_to_take__Leaves() throws XtumlException {
@@ -720,6 +1226,11 @@ public class Hr extends Component<Hr> {
 
 
     // ports
+    private HrAuthenticate HrAuthenticate;
+    public HrAuthenticate Authenticate() {
+        if ( null == HrAuthenticate ) HrAuthenticate = new HrAuthenticate( this, null );
+        return HrAuthenticate;
+    }
     private HrUI HrUI;
     public HrUI UI() {
         if ( null == HrUI ) HrUI = new HrUI( this, null );
@@ -733,15 +1244,15 @@ public class Hr extends Component<Hr> {
 
 
     // utilities
-    private TIM TIM;
-    public TIM TIM() {
-        if ( null == TIM ) TIM = new TIMImpl<>( this );
-        return TIM;
-    }
     private LOG LOG;
     public LOG LOG() {
         if ( null == LOG ) LOG = new LOGImpl<>( this );
         return LOG;
+    }
+    private TIM TIM;
+    public TIM TIM() {
+        if ( null == TIM ) TIM = new TIMImpl<>( this );
+        return TIM;
     }
 
 

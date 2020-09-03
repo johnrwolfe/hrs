@@ -33,11 +33,11 @@
           console.log({ user: this.user });
         },
       submitProduct: function () {
-    	  axios.post('', {
+    	  axios.post('check', {
     		    user: this.user,
     		    password: this.password
             }).then(response => {
-                window.location.href = 'hrs';
+                window.location.href = 'checked';
             })
         }
       }

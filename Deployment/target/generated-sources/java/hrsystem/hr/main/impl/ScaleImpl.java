@@ -33,11 +33,11 @@ public class ScaleImpl extends ModelInstance<Scale,Hr> implements Scale {
     private ScaleImpl( Hr context ) {
         this.context = context;
         m_Name = "";
-        m_Description = 0;
+        m_Description = "";
         R12_is_made_of_Grade_set = new GradeSetImpl();
     }
 
-    private ScaleImpl( Hr context, UniqueId instanceId, String m_Name, int m_Description ) {
+    private ScaleImpl( Hr context, UniqueId instanceId, String m_Name, String m_Description ) {
         super(instanceId);
         this.context = context;
         this.m_Name = m_Name;
@@ -54,7 +54,7 @@ public class ScaleImpl extends ModelInstance<Scale,Hr> implements Scale {
         else throw new InstancePopulationException( "Instance already exists within this population." );
     }
 
-    public static Scale create( Hr context, UniqueId instanceId, String m_Name, int m_Description ) throws XtumlException {
+    public static Scale create( Hr context, UniqueId instanceId, String m_Name, String m_Description ) throws XtumlException {
         Scale newScale = new ScaleImpl( context, instanceId, m_Name, m_Description );
         if ( context.addInstance( newScale ) ) {
             return newScale;
@@ -80,20 +80,20 @@ public class ScaleImpl extends ModelInstance<Scale,Hr> implements Scale {
         checkLiving();
         return m_Name;
     }
-    private int m_Description;
+    private String m_Description;
     @Override
-    public void setDescription(int m_Description) throws XtumlException {
+    public String getDescription() throws XtumlException {
         checkLiving();
-        if (m_Description != this.m_Description) {
-            final int oldValue = this.m_Description;
+        return m_Description;
+    }
+    @Override
+    public void setDescription(String m_Description) throws XtumlException {
+        checkLiving();
+        if (StringUtil.inequality(m_Description, this.m_Description)) {
+            final String oldValue = this.m_Description;
             this.m_Description = m_Description;
             getRunContext().addChange(new AttributeChangedDelta(this, KEY_LETTERS, "m_Description", oldValue, this.m_Description));
         }
-    }
-    @Override
-    public int getDescription() throws XtumlException {
-        checkLiving();
-        return m_Description;
     }
 
 
@@ -173,11 +173,11 @@ class EmptyScale extends ModelInstance<Scale,Hr> implements Scale {
     public String getName() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
     }
-    public void setDescription( int m_Description ) throws XtumlException {
-        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
-    }
-    public int getDescription() throws XtumlException {
+    public String getDescription() throws XtumlException {
         throw new EmptyInstanceException( "Cannot get attribute of empty instance." );
+    }
+    public void setDescription( String m_Description ) throws XtumlException {
+        throw new EmptyInstanceException( "Cannot set attribute of empty instance." );
     }
 
 

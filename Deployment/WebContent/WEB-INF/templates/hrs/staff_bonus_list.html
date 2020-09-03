@@ -19,7 +19,6 @@
   <myheader id="header"></myheader>
   <myjs id="js"></myjs>
   <mycontent id="content"></mycontent>
-  <mypagination id="pagination"></mypagination>
   <myfooter id="footer"></myfooter>
   </div>
   
@@ -30,7 +29,7 @@
   min-height: 94.5vh;
   position: relative;
   margin: 0;
-  padding-bottom: 100px; //height of the footer
+  padding-bottom: 100px; 
   box-sizing: border-box;
 }
 
@@ -59,7 +58,9 @@
                 <li><a href="staff_form">إضافة موظف</a> </li>
                  <li><a href="staff_commence">بدء موظف</a> </li>
                  <li><a href="staff_leave">طلب اجازة</a> </li>
+                 <li><a href="manageLeave">الموافقة على اجازة</a> </li>
                  <li><a href="staff_return">عودة الموظف من الاجازة</a> </li>
+                 <li><a href="new_account">اضافة حساب جديد</a> </li>
                 <br>
                 <br>
                 <li><a href="staff_bonus_list">استعراض بدلات الموظفين</a></li>
@@ -73,8 +74,6 @@
               		
         <h3 align="right">بدلات الموظفين</h3>
 <br>
-{% if staff_bonus_list %}
-     {% for staff_bonus in staff_bonus_list %}
 <div class="row align-right">
 
          <div class="col-md-2">
@@ -89,12 +88,7 @@
 
     </div>
 <br>
-    {%  endfor %}
-{% else %}
-    <p>لا توجد بدلات حاليا</p>
-
-{% endif %}
-    {% endblock %}
+   
               </div>
               <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
               <script class="vue"></script>

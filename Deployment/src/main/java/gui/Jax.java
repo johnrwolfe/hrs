@@ -14,6 +14,7 @@ public class Jax extends Application{
 	
 	public Jax() {
 		this.singletons.add(new Gui());
+		this.singletons.add(new Gui_ENG());
 	}
 	
 	@Override
